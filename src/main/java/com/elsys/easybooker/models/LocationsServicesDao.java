@@ -1,4 +1,9 @@
 package com.elsys.easybooker.models;
 
-public interface LocationsServicesDao {
+import org.springframework.data.repository.CrudRepository;
+
+import javax.transaction.Transactional;
+
+@Transactional
+public interface LocationsServicesDao extends CrudRepository<LocationsServices, Long> {
 }

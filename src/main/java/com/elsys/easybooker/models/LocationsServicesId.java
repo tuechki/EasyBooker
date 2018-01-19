@@ -1,26 +1,12 @@
 package com.elsys.easybooker.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-@Entity
-@Table(name = "LocationsServices")
-@IdClass(LocationsServicesId.class)
-public class LocationsServices {
-
-    @Id @NotNull
+public class LocationsServicesId {
     private long locationId;
-
-    @Id @NotNull
     private long serviceId;
 
-    public LocationsServices(long locationId, long serviceId){
+    public LocationsServicesId(long locationId, long serviceId){
         this.locationId = locationId;
         this.serviceId = serviceId;
-
     }
 
     public long getLocationId() {
@@ -38,5 +24,4 @@ public class LocationsServices {
     public void setServiceId(long serviceId) {
         this.serviceId = serviceId;
     }
-
 }

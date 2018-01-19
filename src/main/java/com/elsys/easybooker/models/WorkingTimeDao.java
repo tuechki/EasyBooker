@@ -1,4 +1,9 @@
 package com.elsys.easybooker.models;
 
-public interface WorkingTimeDao {
+import org.springframework.data.repository.CrudRepository;
+
+import javax.transaction.Transactional;
+
+@Transactional
+public interface WorkingTimeDao extends CrudRepository<WorkingTime, Long> {
 }

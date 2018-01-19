@@ -1,4 +1,9 @@
 package com.elsys.easybooker.models;
 
-public interface UsersBusinessesDao {
+import org.springframework.data.repository.CrudRepository;
+
+import javax.transaction.Transactional;
+
+@Transactional
+public interface UsersBusinessesDao extends CrudRepository<UsersBusinesses, Long> {
 }

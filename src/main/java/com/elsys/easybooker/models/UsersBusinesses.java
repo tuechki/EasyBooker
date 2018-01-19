@@ -1,17 +1,20 @@
 package com.elsys.easybooker.models;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "UsersBusinesses")
+@IdClass(UsersBusinessesId.class)
 public class UsersBusinesses {
 
-    @NotNull
+    @Id @NotNull
     private long businessId;
 
-    @NotNull
+    @Id @NotNull
     private long userId;
 
     @NotNull
