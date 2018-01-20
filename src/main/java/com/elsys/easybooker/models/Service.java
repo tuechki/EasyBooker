@@ -9,17 +9,22 @@ public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
     @NotNull
+    @Column(name = "businessId")
     private long businessId;
 
+    @Column(name = "summary")
     private String summary;
 
     @NotNull
+    @Column(name = "timeDuration")
     private int timeDuration;
 
     @NotNull
+    @Column(name = "price")
     private int price;
 
     public Service(){ }

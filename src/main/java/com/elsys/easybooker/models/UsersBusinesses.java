@@ -1,9 +1,6 @@
 package com.elsys.easybooker.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -12,12 +9,15 @@ import javax.validation.constraints.NotNull;
 public class UsersBusinesses {
 
     @Id @NotNull
+    @Column(name = "businessId")
     private long businessId;
 
     @Id @NotNull
+    @Column(name = "userId")
     private long userId;
 
     @NotNull
+    @Column(name = "permission")
     private int permission;
 
     public UsersBusinesses(long businessId, long userId, int permission){

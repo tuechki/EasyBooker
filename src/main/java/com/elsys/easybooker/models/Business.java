@@ -8,14 +8,18 @@ import javax.validation.constraints.NotNull;
 public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
     @NotNull
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "summary")
     private String summary;
 
     @NotNull
+    @Column(name = "email")
     private String email;
 
     public Business(){ }

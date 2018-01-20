@@ -9,19 +9,25 @@ public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
     @NotNull
+    @Column(name = "businessId")
     private long businessId;
 
     @NotNull
+    @Column(name = "address")
     private String address;
 
+    @Column(name = "number")
     private String number;
 
+    @Column(name = "summary")
     private String summary;
 
     @NotNull
+    @Column(name = "email")
     private String email;
 
     public Location(){ }

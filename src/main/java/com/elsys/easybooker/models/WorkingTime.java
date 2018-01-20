@@ -8,21 +8,27 @@ import javax.validation.constraints.NotNull;
 public class WorkingTime {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
     @NotNull
+    @Column(name = "locationId")
     private long locationId;
 
     @NotNull
+    @Column(name = "userId")
     private long userId;
 
     @NotNull
+    @Column(name = "dayOfWeek")
     private String dayOfWeek;
 
     @NotNull
+    @Column(name = "beginHour")
     private String beginHour;
 
     @NotNull
+    @Column(name = "endHour")
     private String endHour;
 
     public WorkingTime(long locationId, long userId, String dayOfWeek, String beginHour, String endHour){

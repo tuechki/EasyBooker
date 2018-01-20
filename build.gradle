@@ -12,6 +12,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 group = 'com.elsys'
@@ -29,6 +30,12 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.session:spring-session')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("com.h2database:h2")
+
+//	compile 'org.javassist:javassist:3.15.0-GA'
+
+	compile 'javax.xml.bind:jaxb-api:2.2.11'
+
 	runtime('mysql:mysql-connector-java')
 	runtime('org.postgresql:postgresql')
 	runtime('com.microsoft.sqlserver:mssql-jdbc')

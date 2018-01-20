@@ -11,25 +11,33 @@ import java.sql.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
     @NotNull
+    @Column(name = "firstName")
     private String firstName;
 
     @NotNull
+    @Column(name = "lastName")
     private String lastName;
 
     @NotNull
+    @Column(name = "userName")
     private String username;
 
     @NotNull
+    @Column(name = "password")
     private String password;
 
     @NotNull
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "number")
     private String number;
 
+    @Column(name = "gender")
     private String gender;
 
 //    private Date dateOfBirth;
