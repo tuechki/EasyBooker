@@ -6,4 +6,7 @@ import javax.transaction.Transactional;
 
 @Transactional
 public interface ServiceDao extends CrudRepository<Service, Long> {
+    public Service findById(long id);
+    public Service findByName(String name);
+
 }

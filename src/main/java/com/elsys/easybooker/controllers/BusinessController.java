@@ -1,43 +1,41 @@
 package com.elsys.easybooker.controllers;
 
-import com.elsys.easybooker.models.User;
-import com.elsys.easybooker.models.UserDao;
+import com.elsys.easybooker.models.Business;
+import com.elsys.easybooker.models.BusinessDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/businesses")
+public class BusinessController {
 
     @Autowired
-    private UserDao userDao;
+    private BusinessDao businessDao;
 
     @GetMapping
     public Iterable findAll() {
-        return userDao.findAll();
+        return businessDao.findAll();
     }
 
-    @GetMapping("/{username}")
-    public User findByUsername(@PathVariable String username) {
-        return userDao.findByUsername(username);
+    @GetMapping("/{id}")
+    public Business findById(@PathVariable long id) {
+        return businessDao.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User create(@Valid @RequestBody User user) {
-        return userDao.save(user);
+    public Business create(@Valid @RequestBody Business business) {
+        return businessDao.save(business);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         try {
-            userDao.delete(id);
+            businessDao.delete(id);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -45,11 +43,11 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User update(@RequestBody User user, @PathVariable Long id) {
+    public Business update(@RequestBody Business business, @PathVariable Long id) {
 //        if (user.getId() != id) {
 ////            throw new UserIdMismatchException();
 ////        }
-        return userDao.save(user);
+        return businessDao.save(business);
     }
 
 }
