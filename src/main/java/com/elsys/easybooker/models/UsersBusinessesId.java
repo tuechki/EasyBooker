@@ -1,6 +1,8 @@
 package com.elsys.easybooker.models;
 
-public class UsersBusinessesId {
+import java.io.Serializable;
+
+public class UsersBusinessesId  implements Serializable{
     private long businessId;
     private long userId;
 

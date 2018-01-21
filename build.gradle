@@ -23,26 +23,59 @@ repositories {
 	mavenCentral()
 }
 
+jar {
+	baseName = 'easybooker'
+	version =  '1.0'
+}
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-jdbc')
-	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.session:spring-session')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile("com.h2database:h2")
 
-//	compile 'org.javassist:javassist:3.15.0-GA'
+		//Spring
+		compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+		compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest'
+		compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+		compile group: 'org.springframework.security', name: 'spring-security-data'
+		compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'
+		compile group: 'org.springframework.data', name: 'spring-data-rest-hal-browser'
+		// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+		compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.9.RELEASE'
 
-	compile 'javax.xml.bind:jaxb-api:2.2.11'
 
-	runtime('mysql:mysql-connector-java')
-	runtime('org.postgresql:postgresql')
-	runtime('com.microsoft.sqlserver:mssql-jdbc')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('org.springframework.security:spring-security-test')
+	//Hibernate
+		compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.12.Final'
+		compile group: 'org.hibernate', name: 'hibernate-spatial', version: '5.2.12.Final'
+		compile group: 'org.hibernate', name: 'hibernate-search', version: '5.8.2.Final'
+		compile group: 'org.hibernate', name: 'hibernate-search-engine', version: '5.8.2.Final'
+		compile group: 'org.hibernate', name: 'hibernate-search-orm', version: '5.8.2.Final'
+	    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.12.Final'
+	    // https://mvnrepository.com/artifact/org.hibernate/hibernate-cglib-repack
+	    compile group: 'org.hibernate', name: 'hibernate-cglib-repack', version: '2.1_3'
+		// https://mvnrepository.com/artifact/asm/asm
+		compile group: 'asm', name: 'asm', version: '3.3.1'
 
-	// https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
-	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '4.1.7.Final'
+
+
+	//JSON
+		compile("org.codehaus.jackson:jackson-mapper-asl")
+
+		compile("com.h2database:h2")
+		compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.7-dmr'
+
+		compile group: 'commons-io', name: 'commons-io', version: '2.5'
+		compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+		compile group: 'org.apache.commons', name: 'commons-text', version: '1.1'
+		compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
+		compile group: 'commons-validator', name: 'commons-validator', version: '1.6'
+		compile group: 'net.glxn', name: 'qrgen', version: '1.4'
+		compile group: 'com.vividsolutions', name: 'jts', version: '1.13'
+
+
+		//Test
+		testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0")
+		testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0")
+		testCompile("org.junit.platform:junit-platform-runner:1.0.0")
+
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+
 
 }

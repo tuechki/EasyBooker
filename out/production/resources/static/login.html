@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+</head>
+<body>
+<p> Hello to Login page </p>
+<p> You know.....just log in and start booking </p>
+
+<div ng-app = "app" ng-controller = "loginController">
+
+    Enter username: <input type="text" ng-model = "user.username"><br><br>
+    Enter password: <input type="password" ng-model = "user.password"><br><br>
+    <div>
+    <button ng-click="loggedIn()" class="btn btn-default">Log in</button>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("app", []);
+
+    app.controller('loginController', function ($scope, $log, $window) {
+        $scope.loggedIn = function () {
+            var url = "http://" + $window.location.host + "/user.html";
+            $log.log(url);
+            $window.location.href = url;
+        };
+
+    });
+</script>
+
+
+</body>
+</html>

@@ -6,29 +6,15 @@ import javax.validation.constraints.NotNull;
 import java.awt.*;
 import java.sql.Date;
 
-@Entity
-@Table(name = "UsersTry")
-public class UserTry {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+public class LoggingUser {
 
-    @NotNull
-    @Column(name = "username")
     private String username;
 
-    @NotNull
-    @Column(name = "password")
     private String password;
 
-    public UserTry(){ }
+    public LoggingUser(){ }
 
-    public UserTry(long id){
-        this.id = id;
-    }
-
-    public UserTry( String username, String password){
+    public LoggingUser( String username, String password){
         this.username = username;
         this.password = password;
     }
@@ -48,14 +34,6 @@ public class UserTry {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
 

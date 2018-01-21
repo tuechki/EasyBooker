@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+</head>
+<body>
+<h2>EasyBooker</h2>
+<p style="align-content: center">Hello user</p>
+
+<div ng-app = "app" ng-controller = "userController">
+
+    <table>
+        <tr>
+            <th>BrandId</th>
+            <th>Summary</th>
+            <th>Price</th>
+        </tr>
+
+        <tr>
+            <td>{{ service.brandId }}</td>
+            <td>{{ service.summary }}</td>
+            <td>{{ service.price }}</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+
+    var app = angular.module("app", []);
+
+    app.controller('userController', function ($scope, $http) {
+        var url = "http://localhost:8080/users";
+
+        $http.get(url).then( function(response) {
+            $scope.services = response.data;
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

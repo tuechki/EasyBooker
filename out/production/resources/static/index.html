@@ -6,100 +6,35 @@
 </head>
 
 <body>
-<h2>Register in order to use EasyBooker</h2>
+<h2>EasyBooker</h2>
 
-<div ng-app = "app" ng-controller = "signupController">
+<p> The place where you can book free, easy and fast!</p>
+<p>Follow us on Facebook and Instagram</p>
 
-    Enter first name: <input type = "text" ng-model = "firstName"><br><br>
-    Enter last name: <input type="text" ng-model = "lastName"><br><br>
-    Enter username: <input type="text" ng-model = "user.username"><br><br>
-    Enter password: <input type="password" ng-model = "user.password"><br><br>
-    Renter the password: <input type="password" ng-model = "repassword"><br><br>
-    Enter email: <input type="text" ng-model = "email"><br><br>
-    Enter number: <input type="text" ng-model = "number"><br><br>
-    <!--<form action="">-->
-    <!--<input type="radio" ng-model="user.gender" value="male"> Male<br>-->
-    <!--<input type="radio" ng-model="user.gender" value="female"> Female<br>-->
-    <!--<input type="radio" ng-model="user.gender" value="other"> Other-->
-    <!--</form>-->
-    Enter gender: <input type="text" ng-model = "gender"><br><br>
-    <br>
-    Enter date of birth: <input type="date" ng-model="dateOfBirth">
-    <br><br>
-    <form action="//upload.php//" method="post" enctype="multipart/form-data">
-        Select image to upload:
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload Image" name="submit">
-    </form>
-    <br><br>
-    <button ng-click="create()">Create User</button>
-
-    <br><br>
-    <button ng-click="getUsers()">Get Users</button>
-    <pre>
-        {{ user }}
-    </pre>
-
-    <!--<li ng-repeat="user in users" ng-class="IsFiltered(user.Filtered)">-->
-
-
-    <table>
-        <tr>
-            <th>Username</th>
-            <th>Password</th>
-        </tr>
-
-        <tr ng-repeat = "user in users">
-            <td>{{ user.username }}</td>
-            <td>{{ user.password }}</td>
-        </tr>
-    </table>
+<div ng-app = "mainApp" ng-controller = "indexController">
+    <div>
+        <button ng-click="logIn()" class="btn btn-default">Log in</button>
+        <button ng-click="signUp()" class="btn btn-default">Sign up</button>
+    </div>
 
 </div>
 
-
 <script>
+    var mainApp = angular.module("mainApp", []);
 
-    // $.param($scope.user)
+    mainApp.controller('indexController', function ($scope, $log, $window) {
+        $scope.logIn = function () {
+            var url = "http://" + $window.location.host + "/login.html";
+            $log.log(url);
+            $window.location.href = url;
+        };
+        $scope.signUp = function () {
+            var url = "http://" + $window.location.host + "/signup.html";
+            $log.log(url);
+            $window.location.href = url;
+        };
 
-    console.log('in the script');
-
-    var app = angular.module("app", []);
-
-    console.log('in the app');
-
-    app.controller('signupController', function($scope, $http) {
-
-        console.log('in the controller');
-
-        $scope.getUsers = function() {
-
-            console.log('in the function');
-
-            $scope.users = [];
-            $http.get('http://localhost:8080/users')
-                .then(function(result) {
-                    $scope.users = result.data;
-                });
-        }
-
-        $scope.create = function(){
-            console.log('in creating user');
-
-            var successCallBack = function (response) {
-                // success response found from server
-                console.log('successful creation');
-            };
-
-            var errorCallBack = function (response) {
-                // error response found from server
-                console.log('not successful creation');
-            };
-
-            $http.post('http://localhost:8080/create', $scope.user).then(successCallBack, errorCallBack);
-        }
     });
-
 
 </script>
 

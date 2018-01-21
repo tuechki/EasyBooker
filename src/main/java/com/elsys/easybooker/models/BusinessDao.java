@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import javax.transaction.Transactional;
 
 @Transactional
-public interface BusinessDao extends CrudRepository<UserTry, Long> {
+public interface BusinessDao extends CrudRepository<Business, Long> {
 }

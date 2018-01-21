@@ -1,6 +1,8 @@
 package com.elsys.easybooker.models;
 
-public class LocationsServicesId {
+import java.io.Serializable;
+
+public class LocationsServicesId implements Serializable{
     private long locationId;
     private long serviceId;
 
@@ -24,4 +26,5 @@ public class LocationsServicesId {
     public void setServiceId(long serviceId) {
         this.serviceId = serviceId;
     }
+
 }
