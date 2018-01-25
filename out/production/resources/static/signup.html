@@ -31,9 +31,9 @@
 
     <br><br>
     <!--<button ng-click="getUsers()">Get Users</button>-->
-    <!--<pre>-->
-        <!--{{ user }}-->
-    <!--</pre>-->
+    <pre>
+        {{ user }}
+    </pre>
 
     <table>
         <tr>
@@ -73,7 +73,7 @@
                 console.log('not successful creation');
             };
 
-            $http.post('http://localhost:8080/users', $scope.user).then(successCallBack, errorCallBack);
+            $http.post('http://localhost:8080/users/sign-up', $scope.user).then(successCallBack, errorCallBack);
         }
     });
 

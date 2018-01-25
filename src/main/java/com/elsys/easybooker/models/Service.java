@@ -16,6 +16,10 @@ public class Service {
     @Column(name = "businessId")
     private long businessId;
 
+    @NotNull
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "summary")
     private String summary;
 
@@ -33,8 +37,10 @@ public class Service {
         this.id = id;
     }
 
-    public Service(long businessId, int timeDuration, int price){
+
+    public Service(long businessId, String name, int timeDuration, int price){
         this.businessId = businessId;
+        this.name = name;
         this.timeDuration = timeDuration;
         this.price = price;
 
@@ -78,6 +84,14 @@ public class Service {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

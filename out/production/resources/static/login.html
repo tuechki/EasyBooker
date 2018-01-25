@@ -22,11 +22,25 @@
     var app = angular.module("app", []);
 
     app.controller('loginController', function ($scope, $log, $window) {
-        $scope.loggedIn = function () {
-            var url = "http://" + $window.location.host + "/user.html";
-            $log.log(url);
-            $window.location.href = url;
-        };
+        // $scope.loggedIn = function () {
+        //     var url = "http://" + $window.location.host + "/user.html";
+        //     $log.log(url);
+        //     $window.location.href = url;
+        // };
+
+        $scope.loggedIn = function(){
+            var successCallBack = function (response) {
+                // success response found from server
+                console.log('successful creation');
+            };
+
+            var errorCallBack = function (response) {
+                // error response found from server
+                console.log('not successful creation');
+            };
+
+            $http.post('http://localhost:8080/login', $scope.user).then(successCallBack, errorCallBack);
+        }
 
     });
 </script>

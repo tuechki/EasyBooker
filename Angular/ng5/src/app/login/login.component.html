@@ -1,0 +1,21 @@
+<div class="sign-up-div">
+
+  <form>
+
+    <mat-form-field class="example-full-width">
+      <input matInput  type="text" placeholder="Username" name="username" [(ngModel)]="username" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput  type="password" placeholder="Password" name="password" [(ngModel)]="password" />
+    </mat-form-field>
+
+    <br/>
+    <br>
+
+    <button mat-raised-button (click)="loginUser()">Log in</button>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+  </form>
+
+</div>
