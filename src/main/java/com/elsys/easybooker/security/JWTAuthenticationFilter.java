@@ -17,10 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.elsys.easybooker.security.SecurityConstants.EXPIRATION_TIME;
-import static com.elsys.easybooker.security.SecurityConstants.HEADER_STRING;
-import static com.elsys.easybooker.security.SecurityConstants.SECRET;
-import static com.elsys.easybooker.security.SecurityConstants.TOKEN_PREFIX;
+import static com.elsys.easybooker.security.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
@@ -58,6 +55,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();
+        res.addHeader( HEADER_STRING_ADDITIONAL_HEADERS, HEADER_STRING );
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 }

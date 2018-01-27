@@ -29,8 +29,11 @@ export class LoginComponent implements OnInit {
         }, {observe: 'response'}).subscribe(resp => {
         console.log(resp.headers);
         console.log(resp.headers.get('cache-control'));
-      console.log(resp.headers.getAll('Authorization'));
+      console.log(resp.headers.getAll('Authorization').toString());
+      localStorage.setItem('token',resp.headers.getAll('Authorization').toString());
     });
+
+
 
     setTimeout(() => {
       this.showSpinner = false;

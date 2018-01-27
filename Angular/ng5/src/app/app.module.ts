@@ -16,6 +16,10 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BusinessComponent } from './business/business.component';
 import { LocationComponent } from './location/location.component';
+import { AuthComponent } from './auth/auth.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/token.interceptor';
+import {AuthService} from "./auth/auth.service";
 
 @NgModule({
   declarations: [
@@ -25,7 +29,8 @@ import { LocationComponent } from './location/location.component';
     SignUpComponent,
     LoginComponent,
     BusinessComponent,
-    LocationComponent
+    LocationComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,13 @@ import { LocationComponent } from './location/location.component';
     HttpClientModule
 
 ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }, AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
