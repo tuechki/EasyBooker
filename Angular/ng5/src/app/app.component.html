@@ -5,16 +5,17 @@
 
     <span class="example-spacer"></span>
 
-    <ng-container *ngIf="!this.authenticated">
+    <ng-container *ngIf="!this.authService.isAuthenticated()">
+      <button mat-button routerLink="">Home</button>
+      <button mat-button routerLink="about">What's this</button>
       <button mat-button routerLink="sign-up" >Sign up</button>
       <button mat-button routerLink="login">Log in</button>
     </ng-container>
 
-    <ng-container *ngIf="this.authenticated">
+    <ng-container *ngIf="this.authService.isAuthenticated()">
       <button mat-button routerLink="">Home</button>
-      <button mat-button routerLink="about">About</button>
       <button mat-button routerLink="business" >Add business</button>
-      <button mat-button routerLink="login" (click)="removeToken()">Log out</button>
+      <button mat-button (click)="removeToken()">Log out</button>
     </ng-container>
   </mat-toolbar-row>
 </mat-toolbar>

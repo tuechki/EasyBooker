@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
   showSpinner: boolean = false;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router: Router) {
   }
 
   ngOnInit() {
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
         console.log(resp.headers.get('cache-control'));
       console.log(resp.headers.getAll('Authorization').toString());
       localStorage.setItem('token',resp.headers.getAll('Authorization').toString());
+      this.router.navigate(['']);
     });
 
 
@@ -38,6 +40,8 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.showSpinner = false;
     }, 2000);
+
+
   }
 
 

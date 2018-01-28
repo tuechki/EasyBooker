@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {tokenNotExpired} from "angular2-jwt";
+import {AuthService} from "./auth/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -9,30 +11,17 @@ import {tokenNotExpired} from "angular2-jwt";
 export class AppComponent {
 
 
-  authenticated: boolean = true;
-
-  constructor(){}
+  constructor(public authService: AuthService, private router: Router){}
 
   ngOnInit() {
   }
 
-  public isAuthenticated(): boolean {
-
-      const token = localStorage.getItem('token');
-      return tokenNotExpired(token);
-
-  }
-
 
   removeToken(){
-    console.log(localStorage.getItem('token'));
-    console.log(this.isAuthenticated());
-
+    console.log(this.authService.isAuthenticated());
     localStorage.removeItem('token');
-    this.authenticated = false;
-    console.log(localStorage.getItem('token'));
-    console.log(this.isAuthenticated());
-
+    console.log(this.authService.isAuthenticated());
+    this.router.navigate(['']);
   }
 
   title = 'app';

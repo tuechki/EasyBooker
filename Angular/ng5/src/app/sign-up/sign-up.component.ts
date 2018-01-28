@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup,FormBuilder,Validators } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {anchorDef} from "@angular/core/src/view";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
@@ -29,7 +30,7 @@ export class SignUpComponent implements OnInit {
   showSpinner: boolean = false;
 
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router: Router) {
   }
   ngOnInit() {
 
@@ -48,12 +49,15 @@ export class SignUpComponent implements OnInit {
               number: this.number}, {observe: 'response'}).subscribe(resp => {
               console.log(resp.headers);
               console.log(resp.body);
+              this.router.navigate(['/login']);
     });
 
     setTimeout(() => {
       this.answerDisplay = this.firstName;
       this.showSpinner = false;
     }, 2000);
+
+
   }
 
 

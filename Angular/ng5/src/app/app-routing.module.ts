@@ -6,6 +6,7 @@ import { AboutComponent } from './about/about.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LoginComponent } from './login/login.component';
 import {BusinessComponent} from "./business/business.component";
+import {AuthGuardService} from "./auth/auth.guard.service";
 
 
 const routes: Routes = [
@@ -27,7 +28,8 @@ const routes: Routes = [
   },
   {
     path: 'business',
-    component: BusinessComponent
+    component: BusinessComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 

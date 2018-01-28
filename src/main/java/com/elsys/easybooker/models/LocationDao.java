@@ -6,4 +6,5 @@ import javax.transaction.Transactional;
 
 @Transactional
 public interface LocationDao extends CrudRepository<Location, Long> {
+    public Location findById(long id);
 }

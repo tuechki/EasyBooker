@@ -19,7 +19,8 @@ import { LocationComponent } from './location/location.component';
 import { AuthComponent } from './auth/auth.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
-import {AuthService} from "./auth/auth.service";
+import {AuthService, homeUrl} from "./auth/auth.service";
+import {AuthGuardService} from "./auth/auth.guard.service";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,9 @@ import {AuthService} from "./auth/auth.service";
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }, AuthService
+    }, AuthService,
+      AuthGuardService
+
   ],
   bootstrap: [AppComponent]
 })

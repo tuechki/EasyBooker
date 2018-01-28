@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {tokenNotExpired} from "angular2-jwt";
 import {HttpRequest} from "@angular/common/http";
 
+export var homeUrl:string = '../about/about.component.html';
+
 @Injectable()
 export class AuthService {
 
@@ -22,12 +24,18 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
 
-    if(this.getToken()){
       const token = this.getToken();
-      return tokenNotExpired(token);
-    }
+      console.log("TOKEN TRY:   " + token);
+      console.log("TOKEN NOT EXPIRED: " + tokenNotExpired('token'));
 
-    return false;
+      if(token != null){
+        return true;
+      }else{
+        return false;
+      }
+
+
+
   }
 
 }
