@@ -9,4 +9,5 @@ import javax.transaction.Transactional;
 public interface BusinessRepository extends JpaRepository<Business, Long> {
     public Business findByName(String name);
     public Business findById(long id);
+    public Business findByEmail(String email);
 }

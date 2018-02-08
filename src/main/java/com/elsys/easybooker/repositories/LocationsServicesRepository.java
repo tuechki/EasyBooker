@@ -7,4 +7,6 @@ import javax.transaction.Transactional;
 
 @Transactional
 public interface LocationsServicesRepository extends JpaRepository<LocationsServices, Long> {
+    public LocationsServices findByLocationId(long locationId);
+    public LocationsServices findByServiceId(long serviceId);
 }
