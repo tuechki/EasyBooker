@@ -1,7 +1,7 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.models.Location;
-import com.elsys.easybooker.repositories.LocationDao;
+import com.elsys.easybooker.repositories.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,28 +13,28 @@ import javax.validation.Valid;
 public class LocationController {
 
     @Autowired
-    private LocationDao locationDao;
+    private LocationRepository locationRepository;
 
     @GetMapping
     public Iterable findAll() {
-        return locationDao.findAll();
+        return locationRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public Location findById(@PathVariable long id) {
-        return locationDao.findById(id);
+        return locationRepository.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Location create(@Valid @RequestBody Location location) {
-        return locationDao.save(location);
+        return locationRepository.save(location);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         try {
-            locationDao.delete(id);
+            locationRepository.delete(id);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -44,7 +44,7 @@ public class LocationController {
     @PutMapping("/{id}")
     public Location update(@RequestBody Location location, @PathVariable Long id) {
 
-        return locationDao.save(location);
+        return locationRepository.save(location);
     }
 
 }

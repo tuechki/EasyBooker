@@ -1,7 +1,7 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.models.Service;
-import com.elsys.easybooker.repositories.ServiceDao;
+import com.elsys.easybooker.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,34 +13,34 @@ import javax.validation.Valid;
 public class ServiceController {
 
     @Autowired
-    private ServiceDao serviceDao;
+    private ServiceRepository serviceRepository;
 
     @GetMapping
     public Iterable findAll(@RequestParam("businessId") long businessId) {
 
-        return serviceDao.findAll();
+        return serviceRepository.findAll();
     }
 
     @GetMapping
     public Iterable findAllByBusinessId(@RequestParam("businessId") long businessId) {
-        return serviceDao.findByBusinessId(businessId);
+        return serviceRepository.findByBusinessId(businessId);
     }
 
     @GetMapping("/{id}")
     public Service findById(@PathVariable long id) {
-        return serviceDao.findById(id);
+        return serviceRepository.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Service create(@Valid @RequestBody Service service) {
-        return serviceDao.save(service);
+        return serviceRepository.save(service);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         try {
-            serviceDao.delete(id);
+            serviceRepository.delete(id);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class ServiceController {
     @PutMapping("/{id}")
     public Service update(@RequestBody Service service, @PathVariable Long id) {
 
-        return serviceDao.save(service);
+        return serviceRepository.save(service);
     }
 
 }

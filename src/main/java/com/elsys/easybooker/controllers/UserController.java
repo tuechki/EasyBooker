@@ -1,7 +1,7 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.models.User;
-import com.elsys.easybooker.repositories.UserDao;
+import com.elsys.easybooker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,41 +14,41 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserController(UserDao userDao,
+    public UserController(UserRepository userRepository,
                           BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userDao = userDao;
+        this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostMapping("/sign-up")
     public void signUp(@RequestBody User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userDao.save(user);
+        userRepository.save(user);
     }
 
     @GetMapping
     public Iterable findAll() {
-        return userDao.findAll();
+        return userRepository.findAll();
     }
 
     @GetMapping("/{username}")
     public User findByUsername(@PathVariable String username) {
-        return userDao.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User create(@Valid @RequestBody User user) {
-        return userDao.save(user);
+        return userRepository.save(user);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         try {
-            userDao.delete(id);
+            userRepository.delete(id);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -60,7 +60,7 @@ public class UserController {
 //        if (user.getId() != id) {
 ////            throw new UserIdMismatchException();
 ////        }
-        return userDao.save(user);
+        return userRepository.save(user);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.models.Business;
-import com.elsys.easybooker.repositories.BusinessDao;
-import com.elsys.easybooker.repositories.UsersBusinessesDao;
+import com.elsys.easybooker.repositories.BusinessRepository;
+import com.elsys.easybooker.repositories.UsersBusinessesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,30 +14,30 @@ import javax.validation.Valid;
 public class BusinessController {
 
     @Autowired
-    private BusinessDao businessDao;
+    private BusinessRepository businessRepository;
     @Autowired
-    private UsersBusinessesDao usersBusinessesDao;
+    private UsersBusinessesRepository usersBusinessesRepository;
 
     @GetMapping
     public Iterable findAll() {
-        return businessDao.findAll();
+        return businessRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public Business findById(@PathVariable long id) {
-        return businessDao.findById(id);
+        return businessRepository.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Business create(@Valid @RequestBody Business business ) {
-        return businessDao.save(business);
+        return businessRepository.save(business);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         try {
-            businessDao.delete(id);
+            businessRepository.delete(id);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -49,7 +49,7 @@ public class BusinessController {
 //        if (user.getId() != id) {
 ////            throw new UserIdMismatchException();
 ////        }
-        return businessDao.save(business);
+        return businessRepository.save(business);
     }
 
 }
