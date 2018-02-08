@@ -1,6 +1,6 @@
 package com.elsys.easybooker.services;
 
-import com.elsys.easybooker.models.UserDao;
+import com.elsys.easybooker.repositories.UserDao;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

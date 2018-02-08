@@ -1,14 +1,12 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.models.Service;
-import com.elsys.easybooker.models.ServiceDao;
+import com.elsys.easybooker.repositories.ServiceDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/services")
@@ -19,9 +17,7 @@ public class ServiceController {
 
     @GetMapping
     public Iterable findAll(@RequestParam("businessId") long businessId) {
-        if(businessId != ){
 
-        }
         return serviceDao.findAll();
     }
 
