@@ -17,14 +17,17 @@ export class SignUpComponent implements OnInit {
     {value: 'other', viewValue: 'Other'}
   ];
 
+  user: object ={
+    firstName: '',
+    lastName: '',
+    username: '',
+    password: '',
+    email: '',
+    number: ''
+  };
 
-  firstName: string = '';
-  lastName: string = '';
-  username: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-  email: string = '';
-  number: string = '';
+  confirmPassword: '';
+
 
   answerDisplay: string = '';
   showSpinner: boolean = false;
@@ -38,22 +41,18 @@ export class SignUpComponent implements OnInit {
 
   addUser() {
     this.showSpinner = true;
-    console.log(this.firstName);
+    console.log(this.user['firstName']);
 
     this.httpClient.post('http://localhost:8080/users/sign-up',
-      {firstName: this.firstName,
-              lastName: this.lastName,
-              username: this.username,
-              password: this.password,
-              email: this.email,
-              number: this.number}, {observe: 'response'}).subscribe(resp => {
+      this.user,
+      {observe: 'response'}).subscribe(resp => {
               console.log(resp.headers);
               console.log(resp.body);
               this.router.navigate(['/login']);
     });
 
     setTimeout(() => {
-      this.answerDisplay = this.firstName;
+      this.answerDisplay = this.user['firstName'];
       this.showSpinner = false;
     }, 2000);
 

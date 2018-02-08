@@ -1,24 +1,24 @@
 <h2>Sign up now and start the journey of booking</h2>
 <br>
 
-<div class="sign-up-div">
+<div class="easybooker-div">
 
   <form>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="First name" name="firstName" [(ngModel)]="firstName" />
+      <input matInput  type="text" placeholder="First name" name="firstName" [(ngModel)]="user['firstName']" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Last Name" name="lastName" [(ngModel)]="lastName"/>
+      <input matInput  type="text" placeholder="Last Name" name="lastName" [(ngModel)]="user['lastName']"/>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Username" name="username" [(ngModel)]="username" />
+      <input matInput  type="text" placeholder="Username" name="username" [(ngModel)]="user['username']" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="password" placeholder="Password" name="password" [(ngModel)]="password" />
+      <input matInput  type="password" placeholder="Password" name="password" [(ngModel)]="user['password']" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
@@ -26,7 +26,7 @@
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Email Address" name="email" [(ngModel)]="email"/>
+      <input matInput  type="text" placeholder="Email Address" name="email" [(ngModel)]="user['email']"/>
     </mat-form-field>
 
     <mat-form-field>

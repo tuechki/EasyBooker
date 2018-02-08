@@ -1,0 +1,33 @@
+<h2>Add services to the business</h2>
+<br>
+
+<div class="easybooker-div">
+<form>
+
+  <mat-form-field class="example-full-width">
+    <input matInput  type="text" placeholder="Name" name="serviceName" [(ngModel)]="service['name']" />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput  type="text" placeholder="Summary" name="serviceSummary" [(ngModel)]="service['summary']"/>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput  type="text" placeholder="Time duration" name="serviceTimeDuration" [(ngModel)]="service['timeDuration']"/>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput  type="text" placeholder="Price" name="servicePrice" [(ngModel)]="service['price']"/>
+  </mat-form-field>
+
+  <br/>
+
+  <button mat-raised-button (click)="addService()">Add service</button>
+  <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+  <button mat-raised-button (click)="goToLocations()">Go to locations</button>
+
+</form>
+
+</div>
+

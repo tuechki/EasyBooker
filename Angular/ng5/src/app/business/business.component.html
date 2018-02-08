@@ -2,24 +2,24 @@
 <h2>Add new business</h2>
 <br>
 
-<div class="business-div">
+<div class="easybooker-div">
 
   <form>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Name" name="name" [(ngModel)]="name" />
+      <input matInput  type="text" placeholder="Name" name="name" [(ngModel)]="business['name']" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Summary" name="summary" [(ngModel)]="summary"/>
+      <input matInput  type="text" placeholder="Summary" name="summary" [(ngModel)]="business['summary']"/>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Email Address" name="email" [(ngModel)]="email"/>
+      <input matInput  type="text" placeholder="Email Address" name="email" [(ngModel)]="business['email']"/>
     </mat-form-field>
 
     <br/>
-    <br>
+
 
     <button mat-raised-button (click)="addBusiness()">Create business</button>
     <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
@@ -27,4 +27,4 @@
   </form>
 
 
-</div>
+  </div>

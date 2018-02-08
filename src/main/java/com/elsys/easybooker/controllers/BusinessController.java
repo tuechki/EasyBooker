@@ -2,10 +2,12 @@ package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.BusinessDao;
+import com.elsys.easybooker.models.UsersBusinessesDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -15,6 +17,8 @@ public class BusinessController {
 
     @Autowired
     private BusinessDao businessDao;
+    @Autowired
+    private UsersBusinessesDao usersBusinessesDao;
 
     @GetMapping
     public Iterable findAll() {
@@ -28,7 +32,7 @@ public class BusinessController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Business create(@Valid @RequestBody Business business) {
+    public Business create(@Valid @RequestBody Business business ) {
         return businessDao.save(business);
     }
 

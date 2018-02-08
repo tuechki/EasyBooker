@@ -1,3 +1,39 @@
-<p>
-  location works!
-</p>
+<h2>Add locations to the business</h2>
+<br>
+
+<div class="easybooker-div">
+<form>
+
+  <mat-form-field class="example-full-width">
+    <input matInput  type="text" placeholder="Address" name="locationAddress" [(ngModel)]="location['address']" />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput  type="text" placeholder="Summary" name="serviceSummary" [(ngModel)]="location['summary']"/>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput  type="text" placeholder="Number" name="locationNumber" [(ngModel)]="location['number']"/>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput  type="text" placeholder="Email" name="locationEmail" [(ngModel)]="location['email']"/>
+  </mat-form-field>
+
+  <div class="col">
+    <p class="life-container" *ngFor="let service of services">
+      <button mat-raised-button >{{service['name']}}</button>
+    </p>
+  </div>
+
+  <br/>
+  <br>
+
+  <button mat-raised-button (click)="addLocation()">Add location</button>
+  <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+  <button mat-raised-button (click)="finish()">I'm done</button>
+
+
+</form>
+</div>

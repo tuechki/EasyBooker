@@ -19,8 +19,10 @@ import { LocationComponent } from './location/location.component';
 import { AuthComponent } from './auth/auth.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
-import {AuthService, homeUrl} from "./auth/auth.service";
+import {AuthService} from "./auth/auth.service";
 import {AuthGuardService} from "./auth/auth.guard.service";
+import { ServiceComponent } from './service/service.component';
+import { CreateBusinessService } from './services/message.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import {AuthGuardService} from "./auth/auth.guard.service";
     LoginComponent,
     BusinessComponent,
     LocationComponent,
-    AuthComponent
+    AuthComponent,
+    ServiceComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ import {AuthGuardService} from "./auth/auth.guard.service";
       useClass: TokenInterceptor,
       multi: true
     }, AuthService,
-      AuthGuardService
+      AuthGuardService,
+      CreateBusinessService
 
   ],
   bootstrap: [AppComponent]

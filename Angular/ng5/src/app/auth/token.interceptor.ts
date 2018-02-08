@@ -7,20 +7,20 @@ import {
 } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs/Observable';
+import {CreateBusinessService} from "../services/message.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService, public createBusinessService: CreateBusinessService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    console.log("ETO:   " + this.auth.getToken());
 
     request = request.clone({
 
       setHeaders: {
-        Authorization: `${this.auth.getToken()}`
+        Authorization: `${this.auth.getToken()}`,
+        businessId: `${this.createBusinessService.getBusinessId()}`
       }
     });
 

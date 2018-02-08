@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -17,8 +18,16 @@ public class ServiceController {
     private ServiceDao serviceDao;
 
     @GetMapping
-    public Iterable findAll() {
+    public Iterable findAll(@RequestParam("businessId") long businessId) {
+        if(businessId != ){
+
+        }
         return serviceDao.findAll();
+    }
+
+    @GetMapping
+    public Iterable findAllByBusinessId(@RequestParam("businessId") long businessId) {
+        return serviceDao.findByBusinessId(businessId);
     }
 
     @GetMapping("/{id}")

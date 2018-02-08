@@ -7,6 +7,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { LoginComponent } from './login/login.component';
 import {BusinessComponent} from "./business/business.component";
 import {AuthGuardService} from "./auth/auth.guard.service";
+import {LocationComponent} from "./location/location.component";
+import {ServiceComponent} from "./service/service.component";
 
 
 const routes: Routes = [
@@ -27,8 +29,18 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'business',
+    path: 'businesses',
     component: BusinessComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'locations',
+    component: LocationComponent,
+    canActivate:[AuthGuardService]
+  },
+  {
+    path: 'services',
+    component: ServiceComponent,
     canActivate: [AuthGuardService]
   }
 ];
