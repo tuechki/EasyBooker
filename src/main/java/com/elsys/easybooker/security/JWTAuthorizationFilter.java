@@ -1,5 +1,6 @@
 package com.elsys.easybooker.security;
 
+import com.elsys.easybooker.models.User;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -49,6 +50,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                     .getBody()
                     .getSubject();
+
 
             if (user != null) {
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());

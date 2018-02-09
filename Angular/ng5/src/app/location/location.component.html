@@ -21,12 +21,22 @@
   </mat-form-field>
 
   <div class="col">
-    <p class="life-container" *ngFor="let service of services">
-      <button mat-raised-button >{{service['name']}}</button>
-    </p>
+    <span *ngFor="let service of services">
+    <mat-checkbox color="warn"
+                  name="{{service['name']}}"
+                  value="{{service['name']}}"
+                  (change)="change($event, service)">
+         {{service['name']}}
+    </mat-checkbox>
+</span>
   </div>
 
+  <!--<p> Selected value: {{selectedServices | json}} </p>-->
+
   <br/>
+
+
+
   <br>
 
   <button mat-raised-button (click)="addLocation()">Add location</button>

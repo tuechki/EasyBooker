@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/services")
@@ -16,14 +17,13 @@ public class ServiceController {
     private ServiceRepository serviceRepository;
 
     @GetMapping
-    public Iterable findAll(@RequestParam("businessId") long businessId) {
+    public Iterable findAll(@RequestParam Map<String, String> queryMap) {
 
+        System.out.println(queryMap.toString());
+        if(queryMap.containsKey("businessId")){
+           return  serviceRepository.findByBusinessId(Long.parseLong(queryMap.get("businessId")));
+        }
         return serviceRepository.findAll();
-    }
-
-    @GetMapping
-    public Iterable findAllByBusinessId(@RequestParam("businessId") long businessId) {
-        return serviceRepository.findByBusinessId(businessId);
     }
 
     @GetMapping("/{id}")

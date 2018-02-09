@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
 
   loginUser() {
     this.showSpinner = true;
-    console.log(this.username);
 
     this.httpClient.post('http://localhost:8080/login',
       {

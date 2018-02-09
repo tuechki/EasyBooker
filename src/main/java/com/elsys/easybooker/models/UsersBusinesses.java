@@ -20,6 +20,8 @@ public class UsersBusinesses {
     @Column(name = "permission")
     private int permission;
 
+    public UsersBusinesses(){}
+
     public UsersBusinesses(long businessId, long userId, int permission){
         this.businessId = businessId;
         this.userId = userId;

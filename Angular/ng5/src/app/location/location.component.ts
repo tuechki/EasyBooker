@@ -10,6 +10,52 @@ import {CreateBusinessService} from "../services/message.service";
 })
 export class LocationComponent implements OnInit {
 
+
+
+
+
+  selectedServices = [];
+
+  change(e, service){
+    if(e.checked){
+      this.selectedServices.push(service);
+    }
+    else{
+      let updateItem = this.selectedServices.find(this.findIndexToUpdate, service['name']);
+      let index = this.selectedServices.indexOf(updateItem);
+      this.selectedServices.splice(index, 1);
+  }
+
+}
+
+findIndexToUpdate(service) {
+  return service['name'] === this;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   constructor(private httpClient: HttpClient, private router: Router, private createBusinessService: CreateBusinessService) {}
 
   locations: object[] = [];
@@ -26,16 +72,15 @@ export class LocationComponent implements OnInit {
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/services?businessId=34',
+    this.httpClient.get('http://localhost:8080/services?businessId='
+      + this.createBusinessService.getBusinessId(),
       {observe: 'response'}
     ).subscribe(resp => {
       this.services = resp.body;
     });
   }
 
-  // answerDisplay: string = '';
   showSpinner: boolean = false;
-
 
   addLocation() {
     this.showSpinner = true;
@@ -44,9 +89,17 @@ export class LocationComponent implements OnInit {
       this.location,
       {observe: 'response'}
     ).subscribe(resp => {
-      console.log(resp);
-      this.router.navigate(['/locations']);
+
+      this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + "/services",
+        this.selectedServices,
+        {observe: 'response'}
+      ).subscribe(resp => {
+        console.log(resp);
+      });
     });
+
+
+
     setTimeout(() => {
       // this.answerDisplay = this.name;
       this.showSpinner = false;
