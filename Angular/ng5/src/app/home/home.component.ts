@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
+import {BusinessInfoService} from "../services/business.info.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,8 @@ export class HomeComponent implements OnInit {
   goals = ['asdasd', 'anotherThing'];
   businesses: any;
 
-  constructor(private httpClient: HttpClient, public authService: AuthService) { }
+  constructor(private httpClient: HttpClient, private router: Router,
+              public authService: AuthService, public businessInfoService: BusinessInfoService) { }
 
   ngOnInit() {
 
@@ -31,6 +34,8 @@ export class HomeComponent implements OnInit {
 
   showBusiness(business){
     console.log(business);
+    this.businessInfoService.setCurrentBusiness(business);
+    this.router.navigate(['business-info']);
   }
 
   addItem(){

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/locations")
@@ -22,7 +23,11 @@ public class LocationController {
     private LocationsServicesRepository locationsServicesRepository;
 
     @GetMapping
-    public Iterable findAll() {
+    public Iterable findAll(@RequestParam Map<String, String> queryMap) {
+        System.out.println(queryMap.toString());
+        if(queryMap.containsKey("businessId")){
+            return  locationRepository.findByBusinessId(Long.parseLong(queryMap.get("businessId")));
+        }
         return locationRepository.findAll();
     }
 

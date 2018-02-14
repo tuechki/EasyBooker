@@ -9,6 +9,7 @@ import {BusinessComponent} from "./business/business.component";
 import {AuthGuardService} from "./auth/auth.guard.service";
 import {LocationComponent} from "./location/location.component";
 import {ServiceComponent} from "./service/service.component";
+import {BusinessInfoComponent} from "./business-info/business-info.component";
 
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
     path: 'services',
     component: ServiceComponent,
     canActivate: [AuthGuardService]
+  },
+  {
+    path: 'business-info',
+    component: BusinessInfoComponent
   }
 ];
 

@@ -15,17 +15,8 @@ export class CreateBusinessService {
   }
 
 
-  setMessage(value) {
-    this.message = value;
-  }
-
-  getMessage() {
-    return this.message;
-  }
-
-
-  clearMessage() {
-    this.message = null;
+  clearBusinessId(){
+    this.businessId = null;
   }
 
 }

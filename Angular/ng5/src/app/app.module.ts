@@ -23,6 +23,11 @@ import {AuthService} from "./auth/auth.service";
 import {AuthGuardService} from "./auth/auth.guard.service";
 import { ServiceComponent } from './service/service.component';
 import { CreateBusinessService } from './services/message.service';
+import { BusinessInfoComponent } from './business-info/business-info.component';
+import { BusinessInfoService } from './services/business.info.service';
+import {UploadService} from "./services/upload.service";
+import {FileUploadModule} from 'primeng/fileupload';
+import { DataTableModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,8 @@ import { CreateBusinessService } from './services/message.service';
     BusinessComponent,
     LocationComponent,
     AuthComponent,
-    ServiceComponent
+    ServiceComponent,
+    BusinessInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,9 @@ import { CreateBusinessService } from './services/message.service';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FileUploadModule,
+    DataTableModule
 
 ],
   providers: [
@@ -53,7 +61,9 @@ import { CreateBusinessService } from './services/message.service';
       multi: true
     }, AuthService,
       AuthGuardService,
-      CreateBusinessService
+      CreateBusinessService,
+      BusinessInfoService,
+      UploadService
 
   ],
   bootstrap: [AppComponent]

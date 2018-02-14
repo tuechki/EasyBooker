@@ -22,16 +22,22 @@ public class Business {
     @Column(name = "email")
     private String email;
 
+    @Lob
+    @Column(name="image")
+    private byte[] image;
+
     public Business(){ }
 
     public Business(long id){
         this.id = id;
     }
 
-    public Business(String name, String summary,String email){
+    public Business(String name, String summary, String email, byte[] image){
         this.name = name;
         this.summary = summary;
         this.email = email;
+        this.image = image;
+
     }
 
     public long getId() {
@@ -64,5 +70,13 @@ public class Business {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getPic() {
+        return image;
+    }
+
+    public void setPic(byte[] pic) {
+        this.image = pic;
     }
 }
