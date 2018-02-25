@@ -3,6 +3,8 @@ package com.elsys.easybooker.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.postgresql.util.PGInterval;
+
 @Entity
 @Table(name = "Services")
 public class Service {
@@ -25,7 +27,7 @@ public class Service {
 
     @NotNull
     @Column(name = "timeDuration")
-    private int timeDuration;
+    private PGInterval timeDuration;
 
     @NotNull
     @Column(name = "price")
@@ -38,7 +40,7 @@ public class Service {
     }
 
 
-    public Service(long businessId, String name, int timeDuration, int price){
+    public Service(long businessId, String name, PGInterval timeDuration, int price){
         this.businessId = businessId;
         this.name = name;
         this.timeDuration = timeDuration;
@@ -70,11 +72,11 @@ public class Service {
         this.summary = summary;
     }
 
-    public int getTimeDuration() {
+    public PGInterval getTimeDuration() {
         return timeDuration;
     }
 
-    public void setTimeDuration(int timeDuration) {
+    public void setTimeDuration(PGInterval timeDuration) {
         this.timeDuration = timeDuration;
     }
 

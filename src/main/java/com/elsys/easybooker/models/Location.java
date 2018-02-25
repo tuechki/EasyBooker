@@ -2,6 +2,7 @@ package com.elsys.easybooker.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import org.postgresql.util.PGInterval;
 
 @Entity
 @Table(name = "Locations")
@@ -29,6 +30,9 @@ public class Location {
     @NotNull
     @Column(name = "email")
     private String email;
+
+    @Column(name = "minTimeBetweenServices")
+    private PGInterval minTimeBetweenServices;
 
     public Location(){ }
 
@@ -92,4 +96,11 @@ public class Location {
         this.email = email;
     }
 
+    public PGInterval getMinTimeBetweenServices() {
+        return minTimeBetweenServices;
+    }
+
+    public void setMinTimeBetweenServices(PGInterval minTimeBetweenServices){
+        this.minTimeBetweenServices = minTimeBetweenServices;
+    }
 }
