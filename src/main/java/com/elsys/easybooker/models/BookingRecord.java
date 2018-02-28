@@ -2,14 +2,13 @@ package com.elsys.easybooker.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import org.postgresql.util.PGInterval;
 
 import java.sql.Time;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "BookingRecords")
-public class BookingRecords {
+public class BookingRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,13 +36,13 @@ public class BookingRecords {
     @Column(name = "cratedAt")
     private Timestamp createdAt;
 
-    public BookingRecords(){ }
+    public BookingRecord(){ }
 
-    public BookingRecords(long id){
+    public BookingRecord(long id){
         this.id = id;
     }
 
-    public BookingRecords(long userId, long locationId, long serviceId, long dayNumber, Time beginTime, Timestamp createdAt){
+    public BookingRecord(long userId, long locationId, long serviceId, long dayNumber, Time beginTime, Timestamp createdAt){
         this.userId = userId;
         this.locationId = locationId;
         this.serviceId = serviceId;
