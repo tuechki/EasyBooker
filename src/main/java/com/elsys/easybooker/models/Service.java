@@ -33,6 +33,10 @@ public class Service {
     @Column(name = "price")
     private int price;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "business_id")
+//    private Business business;
+
     public Service(){ }
 
     public Service(long id){
@@ -40,7 +44,8 @@ public class Service {
     }
 
 
-    public Service(long businessId, String name, PGInterval timeDuration, int price){
+   public Service(long businessId,
+                   String name, PGInterval timeDuration, int price){
         this.businessId = businessId;
         this.name = name;
         this.timeDuration = timeDuration;
@@ -95,5 +100,13 @@ public class Service {
     public void setName(String name) {
         this.name = name;
     }
+
+//    public Business getBusiness(){
+//        return business;
+//    }
+//
+//    public void setBusiness(Business business){
+//        this.business = business;
+//    }
 
 }
