@@ -20,7 +20,7 @@
       <mat-tab label="Services">
         <div class="col">
         <span *ngFor="let service of services">
-          <button mat-raised-button >{{service['name']}}</button> <br>
+          <button mat-raised-button >{{service['name']}} timeDuration: {{(service['timeDuration'])['hours']}}</button> <br>
         </span>
         </div>
       </mat-tab>

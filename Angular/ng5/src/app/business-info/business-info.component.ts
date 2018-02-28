@@ -26,6 +26,8 @@ export class BusinessInfoComponent implements OnInit {
       {observe: 'response'}
     ).subscribe(resp => {
       this.services = resp.body;
+      console.log(resp.body.toString());
+      console.log(resp.body);
     });
 
     this.httpClient.get('http://localhost:8080/locations?businessId='
