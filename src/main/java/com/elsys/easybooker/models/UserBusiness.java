@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "UsersBusinesses")
+@Table(name = "users_businesses")
 @IdClass(UserBusinessId.class)
 public class UserBusiness {
 

@@ -8,7 +8,7 @@ import org.postgresql.util.PGInterval;
 import java.sql.Time;
 
 @Entity
-@Table(name = "DaySchedule")
+@Table(name = "day_schedules")
 public class DaySchedule {
 
     @Id
