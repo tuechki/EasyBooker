@@ -4,6 +4,7 @@ package com.elsys.easybooker.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,6 +48,11 @@ public class User {
 
     @OneToMany(mappedBy = "business")
     private List<UserBusiness> businessAssoc;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private List<BookingRecord> bookingRecords = new ArrayList<>();
 
 
     public User(){ }
