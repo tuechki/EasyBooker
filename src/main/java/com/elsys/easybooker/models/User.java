@@ -3,8 +3,8 @@ package com.elsys.easybooker.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.awt.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -45,6 +45,8 @@ public class User {
 //    private Image image;
 
 
+    @OneToMany(mappedBy = "business")
+    private List<UserBusiness> businessAssoc;
 
 
     public User(){ }

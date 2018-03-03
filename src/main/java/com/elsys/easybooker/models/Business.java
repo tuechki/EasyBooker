@@ -41,6 +41,9 @@ public class Business {
             mappedBy = "business")
     private List<Location> locations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<UserBusiness> userAssoc;
+
     public Business(){ }
 
     public Business(long id){

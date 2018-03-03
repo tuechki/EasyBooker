@@ -51,7 +51,7 @@ public class BusinessController {
         long businessId = businessCreated.getId();
         long userId = userRepository.findByUsername(auth.getName()).getId();
 
-        usersBusinessesRepository.save(new UserBusiness(businessId, userId, ADMIN));
+        usersBusinessesRepository.save(new UserBusiness(userRepository.findByUsername(auth.getName()), businessCreated, ADMIN));
 
         return businessCreated;
     }

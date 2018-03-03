@@ -8,13 +8,15 @@ import javax.validation.constraints.NotNull;
 @IdClass(UserBusinessId.class)
 public class UserBusiness {
 
-    @Id @NotNull
-    @Column(name = "businessId")
-    private long businessId;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    @Id @NotNull
-    @Column(name = "userId")
-    private long userId;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "business_id", referencedColumnName = "id")
+    private Business business;
 
     @NotNull
     @Column(name = "permission")
@@ -22,26 +24,26 @@ public class UserBusiness {
 
     public UserBusiness(){}
 
-    public UserBusiness(long businessId, long userId, int permission){
-        this.businessId = businessId;
-        this.userId = userId;
+    public UserBusiness(User user, Business business, int permission){
+        this.user = user;
+        this.business = business;
         this.permission = permission;
     }
 
-    public long getBusinessId() {
-        return businessId;
+    public User getUser() {
+        return user;
     }
 
-    public void setBusinessId(long businessId) {
-        this.businessId = businessId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public long getUserId() {
-        return userId;
+    public Business getBusiness() {
+        return business;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
     public int getPermission() {
