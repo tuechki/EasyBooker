@@ -15,17 +15,6 @@ public class BookingRecord {
     @Column(name = "id")
     private long id;
 
-    @NotNull
-    @Column(name = "userId")
-    private long userId;
-
-    @NotNull
-    @Column(name = "locationId")
-    private long locationId;
-
-    @Column(name = "serviceId")
-    private long serviceId;
-
     @Column(name = "dayNumber")
     private long dayNumber;
 
@@ -36,16 +25,17 @@ public class BookingRecord {
     @Column(name = "cratedAt")
     private Timestamp createdAt;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "location_id1", nullable = false)
+//    private Location location1;
+
     public BookingRecord(){ }
 
     public BookingRecord(long id){
         this.id = id;
     }
 
-    public BookingRecord(long userId, long locationId, long serviceId, long dayNumber, Time beginTime, Timestamp createdAt){
-        this.userId = userId;
-        this.locationId = locationId;
-        this.serviceId = serviceId;
+    public BookingRecord(long dayNumber, Time beginTime, Timestamp createdAt){
         this.dayNumber = dayNumber;
         this.beginTime = beginTime;
         this.createdAt = createdAt;
@@ -58,30 +48,6 @@ public class BookingRecord {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public long getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(long locationId) {
-        this.locationId = locationId;
-    }
-
-    public long getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(long serviceId) {
-        this.serviceId = serviceId;
     }
 
     public long getDayNumber() {
