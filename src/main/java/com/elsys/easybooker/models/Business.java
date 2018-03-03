@@ -113,4 +113,12 @@ public class Business {
     public void setLocations(List<Location> locations) {
         this.locations = locations;
     }
+
+    public List<UserBusiness> getUserAssoc() {
+        return userAssoc;
+    }
+
+    public void setUserAssoc(List<UserBusiness> userAssoc) {
+        this.userAssoc = userAssoc;
+    }
 }

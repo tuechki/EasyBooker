@@ -33,6 +33,10 @@ public class BookingRecord {
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", nullable = false)
+    private Service service;
+
     public BookingRecord(){ }
 
     public BookingRecord(long id){
@@ -94,5 +98,11 @@ public class BookingRecord {
         this.location = location;
     }
 
+    public Service getService() {
+        return service;
+    }
 
+    public void setService(Service service) {
+        this.service = service;
+    }
 }
