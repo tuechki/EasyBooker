@@ -2,7 +2,9 @@ package com.elsys.easybooker.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,10 +30,8 @@ public class Business {
     @Column(name="image")
     private byte[] image;
 
-//    @OneToMany(cascade = CascadeType.ALL,
-//            fetch = FetchType.LAZY,
-//            mappedBy = "business")
-//    private Set<Service> services = new HashSet<>();
+    @OneToMany
+    private List<Service> services = new ArrayList<>();
 
     public Business(){ }
 
@@ -87,11 +87,11 @@ public class Business {
         this.image = pic;
     }
 
-//    public Set<Service> getServices(){
-//        return this.services;
-//    }
-//
-//    public void addServices(Service service){
-//        this.services.add(service);
-//    }
+    public List<Service> getServices(){
+        return this.services;
+    }
+
+    public void addServices(Service service){
+        this.services.add(service);
+    }
 }
