@@ -154,5 +154,19 @@ public class User {
         return this.firstName.concat(this.lastName);
     }
 
+    public List<UserBusiness> getBusinessAssoc() {
+        return businessAssoc;
+    }
 
+    public void setBusinessAssoc(List<UserBusiness> businessAssoc) {
+        this.businessAssoc = businessAssoc;
+    }
+
+    public List<BookingRecord> getBookingRecords() {
+        return bookingRecords;
+    }
+
+    public void setBookingRecords(List<BookingRecord> bookingRecords) {
+        this.bookingRecords = bookingRecords;
+    }
 }

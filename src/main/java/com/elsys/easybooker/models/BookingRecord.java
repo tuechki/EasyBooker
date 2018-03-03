@@ -78,6 +78,14 @@ public class BookingRecord {
         this.createdAt = createdAt;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Location getLocation() {
         return location;
     }
@@ -85,4 +93,6 @@ public class BookingRecord {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+
 }
