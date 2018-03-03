@@ -2,13 +2,13 @@ package com.elsys.easybooker.models;
 
 import java.io.Serializable;
 
-public class UsersBusinessesId  implements Serializable{
+public class UserBusinessId  implements Serializable{
     private long businessId;
     private long userId;
 
-    public UsersBusinessesId(){}
+    public UserBusinessId(){}
 
-    public UsersBusinessesId(long businessId, long userId){
+    public UserBusinessId(long businessId, long userId){
         this.businessId = businessId;
         this.userId = userId;
     }
@@ -40,7 +40,7 @@ public class UsersBusinessesId  implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        UsersBusinessesId other = (UsersBusinessesId) obj;
+        UserBusinessId other = (UserBusinessId) obj;
 
         if(other.getBusinessId() != this.businessId){
             return false;

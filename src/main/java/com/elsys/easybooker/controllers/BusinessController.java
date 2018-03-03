@@ -1,7 +1,7 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.models.Business;
-import com.elsys.easybooker.models.UsersBusinesses;
+import com.elsys.easybooker.models.UserBusiness;
 import com.elsys.easybooker.repositories.BusinessRepository;
 import com.elsys.easybooker.repositories.UserRepository;
 import com.elsys.easybooker.repositories.UsersBusinessesRepository;
@@ -51,7 +51,7 @@ public class BusinessController {
         long businessId = businessCreated.getId();
         long userId = userRepository.findByUsername(auth.getName()).getId();
 
-        usersBusinessesRepository.save(new UsersBusinesses(businessId, userId, ADMIN));
+        usersBusinessesRepository.save(new UserBusiness(businessId, userId, ADMIN));
 
         return businessCreated;
     }

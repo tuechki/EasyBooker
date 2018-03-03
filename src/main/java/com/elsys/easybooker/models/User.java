@@ -7,7 +7,7 @@ import java.awt.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

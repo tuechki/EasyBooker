@@ -5,8 +5,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "UsersBusinesses")
-@IdClass(UsersBusinessesId.class)
-public class UsersBusinesses {
+@IdClass(UserBusinessId.class)
+public class UserBusiness {
 
     @Id @NotNull
     @Column(name = "businessId")
@@ -20,9 +20,9 @@ public class UsersBusinesses {
     @Column(name = "permission")
     private int permission;
 
-    public UsersBusinesses(){}
+    public UserBusiness(){}
 
-    public UsersBusinesses(long businessId, long userId, int permission){
+    public UserBusiness(long businessId, long userId, int permission){
         this.businessId = businessId;
         this.userId = userId;
         this.permission = permission;
