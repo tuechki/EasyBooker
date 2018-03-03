@@ -51,10 +51,10 @@ public class Location {
             mappedBy = "location")
     private List<DaySchedule> scheduleOfDays = new ArrayList<>();
 
-//    @OneToMany(cascade = CascadeType.ALL,
-//            fetch = FetchType.LAZY,
-//            mappedBy = "location1")
-//    private List<BookingRecord> bookingRecords = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "location")
+    private List<BookingRecord> bookingRecords = new ArrayList<>();
 
     public Location(){ }
 
@@ -141,11 +141,11 @@ public class Location {
         this.scheduleOfDays = scheduleOfDays;
     }
 
-//    public List<BookingRecord> getBookingRecords() {
-//        return bookingRecords;
-//    }
-//
-//    public void setBookingRecords(List<BookingRecord> bookingRecords) {
-//        this.bookingRecords = bookingRecords;
-//    }
+    public List<BookingRecord> getBookingRecords() {
+        return bookingRecords;
+    }
+
+    public void setBookingRecords(List<BookingRecord> bookingRecords) {
+        this.bookingRecords = bookingRecords;
+    }
 }

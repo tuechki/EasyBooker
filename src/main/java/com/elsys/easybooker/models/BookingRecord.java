@@ -25,9 +25,9 @@ public class BookingRecord {
     @Column(name = "cratedAt")
     private Timestamp createdAt;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "location_id1", nullable = false)
-//    private Location location1;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
 
     public BookingRecord(){ }
 
