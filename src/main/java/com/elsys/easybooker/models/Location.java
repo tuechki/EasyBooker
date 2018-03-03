@@ -5,17 +5,13 @@ import javax.validation.constraints.NotNull;
 import org.postgresql.util.PGInterval;
 
 @Entity
-@Table(name = "Locations")
+@Table(name = "locations")
 public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-
-    @NotNull
-    @Column(name = "businessId")
-    private long businessId;
 
     @NotNull
     @Column(name = "address")
@@ -34,14 +30,17 @@ public class Location {
     @Column(name = "minTimeBetweenServices")
     private PGInterval minTimeBetweenServices;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id", nullable = false)
+    private Business business;
+
     public Location(){ }
 
     public Location(long id){
         this.id = id;
     }
 
-    public Location(long businessId, String address, String summary, String email){
-        this.businessId = businessId;
+    public Location(String address, String summary, String email){
         this.address = address;
         this.summary = summary;
         this.email = email;
@@ -54,14 +53,6 @@ public class Location {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getBusinessId() {
-        return businessId;
-    }
-
-    public void setBusinessId(long businessId) {
-        this.businessId = businessId;
     }
 
     public String getAddress() {
@@ -102,5 +93,13 @@ public class Location {
 
     public void setMinTimeBetweenServices(PGInterval minTimeBetweenServices){
         this.minTimeBetweenServices = minTimeBetweenServices;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 }

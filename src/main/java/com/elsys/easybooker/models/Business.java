@@ -36,6 +36,11 @@ public class Business {
             mappedBy = "business")
     private List<Service> services = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "business")
+    private List<Location> locations = new ArrayList<>();
+
     public Business(){ }
 
     public Business(long id){
@@ -95,6 +100,14 @@ public class Business {
     }
 
     public void setServices(List<Service> services){
-        this.services = services.stream().collect(Collectors.toList());
+        this.services = services;
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 }
