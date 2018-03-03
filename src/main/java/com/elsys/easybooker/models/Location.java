@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.postgresql.util.PGInterval;
 
+import java.util.*;
+
 @Entity
 @Table(name = "locations")
 public class Location {
@@ -33,6 +35,16 @@ public class Location {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_id", nullable = false)
     private Business business;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "locations_services",
+            joinColumns = { @JoinColumn(name = "location_id") },
+            inverseJoinColumns = { @JoinColumn(name = "service_id") })
+    private List<Service> services = new ArrayList<>();
 
     public Location(){ }
 
@@ -102,4 +114,5 @@ public class Location {
     public void setBusiness(Business business) {
         this.business = business;
     }
+
 }

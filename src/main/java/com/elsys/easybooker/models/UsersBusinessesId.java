@@ -40,12 +40,12 @@ public class UsersBusinessesId  implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        LocationsServicesId other = (LocationsServicesId) obj;
+        UsersBusinessesId other = (UsersBusinessesId) obj;
 
-        if(other.getLocationId() != this.businessId){
+        if(other.getBusinessId() != this.businessId){
             return false;
         }else {
-            if(other.getServiceId() != this.userId){
+            if(other.getUserId() != this.userId){
                 return false;
             }
 

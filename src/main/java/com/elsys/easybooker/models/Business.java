@@ -34,7 +34,7 @@ public class Business {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "business")
-    private List<Service> services = new ArrayList<>();
+    private Set<Service> services = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -95,11 +95,11 @@ public class Business {
         this.image = pic;
     }
 
-    public List<Service> getServices(){
+    public Set<Service> getServices(){
         return this.services;
     }
 
-    public void setServices(List<Service> services){
+    public void setServices(Set<Service> services){
         this.services = services;
     }
 
