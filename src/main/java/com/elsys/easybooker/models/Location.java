@@ -46,6 +46,11 @@ public class Location {
             inverseJoinColumns = { @JoinColumn(name = "service_id") })
     private List<Service> services = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "location")
+    private List<DaySchedule> scheduleOfDays = new ArrayList<>();
+
     public Location(){ }
 
     public Location(long id){
@@ -115,4 +120,19 @@ public class Location {
         this.business = business;
     }
 
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public List<DaySchedule> getScheduleOfDays() {
+        return scheduleOfDays;
+    }
+
+    public void setScheduleOfDays(List<DaySchedule> scheduleOfDays) {
+        this.scheduleOfDays = scheduleOfDays;
+    }
 }

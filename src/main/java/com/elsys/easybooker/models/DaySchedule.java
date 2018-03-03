@@ -17,10 +17,6 @@ public class DaySchedule {
     private long id;
 
     @NotNull
-    @Column(name = "locationId")
-    private long locationId;
-
-    @NotNull
     @Column(name = "dayOfWeek")
     private int dayOfWeek;
 
@@ -31,6 +27,10 @@ public class DaySchedule {
     @Column(name = "CloseTime")
     private Time closeTime;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
+
     public DaySchedule(){ }
 
     public DaySchedule(long id){
@@ -38,9 +38,7 @@ public class DaySchedule {
     }
 
 
-    public DaySchedule(long locationIdId,
-                   int dayOfWeek, Time openTime, Time closeTime){
-        this.locationId = locationIdId;
+    public DaySchedule(int dayOfWeek, Time openTime, Time closeTime){
         this.dayOfWeek = dayOfWeek;
         this.openTime = openTime;
         this.closeTime = closeTime;
@@ -53,14 +51,6 @@ public class DaySchedule {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(long locationId) {
-        this.locationId = locationId;
     }
 
     public int getDayOfWeek() {
@@ -85,5 +75,13 @@ public class DaySchedule {
 
     public void setCloseTime(Time closeTime) {
         this.closeTime = closeTime;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }
