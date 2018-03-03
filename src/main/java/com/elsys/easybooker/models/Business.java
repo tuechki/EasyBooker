@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "Businesses")
+@Table(name = "businesses")
 public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +31,9 @@ public class Business {
     @Column(name="image")
     private byte[] image;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "business")
     private List<Service> services = new ArrayList<>();
 
     public Business(){ }
@@ -91,7 +94,7 @@ public class Business {
         return this.services;
     }
 
-    public void addServices(Service service){
-        this.services.add(service);
+    public void setServices(List<Service> services){
+        this.services = services.stream().collect(Collectors.toList());
     }
 }

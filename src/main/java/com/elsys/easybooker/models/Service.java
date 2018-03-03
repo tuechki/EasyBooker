@@ -15,10 +15,6 @@ public class Service {
     private long id;
 
     @NotNull
-    @Column(name = "businessId")
-    private long businessId;
-
-    @NotNull
     @Column(name = "name")
     private String name;
 
@@ -33,9 +29,9 @@ public class Service {
     @Column(name = "price")
     private int price;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "business_id")
-//    private Business business;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id", nullable = false)
+    private Business business;
 
     public Service(){ }
 
@@ -43,10 +39,7 @@ public class Service {
         this.id = id;
     }
 
-
-   public Service(long businessId,
-                   String name, PGInterval timeDuration, int price){
-        this.businessId = businessId;
+   public Service(String name, PGInterval timeDuration, int price){
         this.name = name;
         this.timeDuration = timeDuration;
         this.price = price;
@@ -59,14 +52,6 @@ public class Service {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getBusinessId() {
-        return businessId;
-    }
-
-    public void setBusinessId(long businessId) {
-        this.businessId = businessId;
     }
 
     public String getSummary() {
@@ -101,12 +86,12 @@ public class Service {
         this.name = name;
     }
 
-//    public Business getBusiness(){
-//        return business;
-//    }
-//
-//    public void setBusiness(Business business){
-//        this.business = business;
-//    }
+    public Business getBusiness(){
+        return business;
+    }
+
+    public void setBusiness(Business business){
+        this.business = business;
+    }
 
 }
