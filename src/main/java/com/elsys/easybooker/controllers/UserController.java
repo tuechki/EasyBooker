@@ -1,5 +1,6 @@
 package com.elsys.easybooker.controllers;
 
+import com.elsys.easybooker.ResourceNotFoundException;
 import com.elsys.easybooker.models.User;
 import com.elsys.easybooker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public User findByUsername(@PathVariable String username) {
+    public User findByUsername(@PathVariable String username) throws ResourceNotFoundException {
         return userRepository.findByUsername(username);
     }
 
