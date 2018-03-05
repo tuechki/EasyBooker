@@ -1,5 +1,7 @@
 package com.elsys.easybooker.dtos;
 
+import java.util.Objects;
+
 public class UserDTO {
 
     private String firstName;
@@ -72,5 +74,19 @@ public class UserDTO {
         this.gender = gender;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDTO)) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(getUsername(), userDTO.getUsername()) &&
+                Objects.equals(getEmail(), userDTO.getEmail()) &&
+                Objects.equals(getNumber(), userDTO.getNumber());
+    }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getUsername(), getEmail(), getNumber());
+    }
 }
