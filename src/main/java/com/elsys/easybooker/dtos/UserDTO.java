@@ -18,6 +18,8 @@ public class UserDTO {
 
     private String gender;
 
+    public UserDTO() { }
+
     public String getFirstName() {
         return firstName;
     }
