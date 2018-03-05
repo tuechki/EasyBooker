@@ -30,7 +30,7 @@ public class Service {
 
     @NotNull
     @Column(name = "price")
-    private int price;
+    private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_id", nullable = false)
@@ -86,7 +86,7 @@ public class Service {
         this.timeDuration = timeDuration;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
