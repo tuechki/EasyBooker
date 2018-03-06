@@ -66,7 +66,26 @@ public class BusinessService {
 
 
 
-    
+    public List<Service> getBusinessServices(long businessId) {
+        return serviceRepository.findByBusinessId(businessId);
+    }
+
+
+    public List<Service> createOrUpdateBusinessServices(long businessId, List<Service> services) {
+        Business business = businessRepository.findById(businessId);
+        for(Service service : services){
+            service.setBusiness(business);
+        }
+        business.getServices().addAll(services);
+        businessRepository.save(business);
+
+        return services;
+    }
+
+    public List<Service> deleteBusinessServices(long businessId) {
+       return  serviceRepository.deleteByBusinessId(businessId);
+    }
+
 
 
 }
