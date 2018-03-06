@@ -7,14 +7,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/services")
+@RequestMapping("/businesses/{businessId}/services")
 public class ServiceController {
 
     @Autowired
     private ServiceRepository serviceRepository;
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping
     public Iterable findAll(@RequestParam Map<String, String> queryMap) {

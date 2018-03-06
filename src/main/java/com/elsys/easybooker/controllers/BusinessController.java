@@ -78,16 +78,49 @@ public class BusinessController {
     }
 
 
+
     @GetMapping("/{businessId}/services")
-    public List<Service> getServicesForBusiness(@PathVariable long businessId) {
-        // TO DO implement serviceService.getServicesForBusiness(); //
+    public List<Service> getBusinessServices(@PathVariable long businessId) {
+        // TO DO implement  //
         return null;
     }
 
     @GetMapping("/{businessId}/services/{serviceId}")
-    public List<Service> getServiceForBusinessById(@PathVariable long businessId, @PathVariable long serviceId) {
-        // TO DO implement serviceService.getServiceForBusinessById(); //
+    public List<Service> getBusinessServiceById(@PathVariable long businessId, @PathVariable long serviceId) {
+        // TO DO implement  //
         return null;
     }
+
+    @PostMapping("/{businessId}/services")
+    public List<Service> createBusinessService(@PathVariable long businessId, @RequestBody Service service) {
+        // TO DO implement  //
+        return null;
+    }
+
+    @PutMapping("/{businessId}/services")
+    public List<Service> updateBusinessServices(@PathVariable long businessId) {
+        // TO DO implement //
+        return null;
+    }
+
+    @PutMapping("/{businessId}/services/{serviceId}")
+    public List<Service> updateBusinessServiceById(@PathVariable long businessId, @PathVariable long serviceId) {
+        // TO DO implement //
+        return null;
+    }
+
+
+    @DeleteMapping("/{businessId}/services")
+    public List<Service> deleteBusinessServices(@PathVariable long businessId) {
+        // TO DO implement //
+        return null;
+    }
+
+    @DeleteMapping("/{businessId}/services/{serviceId}")
+    public List<Service> deleteBusinessServiceById(@PathVariable long businessId, @PathVariable long serviceId) {
+        // TO DO implement //
+        return null;
+    }
+
 
 }
