@@ -7,6 +7,7 @@ import com.elsys.easybooker.repositories.ServiceRepository;
 import com.elsys.easybooker.repositories.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 
 import java.util.List;
 
@@ -37,28 +38,25 @@ public class BusinessService {
         return businessRepository.findById(id);
     }
 
-    public Business createBusiness(Business business ) {
+    public void createBusiness(Business business ) {
 
-        Business businessCreated = businessRepository.save(business);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User owner = userRepository.findByUsername(auth.getName());
+
+        Business businessCreated = businessRepository.save(business);
         businessCreated.getUserAssoc().add(new UserBusiness(owner, businessCreated, ADMIN));
 
-        return businessCreated;
     }
 
-    //updates either it's one business or many...
-    public void updateBusinesses( List<Business> businesses) {
-        businessRepository.save(businesses); // TO DO implement equals and hashcode to entities //
+    public void updateBusiness( Business business) {
+        businessRepository.save(business); // TO DO implement equals and hashcode to entities //
     }
 
-
-    public void deleteBusinesses() {
-        businessRepository.deleteAll();
-    }
 
     public void deleteBusinessById(Long id) {
-        businessRepository.delete(id);
+        if(isUserBusinessAdmin(id)) {
+            businessRepository.delete(id);
+        }
     }
 
 
@@ -117,18 +115,18 @@ public class BusinessService {
     }
 
 
-    public boolean isUserBusinessAdmin(long businessId){
+    public boolean isUserBusinessAdmin(long businessId) throws UnauthorizedClientException{
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(auth.getName());
 
         for(UserBusiness userBusiness : user.getBusinessAssoc()){
-            if(userBusiness.getBusiness().getId() == businessId 
+            if(userBusiness.getBusiness().getId() == businessId
                     && userBusiness.getPermission() == ADMIN){
                 return true;
             }
         }
 
-        return false;
+        throw new UnauthorizedClientException("No permissions for requested operation");
     }
 
 
