@@ -34,8 +34,8 @@ public class BusinessService {
         return businessRepository.findAll();
     }
 
-    public Business getBusinessById( long id) {
-        return businessRepository.findById(id);
+    public Business getBusinessById( long businessId) {
+        return businessRepository.findById(businessId);
     }
 
     public void createBusiness(Business business ) {
@@ -48,12 +48,16 @@ public class BusinessService {
 
     }
 
-    public void updateBusiness( Business business) {
-        businessRepository.save(business); // TO DO implement equals and hashcode to entities //
+    public void updateBusiness( Business business) throws UnauthorizedClientException{
+        if(isUserBusinessAdmin(business.getId())){
+            businessRepository.save(business);
+        }
+
+         // TO DO implement equals and hashcode to entities //
     }
 
 
-    public void deleteBusinessById(Long id) {
+    public void deleteBusinessById(Long id) throws UnauthorizedClientException {
         if(isUserBusinessAdmin(id)) {
             businessRepository.delete(id);
         }
@@ -66,27 +70,30 @@ public class BusinessService {
     }
 
 
-    public List<Service> createOrUpdateBusinessServices(long businessId, List<Service> services) {
-        Business business = businessRepository.findById(businessId);
-        for(Service service : services){
-            service.setBusiness(business);
+    public void createOrUpdateBusinessServices(long businessId, List<Service> services) throws UnauthorizedClientException{
+        if(isUserBusinessAdmin(businessId)) {
+            Business business = businessRepository.findById(businessId);
+            for (Service service : services) {
+                service.setBusiness(business);
+            }
+            business.getServices().addAll(services);
+            businessRepository.save(business);
         }
-        business.getServices().addAll(services);
-        businessRepository.save(business);
 
-        return services;
     }
 
-    public void deleteBusinessServices(long businessId) {
-        serviceRepository.deleteByBusinessId(businessId);
+    public void deleteBusinessServices(long businessId) throws UnauthorizedClientException{
+        if(isUserBusinessAdmin(businessId)) {
+            serviceRepository.deleteByBusinessId(businessId);
+        }
     }
 
 
-    public void deleteBusinessServiceById(long businessId, long serviceId) {
-        // TO DO AUTHENTICATE IF USER HAS PERMISSIONS TO DO IT.... //
-        serviceRepository.delete(serviceId);
+    public void deleteBusinessServiceById(long businessId, long serviceId) throws UnauthorizedClientException {
+        if(isUserBusinessAdmin(businessId)) {
+            serviceRepository.delete(serviceId);
+        }
     }
-
 
 
 
@@ -95,23 +102,28 @@ public class BusinessService {
     }
 
 
-    public List<Location> createOrUpdateBusinessLocations(long businessId, List<Location> locations) {
-        Business business = businessRepository.findById(businessId);
-        for(Location location : locations){
-            location.setBusiness(business);
+    public void createOrUpdateBusinessLocations(long businessId, List<Location> locations) throws UnauthorizedClientException {
+        if(isUserBusinessAdmin(businessId)) {
+            Business business = businessRepository.findById(businessId);
+            for (Location location : locations) {
+                location.setBusiness(business);
+            }
+            business.getLocations().addAll(locations);
+            businessRepository.save(business);
+
         }
-        business.getLocations().addAll(locations);
-        businessRepository.save(business);
-
-        return locations;
     }
 
-    public void deleteBusinessLocations(long businessId) {
-         locationRepository.deleteByBusinessId(businessId);
+    public void deleteBusinessLocations(long businessId) throws UnauthorizedClientException{
+        if(isUserBusinessAdmin(businessId)) {
+            locationRepository.deleteByBusinessId(businessId);
+        }
     }
 
-    public void deleteBusinessLocationById(long businessId, long locationId) {
-        locationRepository.delete(locationId);
+    public void deleteBusinessLocationById(long businessId, long locationId) throws UnauthorizedClientException {
+        if(isUserBusinessAdmin(businessId)) {
+            locationRepository.delete(locationId);
+        }
     }
 
 
@@ -126,7 +138,7 @@ public class BusinessService {
             }
         }
 
-        throw new UnauthorizedClientException("No permissions for requested operation");
+        throw new UnauthorizedClientException("No permissions for requested operation.");
     }
 
 
