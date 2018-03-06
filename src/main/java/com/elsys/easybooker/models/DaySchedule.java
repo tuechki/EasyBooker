@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.postgresql.util.PGInterval;
 
 import java.sql.Time;
+import java.util.Objects;
 
 @Entity
 @Table(name = "day_schedules")
@@ -83,5 +84,21 @@ public class DaySchedule {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DaySchedule)) return false;
+        DaySchedule that = (DaySchedule) o;
+        return getId() == that.getId() &&
+                getDayOfWeek() == that.getDayOfWeek() &&
+                Objects.equals(getLocation(), that.getLocation());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getDayOfWeek(), getLocation());
     }
 }

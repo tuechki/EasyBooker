@@ -2,10 +2,7 @@ package com.elsys.easybooker.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -120,5 +117,19 @@ public class Business {
 
     public void setUserAssoc(List<UserBusiness> userAssoc) {
         this.userAssoc = userAssoc;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Business)) return false;
+        Business business = (Business) o;
+        return getId() == business.getId();
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId());
     }
 }

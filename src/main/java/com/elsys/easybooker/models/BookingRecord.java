@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "booking_records")
@@ -104,5 +105,24 @@ public class BookingRecord {
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BookingRecord)) return false;
+        BookingRecord that = (BookingRecord) o;
+        return getId() == that.getId() &&
+                getDayNumber() == that.getDayNumber() &&
+                Objects.equals(getBeginTime(), that.getBeginTime()) &&
+                Objects.equals(getUser(), that.getUser()) &&
+                Objects.equals(getLocation(), that.getLocation()) &&
+                Objects.equals(getService(), that.getService());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getDayNumber(), getBeginTime(), getUser(), getLocation(), getService());
     }
 }

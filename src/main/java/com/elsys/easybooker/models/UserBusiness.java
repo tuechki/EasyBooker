@@ -2,6 +2,7 @@ package com.elsys.easybooker.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users_businesses")
@@ -52,5 +53,21 @@ public class UserBusiness {
 
     public void setPermission(int permission) {
         this.permission = permission;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserBusiness)) return false;
+        UserBusiness that = (UserBusiness) o;
+        return getPermission() == that.getPermission() &&
+                Objects.equals(getUser(), that.getUser()) &&
+                Objects.equals(getBusiness(), that.getBusiness());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getUser(), getBusiness(), getPermission());
     }
 }
