@@ -2,6 +2,7 @@ package com.elsys.easybooker.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,9 +25,12 @@ public class Business {
     @Column(name = "email")
     private String email;
 
-    @Lob
-    @Column(name="image")
-    private byte[] image;
+    @Column(name = "cratedAt")
+    private Timestamp createdAt;
+
+//    @Lob
+//    @Column(name="image")
+//    private byte[] image;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -47,12 +51,10 @@ public class Business {
         this.id = id;
     }
 
-    public Business(String name, String summary, String email, byte[] image){
+    public Business(String name, String summary, String email){
         this.name = name;
         this.summary = summary;
         this.email = email;
-        this.image = image;
-
     }
 
     public long getId() {
@@ -87,12 +89,12 @@ public class Business {
         this.email = email;
     }
 
-    public byte[] getPic() {
-        return image;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setPic(byte[] pic) {
-        this.image = pic;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
     public List<Service> getServices(){
