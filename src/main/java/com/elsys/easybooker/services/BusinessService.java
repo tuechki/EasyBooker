@@ -1,9 +1,6 @@
 package com.elsys.easybooker.services;
 
-import com.elsys.easybooker.models.Business;
-import com.elsys.easybooker.models.Service;
-import com.elsys.easybooker.models.User;
-import com.elsys.easybooker.models.UserBusiness;
+import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.BusinessRepository;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
@@ -82,8 +79,53 @@ public class BusinessService {
         return services;
     }
 
-    public List<Service> deleteBusinessServices(long businessId) {
-       return  serviceRepository.deleteByBusinessId(businessId);
+    public void deleteBusinessServices(long businessId) {
+        serviceRepository.deleteByBusinessId(businessId);
+    }
+
+
+    public void deleteBusinessServiceById(long businessId, long serviceId) {
+        // TO DO AUTHENTICATE IF USER HAS PERMISSIONS TO DO IT.... //
+        serviceRepository.delete(serviceId);
+    }
+
+
+
+
+    public List<Location> getBusinessLocations(long businessId) {
+       return  locationRepository.findAll();
+    }
+
+
+    public List<Location> createOrUpdateBusinessLocations(long businessId, List<Location> locations) {
+        Business business = businessRepository.findById(businessId);
+        for(Location location : locations){
+            location.setBusiness(business);
+        }
+        business.getLocations().addAll(locations);
+        businessRepository.save(business);
+
+        return locations;
+    }
+
+    public void deleteBusinessLocations(long businessId) {
+         locationRepository.deleteByBusinessId(businessId);
+    }
+
+    public void deleteBusinessLocationById(long businessId, long locationId) {
+        locationRepository.delete(locationId);
+    }
+
+
+    public boolean isUserBusinessAdmin(long businessId){
+        Business business = businessRepository.findById(businessId);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName());
+        if(user.getBusinessAssoc().contains(business)){
+            return true;
+        }
+
+        return false;
     }
 
 
