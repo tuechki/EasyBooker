@@ -6,6 +6,7 @@ import com.elsys.easybooker.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,6 +19,28 @@ public class LocationController {
     private ServiceRepository serviceRepository;
 //    @Autowired
 //    private LocationsServicesRepository locationsServicesRepository;
+
+
+
+
+
+
+
+
+
+
+    @GetMapping("/{businessId}/locations/{locationId}")
+    public List<Location> getBusinessLocationById(@PathVariable long businessId, @PathVariable long locationId) {
+        // TO DO implement  //
+        return null;
+    }
+
+
+
+
+
+
+
 
     @GetMapping
     public Iterable findAll(@RequestParam Map<String, String> queryMap) {

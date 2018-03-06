@@ -22,6 +22,24 @@ public class ServiceController {
 
 
 
+    @GetMapping("/{businessId}/services/{serviceId}")
+    public List<Service> getBusinessServiceById(@PathVariable long businessId, @PathVariable long serviceId) {
+        // TO DO implement  //
+        return null;
+    }
+
+
+    @DeleteMapping("/{businessId}/services/{serviceId}")
+    public List<Service> deleteBusinessServiceById(@PathVariable long businessId, @PathVariable long serviceId) {
+        // TO DO implement //
+        return null;
+    }
+
+
+
+
+
+
 
 
 
