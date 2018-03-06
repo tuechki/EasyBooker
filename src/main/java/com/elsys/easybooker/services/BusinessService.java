@@ -8,11 +8,11 @@ import com.elsys.easybooker.repositories.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
-
 import java.util.List;
-
 import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BusinessService {
 
     private final BusinessRepository businessRepository;
@@ -65,15 +65,16 @@ public class BusinessService {
 
 
 
-    public List<Service> getBusinessServices(long businessId) {
+    public List<com.elsys.easybooker.models.Service> getBusinessServices(long businessId) {
         return serviceRepository.findByBusinessId(businessId);
     }
 
 
-    public void createOrUpdateBusinessServices(long businessId, List<Service> services) throws UnauthorizedClientException{
+    public void createOrUpdateBusinessServices(long businessId, List<com.elsys.easybooker.models.Service> services)
+                                                                                            throws UnauthorizedClientException{
         if(isUserBusinessAdmin(businessId)) {
             Business business = businessRepository.findById(businessId);
-            for (Service service : services) {
+            for (com.elsys.easybooker.models.Service service : services) {
                 service.setBusiness(business);
             }
             business.getServices().addAll(services);
