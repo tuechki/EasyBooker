@@ -7,6 +7,7 @@ import com.elsys.easybooker.models.UserBusiness;
 import com.elsys.easybooker.repositories.BusinessRepository;
 import com.elsys.easybooker.repositories.UserRepository;
 import com.elsys.easybooker.repositories.UsersBusinessesRepository;
+import com.elsys.easybooker.services.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -23,121 +24,94 @@ import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 @RequestMapping("/businesses")
 public class BusinessController {
 
-    @Autowired
-    private BusinessRepository businessRepository;
-    @Autowired
-    private UsersBusinessesRepository usersBusinessesRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final BusinessService businessService;
+
+    public BusinessController(BusinessService businessService) {
+        this.businessService = businessService;
+    }
 
 
     @GetMapping
     public Iterable getBusinesses() {
-        // TO DO businessService.getBusinesses(); //
-        return businessRepository.findAll();
+        return businessService.getBusinesses();
     }
 
-    @GetMapping("/{id}")
-    public Business getBusinessById(@PathVariable long id) {
-        // TO DO businessService.getBusinesses(); //
-        return businessRepository.findById(id);
+    @GetMapping("/{businessId}")
+    public Business getBusinessById(@PathVariable long businessId) {
+        return businessService.getBusinessById(businessId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Business createBusiness(@Valid @RequestBody Business business ) {
-
-        Business businessCreated = businessRepository.save(business);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        usersBusinessesRepository.save(new UserBusiness(userRepository.findByUsername(auth.getName()), businessCreated, ADMIN));
-
-        return businessCreated;
+    public void createBusiness(@Valid @RequestBody Business business ) {
+        businessService.createBusiness(business);
     }
 
     @PutMapping
-    public void updateBusinesses(@Valid @RequestBody List<Business> businesses) {
-        // TO DO implement businessService.updateBusinesses(businesses)//
+    public void updateBusinesses(@Valid @RequestBody Business business) {
+        businessService.updateBusiness(business);
     }
 
-    @DeleteMapping
-    public void deleteBusinesses() {
-        //TO DO implement businessService.deleteBusinesses(id);//
-        //businessRepository.deleteAll();//
-    }
 
-    @DeleteMapping("/{id}")
-    public void deleteBusinessById(@PathVariable Long id) {
-        try {
-            businessRepository.delete(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-
+    @DeleteMapping("/{businessId}")
+    public void deleteBusinessById(@PathVariable Long businessId) {
+        businessService.deleteBusinessById(businessId);
     }
 
 
 
     @GetMapping("/{businessId}/services")
     public List<Service> getBusinessServices(@PathVariable long businessId) {
-        // TO DO implement  //
-        return null;
+       return  businessService.getBusinessServices(businessId);
     }
 
 
     @PostMapping("/{businessId}/services")
-    public List<Service> createBusinessServices(@PathVariable long businessId, @RequestBody List<Service> services) {
-        // TO DO implement  //
-        return null;
+    public void createBusinessServices(@PathVariable long businessId, @RequestBody List<Service> services) {
+        businessService.createOrUpdateBusinessServices(businessId, services);
     }
 
     @PutMapping("/{businessId}/services")
-    public List<Service> updateBusinessServices(@PathVariable long businessId, @RequestBody List<Service> services) {
-        // TO DO implement //
-        return null;
+    public void updateBusinessServices(@PathVariable long businessId, @RequestBody List<Service> services) {
+        businessService.createOrUpdateBusinessServices(businessId, services);
     }
 
     @DeleteMapping("/{businessId}/services")
-    public List<Service> deleteBusinessServices(@PathVariable long businessId) {
-        // TO DO implement //
-        return null;
+    public void deleteBusinessServices(@PathVariable long businessId) {
+        businessService.deleteBusinessServices(businessId);
     }
 
-
-
-
-
+    @DeleteMapping("/{businessId}/services/{serviceId}")
+    public void deleteBusinessServices(@PathVariable long businessId, @PathVariable long serviceId) {
+        businessService.deleteBusinessServiceById(businessId,serviceId);
+    }
 
 
     @GetMapping("/{businessId}/locations")
     public List<Location> getBusinessLocations(@PathVariable long businessId) {
-        // TO DO implement  //
-        return null;
+        return businessService.getBusinessLocations(businessId);
     }
 
 
     @PostMapping("/{businessId}/locations")
-    public List<Location> createBusinessLocations(@PathVariable long businessId, @RequestBody List<Location> locations) {
-        // TO DO implement  //
-        return null;
+    public void createBusinessLocations(@PathVariable long businessId, @RequestBody List<Location> locations) {
+        businessService.createOrUpdateBusinessLocations(businessId, locations);
     }
 
     @PutMapping("/{businessId}/locations")
-    public List<Location> updateBusinessLocations(@PathVariable long businessId,  @RequestBody List<Location> locations) {
-        // TO DO implement //
-        return null;
+    public void updateBusinessLocations(@PathVariable long businessId,  @RequestBody List<Location> locations) {
+        businessService.createOrUpdateBusinessLocations(businessId, locations);
     }
 
 
     @DeleteMapping("/{businessId}/locations")
-    public List<Service> deleteBusinessLocations(@PathVariable long businessId) {
-        // TO DO implement //
-        return null;
+    public void deleteBusinessLocations(@PathVariable long businessId) {
+        businessService.deleteBusinessLocations(businessId);
     }
 
     @DeleteMapping("/{businessId}/locations/{locationId}")
-    public List<Service> deleteBusinessLocationById(@PathVariable long businessId, @PathVariable long locationId) {
-        // TO DO implement //
-        return null;
+    public void deleteBusinessLocationById(@PathVariable long businessId, @PathVariable long locationId) {
+        businessService.deleteBusinessLocationById(businessId, locationId);
     }
 
 }
