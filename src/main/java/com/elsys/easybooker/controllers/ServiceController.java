@@ -1,5 +1,6 @@
 package com.elsys.easybooker.controllers;
 
+import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,75 +12,27 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/businesses/{businessId}/services")
+@RequestMapping("/services")
 public class ServiceController {
 
     @Autowired
     private ServiceRepository serviceRepository;
 
-
-
-
-
-
-    @GetMapping("/{businessId}/services/{serviceId}")
-    public List<Service> getBusinessServiceById(@PathVariable long businessId, @PathVariable long serviceId) {
-        // TO DO implement  //
-        return null;
-    }
-
-
-    @DeleteMapping("/{businessId}/services/{serviceId}")
-    public List<Service> deleteBusinessServiceById(@PathVariable long businessId, @PathVariable long serviceId) {
-        // TO DO implement //
-        return null;
-    }
-
-
-
-
-
-
-
-
-
-
-
     @GetMapping
-    public Iterable findAll(@RequestParam Map<String, String> queryMap) {
-
-        System.out.println(queryMap.toString());
-        if(queryMap.containsKey("businessId")){
-           return  serviceRepository.findByBusinessId(Long.parseLong(queryMap.get("businessId")));
-        }
+    public List<Service> getServices(){
         return serviceRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Service findById(@PathVariable long id) {
-        return serviceRepository.findById(id);
+    @GetMapping("/{serviceId}")
+    public Service getServiceById(@PathVariable long serviceId){
+        return serviceRepository.findById(serviceId);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Service create(@Valid @RequestBody Service service) {
-        return serviceRepository.save(service);
+    @GetMapping("/{serviceId}/locations")
+    public List<Location> getLocationsForService(@PathVariable long serviceId){
+        //TO DO Implement //
+        return null;
     }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        try {
-            serviceRepository.delete(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-    }
-
-    @PutMapping("/{id}")
-    public Service update(@RequestBody Service service, @PathVariable Long id) {
-
-        return serviceRepository.save(service);
-    }
+    
 
 }
