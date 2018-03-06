@@ -13,5 +13,7 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
     public List<Service> findByBusinessId(long businessId);
     public List<Service> findByTimeDuration(int timeDuration);
     public List<Service> findByPrice(int price);
+    public List<Service> deleteByBusinessId(long businessId);
+
 
 }

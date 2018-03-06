@@ -13,4 +13,5 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     public Location findByAddress(String address);
     public Location findByNumber(String number);
     public Location findByEmail(String email);
+    public List<Location> deleteByBusinessId(long businessId);
 }
