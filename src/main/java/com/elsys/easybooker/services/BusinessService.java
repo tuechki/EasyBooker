@@ -118,11 +118,14 @@ public class BusinessService {
 
 
     public boolean isUserBusinessAdmin(long businessId){
-        Business business = businessRepository.findById(businessId);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(auth.getName());
-        if(user.getBusinessAssoc().contains(business)){
-            return true;
+
+        for(UserBusiness userBusiness : user.getBusinessAssoc()){
+            if(userBusiness.getBusiness().getId() == businessId 
+                    && userBusiness.getPermission() == ADMIN){
+                return true;
+            }
         }
 
         return false;
