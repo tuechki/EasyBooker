@@ -1,6 +1,7 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.models.Business;
+import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.models.UserBusiness;
 import com.elsys.easybooker.repositories.BusinessRepository;
@@ -122,5 +123,51 @@ public class BusinessController {
         return null;
     }
 
+
+
+
+
+    @GetMapping("/{businessId}/locations")
+    public List<Service> getBusinessLocations(@PathVariable long businessId) {
+        // TO DO implement  //
+        return null;
+    }
+
+    @GetMapping("/{businessId}/locations/{locationId}")
+    public List<Service> getBusinessLocationById(@PathVariable long businessId, @PathVariable long locationId) {
+        // TO DO implement  //
+        return null;
+    }
+
+    @PostMapping("/{businessId}/locations")
+    public List<Service> createBusinessLocation(@PathVariable long businessId, @RequestBody Location location) {
+        // TO DO implement  //
+        return null;
+    }
+
+    @PutMapping("/{businessId}/locations")
+    public List<Service> updateBusinessLocations(@PathVariable long businessId) {
+        // TO DO implement //
+        return null;
+    }
+
+    @PutMapping("/{businessId}/locations/{locationId}")
+    public List<Service> updateBusinessLocationById(@PathVariable long businessId, @PathVariable long locationId) {
+        // TO DO implement //
+        return null;
+    }
+
+
+    @DeleteMapping("/{businessId}/locations")
+    public List<Service> deleteBusinessLocations(@PathVariable long businessId) {
+        // TO DO implement //
+        return null;
+    }
+
+    @DeleteMapping("/{businessId}/locations/{locationId}")
+    public List<Service> deleteBusinessLocationById(@PathVariable long businessId, @PathVariable long locationId) {
+        // TO DO implement //
+        return null;
+    }
 
 }
