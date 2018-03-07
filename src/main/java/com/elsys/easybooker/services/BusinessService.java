@@ -2,6 +2,7 @@ package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
+import org.postgresql.util.PGInterval;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
@@ -113,9 +114,21 @@ public class BusinessService {
                     location.getScheduleOfDays().add(daySchedule);
                 }
 
+                PGInterval minInterval = location.getServices().get(0).getTimeDuration();
+
                 for(Service service : location.getServices()){
                     service.getLocations().add(location);
                     serviceRepository.save(service);
+
+                    if(minInterval.getDays() >= service.getTimeDuration().getDays()){
+                        if(minInterval.getHours() >= service.getTimeDuration().getHours()){
+                            if(minInterval.getMinutes() >= service.getTimeDuration().getMinutes()){
+                                minInterval = service.getTimeDuration();
+                            }
+                        }
+                    }
+
+                    location.setMinTimeBetweenServices(minInterval);
                     location.getServices().add(service);
                 }
                 locationRepository.save(location);
