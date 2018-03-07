@@ -108,11 +108,7 @@ public class BusinessService {
             for (Location location : locations) {
                 location.setBusiness(business);
 
-                for(DaySchedule daySchedule : location.getScheduleOfDays()){
-                    daySchedule.setLocation(location);
-                    dayScheduleRepository.save(daySchedule);
-                    location.getScheduleOfDays().add(daySchedule);
-                }
+                setScheduleOfDaysForLocation(location);
 
                 PGInterval minInterval = location.getServices().get(0).getTimeDuration();
 
@@ -138,6 +134,16 @@ public class BusinessService {
 
         }
     }
+
+    public void setScheduleOfDaysForLocation (Location location){
+        for(DaySchedule daySchedule : location.getScheduleOfDays()){
+            daySchedule.setLocation(location);
+            dayScheduleRepository.save(daySchedule);
+            location.getScheduleOfDays().add(daySchedule);
+        }
+    }
+
+    
 
     public void deleteBusinessLocations(long businessId) throws UnauthorizedClientException{
         if(isUserBusinessAdmin(businessId)) {
