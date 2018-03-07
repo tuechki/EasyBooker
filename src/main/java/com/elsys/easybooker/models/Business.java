@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "businesses")
@@ -26,7 +27,7 @@ public class Business {
     private String email;
 
     @Column(name = "cratedAt")
-    private Timestamp createdAt;
+    private LocalDate createdAt;
 
 //    @Lob
 //    @Column(name="image")
@@ -89,11 +90,11 @@ public class Business {
         this.email = email;
     }
 
-    public Timestamp getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
