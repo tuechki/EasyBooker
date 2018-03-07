@@ -87,13 +87,11 @@ public class BusinessService {
     }
 
 
-    public void createOrUpdateBusinessServices(long businessId, List<Service> services) throws UnauthorizedClientException{
+    public void createOrUpdateBusinessService(long businessId, Service service) throws UnauthorizedClientException{
         if(isUserBusinessAdmin(businessId)) {
             Business business = businessRepository.findById(businessId);
-            for (Service service : services) {
-                service.setBusiness(business);
-            }
-            business.getServices().addAll(services);
+            service.setBusiness(business);
+            business.getServices().add(service);
             businessRepository.save(business);
         }
 

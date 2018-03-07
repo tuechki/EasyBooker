@@ -57,13 +57,13 @@ public class BusinessController {
 
 
     @PostMapping("/{businessId}/services")
-    public void createBusinessServices(@PathVariable long businessId, @RequestBody List<Service> services) {
-        businessService.createOrUpdateBusinessServices(businessId, services);
+    public void createBusinessService(@PathVariable long businessId, @RequestBody Service service) {
+        businessService.createOrUpdateBusinessService(businessId, service);
     }
 
     @PutMapping("/{businessId}/services")
-    public void updateBusinessServices(@PathVariable long businessId, @RequestBody List<Service> services) {
-        businessService.createOrUpdateBusinessServices(businessId, services);
+    public void updateBusinessService(@PathVariable long businessId, @RequestBody Service service) {
+        businessService.createOrUpdateBusinessService(businessId, service);
     }
 
     @DeleteMapping("/{businessId}/services")
