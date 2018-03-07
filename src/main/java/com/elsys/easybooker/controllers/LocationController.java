@@ -8,8 +8,11 @@ import com.elsys.easybooker.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @RestController
 @RequestMapping("/locations")
@@ -36,15 +39,15 @@ public class LocationController {
 
     }
 
-    @GetMapping("/{locationId}/services/{serviceId}/")
-    public Service getLocationsForService(@PathVariable long locationId, @PathVariable long serviceId) {
+    @GetMapping("/{locationId}/services/{serviceId}/freeHours")
+    public long getLocationsForService(@PathVariable long locationId, @PathVariable long serviceId,
+                                          @RequestBody LocalDate dateForBooking ) {
         Location location = locationRepository.findById(locationId);
         Service service = serviceRepository.findById(serviceId);
         Business business = location.getBusiness();
 
+        return  DAYS.between(business.getCreatedAt(), dateForBooking);
 
-
-        return null;
     }
 
 

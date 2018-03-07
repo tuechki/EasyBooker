@@ -1,5 +1,7 @@
 package com.elsys.easybooker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -11,11 +13,13 @@ public class UserBusiness {
 
     @Id
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Id
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "business_id", referencedColumnName = "id")
     private Business business;
 

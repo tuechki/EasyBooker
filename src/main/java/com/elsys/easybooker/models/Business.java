@@ -1,11 +1,16 @@
 package com.elsys.easybooker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.jdbc.support.incrementer.AbstractDataFieldMaxValueIncrementer;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
+
+import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 
 @Entity
 @Table(name = "businesses")
@@ -43,8 +48,9 @@ public class Business {
             mappedBy = "business")
     private List<Location> locations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<UserBusiness> userAssoc;
+    @OneToMany(mappedBy = "business")
+    @JsonIgnore
+    private List<UserBusiness> userAssoc = new ArrayList<>();
 
     public Business(){ }
 

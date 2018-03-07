@@ -1,6 +1,7 @@
 package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.ResourceNotFoundException;
+import com.elsys.easybooker.dtos.BusinessDTO;
 import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.User;
 import com.elsys.easybooker.models.UserBusiness;
@@ -10,7 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -40,12 +43,20 @@ public class UserService {
     public Iterable getBusinessesForUser(String username) {
         User loggedInUser = userRepository.findByUsername(username);
 
-        List<Business> businesses = null;
+        System.out.println("------------------------" + loggedInUser.getUsername());
+
+        List<BusinessDTO> businessesDTO = new ArrayList<>();
         for (UserBusiness userBusiness : loggedInUser.getBusinessAssoc()){
-            businesses.add(userBusiness.getBusiness());
+            BusinessDTO businessDTO = new BusinessDTO();
+            businessDTO.setName(userBusiness.getBusiness().getName());
+            businessDTO.setSummary(userBusiness.getBusiness().getSummary());
+            businessDTO.setEmail(userBusiness.getBusiness().getEmail());
+
+            businessesDTO.add(businessDTO);
+            System.out.println("---///---///---" + userBusiness.getBusiness().getId());
         }
 
-        return businesses;
+        return businessesDTO;
     }
 
     public void createUser(User user) {

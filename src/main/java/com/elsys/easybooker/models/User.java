@@ -1,6 +1,8 @@
 package com.elsys.easybooker.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
@@ -47,8 +49,9 @@ public class User {
 //    private Image image;
 
 
-    @OneToMany(mappedBy = "business")
-    private List<UserBusiness> businessAssoc;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<UserBusiness> businessAssoc = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,

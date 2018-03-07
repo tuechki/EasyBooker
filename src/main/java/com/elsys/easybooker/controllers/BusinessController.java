@@ -1,5 +1,6 @@
 package com.elsys.easybooker.controllers;
 
+import com.elsys.easybooker.dtos.BusinessDTO;
 import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
@@ -32,8 +33,8 @@ public class BusinessController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createBusiness(@Valid @RequestBody Business business ) {
-        businessService.createBusiness(business);
+    public void createBusiness(@Valid @RequestBody BusinessDTO businessDTO ) {
+        businessService.createBusiness(businessDTO);
     }
 
     @PutMapping

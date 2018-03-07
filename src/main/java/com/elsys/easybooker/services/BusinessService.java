@@ -1,5 +1,6 @@
 package com.elsys.easybooker.services;
 
+import com.elsys.easybooker.dtos.BusinessDTO;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
 import org.postgresql.util.PGInterval;
@@ -17,17 +18,20 @@ public class BusinessService {
     private final ServiceRepository serviceRepository;
     private final LocationRepository locationRepository;
     private final DayScheduleRepository dayScheduleRepository;
+    private final UsersBusinessesRepository usersBusinessesRepository;
 
     public BusinessService(BusinessRepository businessRepository,
                            UserRepository userRepository,
                            ServiceRepository serviceRepository,
                            LocationRepository locationRepository,
-                           DayScheduleRepository dayScheduleRepository){
+                           DayScheduleRepository dayScheduleRepository,
+                           UsersBusinessesRepository usersBusinessesRepository){
         this.userRepository = userRepository;
         this.businessRepository = businessRepository;
         this.serviceRepository = serviceRepository;
         this.locationRepository = locationRepository;
         this.dayScheduleRepository = dayScheduleRepository;
+        this.usersBusinessesRepository = usersBusinessesRepository;
     }
 
     public Iterable getBusinesses() {
@@ -38,13 +42,31 @@ public class BusinessService {
         return businessRepository.findById(businessId);
     }
 
-    public void createBusiness(Business business ) {
+    public void createBusiness(BusinessDTO businessDTO ) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User owner = userRepository.findByUsername(auth.getName());
 
-        Business businessCreated = businessRepository.save(business);
-        businessCreated.getUserAssoc().add(new UserBusiness(owner, businessCreated, ADMIN));
+        Business business = new Business();
+        business.setName(businessDTO.getName());
+        business.setSummary(businessDTO.getSummary());
+        business.setEmail(businessDTO.getEmail());
+
+        UserBusiness userBusiness = new UserBusiness();
+
+        userBusiness.setBusiness(business);
+        userBusiness.setUser(owner);
+        userBusiness.setPermission(ADMIN);
+        usersBusinessesRepository.save(userBusiness);
+
+        business.getUserAssoc().add(userBusiness);
+        owner.getBusinessAssoc().add(userBusiness);
+        businessRepository.save(business);
+        userRepository.save(owner);
+
+
+        System.out.println(business.getUserAssoc());
+        System.out.println(owner.getBusinessAssoc());
 
     }
 
