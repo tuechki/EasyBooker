@@ -22,15 +22,7 @@ public class LocationDTO {
 
     private String email;
 
-    private PGInterval minTimeBetweenServices;
-
-    private Business business;
-
-    private List<Service> services = new ArrayList<>();
-
-    private List<DaySchedule> scheduleOfDays = new ArrayList<>();
-
-    private List<BookingRecord> bookingRecords = new ArrayList<>();
+    private long businessId;
 
     public LocationDTO(){ }
 
@@ -78,44 +70,12 @@ public class LocationDTO {
         this.email = email;
     }
 
-    public PGInterval getMinTimeBetweenServices() {
-        return minTimeBetweenServices;
+    public long getBusinessId() {
+        return businessId;
     }
 
-    public void setMinTimeBetweenServices(PGInterval minTimeBetweenServices) {
-        this.minTimeBetweenServices = minTimeBetweenServices;
-    }
-
-    public Business getBusiness() {
-        return business;
-    }
-
-    public void setBusiness(Business business) {
-        this.business = business;
-    }
-
-    public List<Service> getServices() {
-        return services;
-    }
-
-    public void setServices(List<Service> services) {
-        this.services = services;
-    }
-
-    public List<DaySchedule> getScheduleOfDays() {
-        return scheduleOfDays;
-    }
-
-    public void setScheduleOfDays(List<DaySchedule> scheduleOfDays) {
-        this.scheduleOfDays = scheduleOfDays;
-    }
-
-    public List<BookingRecord> getBookingRecords() {
-        return bookingRecords;
-    }
-
-    public void setBookingRecords(List<BookingRecord> bookingRecords) {
-        this.bookingRecords = bookingRecords;
+    public void setBusinessId(long businessId) {
+        this.businessId = businessId;
     }
 
     @Override

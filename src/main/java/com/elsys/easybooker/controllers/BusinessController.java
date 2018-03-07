@@ -1,6 +1,8 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.dtos.BusinessDTO;
+import com.elsys.easybooker.dtos.LocationDTO;
+import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
@@ -51,19 +53,19 @@ public class BusinessController {
 
 
     @GetMapping("/{businessId}/services")
-    public List<Service> getBusinessServices(@PathVariable long businessId) {
+    public Iterable getBusinessServices(@PathVariable long businessId) {
        return  businessService.getBusinessServices(businessId);
     }
 
 
     @PostMapping("/{businessId}/services")
-    public void createBusinessService(@PathVariable long businessId, @RequestBody Service service) {
-        businessService.createOrUpdateBusinessService(businessId, service);
+    public void createBusinessService(@PathVariable long businessId, @RequestBody ServiceDTO serviceDTO) {
+        businessService.createOrUpdateBusinessService(businessId, serviceDTO);
     }
 
     @PutMapping("/{businessId}/services")
-    public void updateBusinessService(@PathVariable long businessId, @RequestBody Service service) {
-        businessService.createOrUpdateBusinessService(businessId, service);
+    public void updateBusinessService(@PathVariable long businessId, @RequestBody ServiceDTO serviceDTO) {
+        businessService.createOrUpdateBusinessService(businessId, serviceDTO);
     }
 
     @DeleteMapping("/{businessId}/services")
@@ -78,19 +80,19 @@ public class BusinessController {
 
 
     @GetMapping("/{businessId}/locations")
-    public List<Location> getBusinessLocations(@PathVariable long businessId) {
+    public Iterable getBusinessLocations(@PathVariable long businessId) {
         return businessService.getBusinessLocations(businessId);
     }
 
 
     @PostMapping("/{businessId}/locations")
-    public void createBusinessLocations(@PathVariable long businessId, @RequestBody List<Location> locations) {
-        businessService.createOrUpdateBusinessLocations(businessId, locations);
+    public void createBusinessLocation(@PathVariable long businessId, @RequestBody LocationDTO locationDTO) {
+        businessService.createOrUpdateBusinessLocations(businessId, locationDTO);
     }
 
     @PutMapping("/{businessId}/locations")
-    public void updateBusinessLocations(@PathVariable long businessId,  @RequestBody List<Location> locations) {
-        businessService.createOrUpdateBusinessLocations(businessId, locations);
+    public void updateBusinessLocation(@PathVariable long businessId,  @RequestBody LocationDTO locationDTO) {
+        businessService.createOrUpdateBusinessLocations(businessId, locationDTO);
     }
 
 

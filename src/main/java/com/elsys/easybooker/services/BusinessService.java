@@ -1,12 +1,16 @@
 package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.dtos.BusinessDTO;
+import com.elsys.easybooker.dtos.LocationDTO;
+import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
 import org.postgresql.util.PGInterval;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
+
+import java.util.ArrayList;
 import java.util.List;
 import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 
@@ -82,14 +86,34 @@ public class BusinessService {
 
 
 
-    public List<Service> getBusinessServices(long businessId) {
-        return serviceRepository.findByBusinessId(businessId);
+    public Iterable getBusinessServices(long businessId) {
+         List<ServiceDTO> services = new ArrayList<>();
+        for(Service service: serviceRepository.findByBusinessId(businessId)){
+
+            ServiceDTO serviceDTO = new ServiceDTO();
+            serviceDTO.setId(service.getId());
+            serviceDTO.setName(service.getName());
+            serviceDTO.setSummary(service.getSummary());
+            serviceDTO.setTimeDuration(service.getTimeDuration());
+            serviceDTO.setPrice(service.getPrice());
+
+            services.add(serviceDTO);
+        }
+
+        return services;
     }
 
 
-    public void createOrUpdateBusinessService(long businessId, Service service) throws UnauthorizedClientException{
+    public void createOrUpdateBusinessService(long businessId, ServiceDTO serviceDTO) throws UnauthorizedClientException{
         if(isUserBusinessAdmin(businessId)) {
             Business business = businessRepository.findById(businessId);
+
+            Service service = new Service();
+            service.setName(serviceDTO.getName());
+            service.setSummary(serviceDTO.getSummary());
+            service.setTimeDuration(serviceDTO.getTimeDuration());
+            service.setPrice(serviceDTO.getPrice());
+
             service.setBusiness(business);
             business.getServices().add(service);
             businessRepository.save(business);
@@ -112,8 +136,23 @@ public class BusinessService {
 
 
 
-    public List<Location> getBusinessLocations(long businessId) {
+    public Iterable getBusinessLocations(long businessId) {
        return  locationRepository.findAll();
+
+        List<LocationDTO> services = new ArrayList<>();
+        for(Location location: locationRepository.findByBusinessId(businessId)){
+
+            LocationDTO locationDTO = new ServiceDTO();
+            locationDTO.setId(location.getId());
+            locationDTO.setName(service.getName());
+            locationDTO.setSummary(service.getSummary());
+            locationDTO.setTimeDuration(service.getTimeDuration());
+            locationDTO.setPrice(service.getPrice());
+
+            services.add(serviceDTO);
+        }
+
+        return services;
     }
 
 
