@@ -56,9 +56,9 @@ public class BusinessService {
     }
 
 
-    public void deleteBusinessById(Long id) throws UnauthorizedClientException {
-        if(isUserBusinessAdmin(id)) {
-            businessRepository.delete(id);
+    public void deleteBusinessById(Long businessId) throws UnauthorizedClientException {
+        if(isUserBusinessAdmin(businessId)) {
+            businessRepository.delete(businessId);
         }
     }
 
@@ -106,6 +106,12 @@ public class BusinessService {
             Business business = businessRepository.findById(businessId);
             for (Location location : locations) {
                 location.setBusiness(business);
+                for(Service service : location.getServices()){
+                    service.getLocations().add(location);
+                    serviceRepository.save(service);
+                    location.getServices().add(service);
+                }
+                locationRepository.save(location);
             }
             business.getLocations().addAll(locations);
             businessRepository.save(business);
