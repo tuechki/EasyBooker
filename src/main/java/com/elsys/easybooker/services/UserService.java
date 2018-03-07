@@ -63,16 +63,11 @@ public class UserService {
         userRepository.deleteAll();
     }
 
-    public void deleteUserById(Long userId) {
+    public void deleteUser() {
 
         //TO DO if authorized to delete the user //
-        userRepository.deleteById(userId);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        userRepository.deleteByUsername(auth.getName());
 
-    }
-
-    public void deleteUserByUsername(String username) {
-
-        //TO DO if authorized to delete the user //
-        userRepository.deleteByUsername(username);
     }
 }
