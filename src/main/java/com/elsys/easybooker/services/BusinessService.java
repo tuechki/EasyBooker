@@ -108,25 +108,10 @@ public class BusinessService {
             for (Location location : locations) {
                 location.setBusiness(business);
 
-                setScheduleOfDaysForLocation(location);
+                location = setScheduleOfDaysForLocation(location);
+                location = setMinTimeBetweenServicesForLocation(location);
+                location = saveServicesToLocation(location);
 
-                PGInterval minInterval = location.getServices().get(0).getTimeDuration();
-
-                for(Service service : location.getServices()){
-                    service.getLocations().add(location);
-                    serviceRepository.save(service);
-
-                    if(minInterval.getDays() >= service.getTimeDuration().getDays()){
-                        if(minInterval.getHours() >= service.getTimeDuration().getHours()){
-                            if(minInterval.getMinutes() >= service.getTimeDuration().getMinutes()){
-                                minInterval = service.getTimeDuration();
-                            }
-                        }
-                    }
-
-                    location.setMinTimeBetweenServices(minInterval);
-                    location.getServices().add(service);
-                }
                 locationRepository.save(location);
             }
             business.getLocations().addAll(locations);
@@ -135,15 +120,43 @@ public class BusinessService {
         }
     }
 
-    public void setScheduleOfDaysForLocation (Location location){
+    public Location setScheduleOfDaysForLocation (Location location){
         for(DaySchedule daySchedule : location.getScheduleOfDays()){
             daySchedule.setLocation(location);
             dayScheduleRepository.save(daySchedule);
             location.getScheduleOfDays().add(daySchedule);
         }
+
+        return location;
     }
 
-    
+    public Location setMinTimeBetweenServicesForLocation(Location location){
+        PGInterval minInterval = location.getServices().get(0).getTimeDuration();
+        for(Service service : location.getServices()){
+
+            if(minInterval.getDays() >= service.getTimeDuration().getDays()){
+                if(minInterval.getHours() >= service.getTimeDuration().getHours()){
+                    if(minInterval.getMinutes() >= service.getTimeDuration().getMinutes()){
+                        minInterval = service.getTimeDuration();
+                    }
+                }
+            }
+
+        }
+
+        location.setMinTimeBetweenServices(minInterval);
+        return location;
+    }
+
+    public Location saveServicesToLocation(Location location){
+        for(Service service : location.getServices()){
+            service.getLocations().add(location);
+            serviceRepository.save(service);
+            location.getServices().add(service);
+        }
+
+        return  location;
+    }
 
     public void deleteBusinessLocations(long businessId) throws UnauthorizedClientException{
         if(isUserBusinessAdmin(businessId)) {
