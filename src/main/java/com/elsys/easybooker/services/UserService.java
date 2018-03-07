@@ -36,6 +36,11 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public User getLoggedInUser() throws ResourceNotFoundException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findByUsername(auth.getName());
+    }
+
     public Iterable getBusinessesForLoggedInUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedInUser = userRepository.findByUsername(auth.getName());
