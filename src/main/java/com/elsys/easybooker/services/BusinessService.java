@@ -1,10 +1,7 @@
 package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.models.*;
-import com.elsys.easybooker.repositories.BusinessRepository;
-import com.elsys.easybooker.repositories.LocationRepository;
-import com.elsys.easybooker.repositories.ServiceRepository;
-import com.elsys.easybooker.repositories.UserRepository;
+import com.elsys.easybooker.repositories.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
@@ -18,15 +15,18 @@ public class BusinessService {
     private final UserRepository userRepository;
     private final ServiceRepository serviceRepository;
     private final LocationRepository locationRepository;
+    private final DayScheduleRepository dayScheduleRepository;
 
     public BusinessService(BusinessRepository businessRepository,
                            UserRepository userRepository,
                            ServiceRepository serviceRepository,
-                           LocationRepository locationRepository){
+                           LocationRepository locationRepository,
+                           DayScheduleRepository dayScheduleRepository){
         this.userRepository = userRepository;
         this.businessRepository = businessRepository;
         this.serviceRepository = serviceRepository;
         this.locationRepository = locationRepository;
+        this.dayScheduleRepository = dayScheduleRepository;
     }
 
     public Iterable getBusinesses() {
@@ -106,6 +106,13 @@ public class BusinessService {
             Business business = businessRepository.findById(businessId);
             for (Location location : locations) {
                 location.setBusiness(business);
+
+                for(DaySchedule daySchedule : location.getScheduleOfDays()){
+                    daySchedule.setLocation(location);
+                    dayScheduleRepository.save(daySchedule);
+                    location.getScheduleOfDays().add(daySchedule);
+                }
+
                 for(Service service : location.getServices()){
                     service.getLocations().add(location);
                     serviceRepository.save(service);
