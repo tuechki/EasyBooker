@@ -36,14 +36,9 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public User getLoggedInUser() throws ResourceNotFoundException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userRepository.findByUsername(auth.getName());
-    }
 
-    public Iterable getBusinessesForLoggedInUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User loggedInUser = userRepository.findByUsername(auth.getName());
+    public Iterable getBusinessesForUser(String username) {
+        User loggedInUser = userRepository.findByUsername(username);
 
         List<Business> businesses = null;
         for (UserBusiness userBusiness : loggedInUser.getBusinessAssoc()){
@@ -68,11 +63,10 @@ public class UserService {
         userRepository.deleteAll();
     }
 
-    public void deleteUser() {
+    public void deleteUserByUsername(String username) {
 
         //TO DO if authorized to delete the user //
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userRepository.deleteByUsername(auth.getName());
+        userRepository.deleteByUsername(username);
 
     }
 }
