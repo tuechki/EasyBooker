@@ -48,6 +48,7 @@ public class UserService {
         List<BusinessDTO> businessesDTO = new ArrayList<>();
         for (UserBusiness userBusiness : loggedInUser.getBusinessAssoc()){
             BusinessDTO businessDTO = new BusinessDTO();
+            businessDTO.setId(userBusiness.getBusiness().getId());
             businessDTO.setName(userBusiness.getBusiness().getName());
             businessDTO.setSummary(userBusiness.getBusiness().getSummary());
             businessDTO.setEmail(userBusiness.getBusiness().getEmail());

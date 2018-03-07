@@ -3,11 +3,32 @@ package com.elsys.easybooker.dtos;
 import java.util.Objects;
 
 public class BusinessDTO {
+
+    private long id;
+
     private String name;
 
     private String summary;
 
     private String email;
+
+    public BusinessDTO(){
+
+    }
+
+    public BusinessDTO(String name, String summary, String email){
+        this.name = name;
+        this.summary = summary;
+        this.email = email;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

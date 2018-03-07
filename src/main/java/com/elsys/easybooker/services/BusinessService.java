@@ -63,11 +63,6 @@ public class BusinessService {
         owner.getBusinessAssoc().add(userBusiness);
         businessRepository.save(business);
         userRepository.save(owner);
-
-
-        System.out.println(business.getUserAssoc());
-        System.out.println(owner.getBusinessAssoc());
-
     }
 
     public void updateBusiness( Business business) throws UnauthorizedClientException{
