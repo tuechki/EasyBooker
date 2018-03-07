@@ -1,6 +1,8 @@
 package com.elsys.easybooker.controllers;
 
+import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.Location;
+import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,100 +19,33 @@ public class LocationController {
     private LocationRepository locationRepository;
     @Autowired
     private ServiceRepository serviceRepository;
-//    @Autowired
-//    private LocationsServicesRepository locationsServicesRepository;
-
-
-
-
-
-
-
-
-
-
-    @GetMapping("/{businessId}/locations/{locationId}")
-    public List<Location> getBusinessLocationById(@PathVariable long businessId, @PathVariable long locationId) {
-        // TO DO implement  //
-        return null;
-    }
-
-
-
-
-
-
-
 
     @GetMapping
-    public Iterable findAll(@RequestParam Map<String, String> queryMap) {
-        System.out.println(queryMap.toString());
-        if(queryMap.containsKey("businessId")){
-            return  locationRepository.findByBusinessId(Long.parseLong(queryMap.get("businessId")));
-        }
+    public List<Location> getServices(){
         return locationRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Location findById(@PathVariable long id) {
-        return locationRepository.findById(id);
+    @GetMapping("/{locationId}")
+    public Location getServiceById(@PathVariable long locationId){
+        return locationRepository.findById(locationId);
     }
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Location create(@Valid @RequestBody Location location) {
-//        Location savedLocation = locationRepository.save(location);
-//        List<Service> belongingServices = new ArrayList<>();
-//
-//        for(LocationsServices locSer : locationsServicesRepository.findByLocationId(savedLocation.getId())){
-//            belongingServices.add(serviceRepository.findById(locSer.getServiceId()));
-//        }
-//
-//        for(Service serv : belongingServices){
-//            System.out.println(serv.getName() + "    " + serv.getTimeDuration());
-//        }
-//
-//        return savedLocation;
-//    }
-//
-//    @PostMapping("/{id}/services")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public List<LocationsServices> createServicesToLocation(@Valid @RequestBody List<Service> services, @PathVariable long id) {
-//
-//        PGInterval minInterval = services.get(0).getTimeDuration();
-//
-//        for(Service service : services){
-//
-//            if(minInterval.getDays() >= service.getTimeDuration().getDays()){
-//                if(minInterval.getHours() >= service.getTimeDuration().getHours()){
-//                    if(minInterval.getMinutes() >= service.getTimeDuration().getMinutes()){
-//                        minInterval = service.getTimeDuration();
-//                    }
-//                }
-//            }
-//
-//            LocationsServices locSer = new LocationsServices(id, service.getId());
-//            locationsServicesRepository.save(locSer);
-//        }
-//
-//        locationRepository.findById(id).setMinTimeBetweenServices(minInterval);
-//        return locationsServicesRepository.findByLocationId(id);
-//    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        try {
-            locationRepository.delete(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
+    @GetMapping("/{locationId}/services")
+    public List<Service> getLocationsForService(@PathVariable long locationId) {
+        return locationRepository.findById(locationId).getServices();
 
     }
 
-    @PutMapping("/{id}")
-    public Location update(@RequestBody Location location, @PathVariable Long id) {
+    @GetMapping("/{locationId}/services/{serviceId}/")
+    public Service getLocationsForService(@PathVariable long locationId, @PathVariable long serviceId) {
+        Location location = locationRepository.findById(locationId);
+        Service service = serviceRepository.findById(serviceId);
+        Business business = location.getBusiness();
 
-        return locationRepository.save(location);
+
+
+        return null;
     }
+
 
 }

@@ -100,10 +100,4 @@ public class UserController {
 
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createBusiness(@Valid @RequestBody Business business) {
-       // TO DO userService.createBusiness(business); //
-    }
-
 }
