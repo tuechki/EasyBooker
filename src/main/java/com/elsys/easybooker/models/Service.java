@@ -3,11 +3,11 @@ package com.elsys.easybooker.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.postgresql.util.PGInterval;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "services")
@@ -43,11 +43,13 @@ public class Service {
                     CascadeType.MERGE
             },
             mappedBy = "services")
+    @JsonIgnore
     private List<Location> locations = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "service")
+    @JsonIgnore
     private List<BookingRecord> bookingRecords = new ArrayList<>();
 
     public Service(){ }
@@ -127,17 +129,5 @@ public class Service {
         this.bookingRecords = bookingRecords;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Service)) return false;
-        Service service = (Service) o;
-        return getId() == service.getId();
-    }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(getId());
-    }
 }

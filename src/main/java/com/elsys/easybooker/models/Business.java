@@ -41,11 +41,13 @@ public class Business {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "business")
+    @JsonIgnore
     private List<Service> services = new ArrayList();
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "business")
+    @JsonIgnore
     private List<Location> locations = new ArrayList<>();
 
     @OneToMany(mappedBy = "business")
