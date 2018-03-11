@@ -18,7 +18,7 @@ export class LocationComponent implements OnInit {
 
   change(e, service){
     if(e.checked){
-      this.selectedServices.push(service);
+      this.selectedServices.push(service['id']);
     }
     else{
       let updateItem = this.selectedServices.find(this.findIndexToUpdate, service['name']);
@@ -61,7 +61,6 @@ findIndexToUpdate(service) {
   locations: object[] = [];
 
   location: object = {
-    businessId: this.createBusinessService.getBusinessId(),
     address: '',
     summary: '',
     number: '',
@@ -72,8 +71,8 @@ findIndexToUpdate(service) {
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/services?businessId='
-      + this.createBusinessService.getBusinessId(),
+    this.httpClient.get('http://localhost:8080/businesses/'
+      + this.createBusinessService.getBusinessId() + "/services",
       {observe: 'response'}
     ).subscribe(resp => {
       this.services = resp.body;
@@ -85,7 +84,8 @@ findIndexToUpdate(service) {
   addLocation() {
     this.showSpinner = true;
 
-    this.httpClient.post('http://localhost:8080/locations',
+    this.httpClient.post('http://localhost:8080/businesses/'
+      + this.createBusinessService.getBusinessId() + '/locations',
       this.location,
       {observe: 'response'}
     ).subscribe(resp => {

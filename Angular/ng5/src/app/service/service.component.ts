@@ -15,7 +15,6 @@ export class ServiceComponent{
   services: object[] = [];
 
   service: object =  {
-    businessId: this.createBusinessService.getBusinessId(),
     name: '',
     summary: '',
     timeDuration: '',
@@ -29,7 +28,8 @@ export class ServiceComponent{
   addService() {
     this.showSpinner = true;
 
-    this.httpClient.post('http://localhost:8080/services',
+    this.httpClient.post('http://localhost:8080/businesses/' +
+      this.createBusinessService.getBusinessId() +'/services',
       this.service,
       {observe: 'response'}
     ).subscribe(resp => {
