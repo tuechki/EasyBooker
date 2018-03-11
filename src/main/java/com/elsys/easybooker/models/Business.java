@@ -32,6 +32,7 @@ public class Business {
     private String email;
 
     @Column(name = "cratedAt")
+    @JsonIgnore
     private LocalDate createdAt;
 
 //    @Lob

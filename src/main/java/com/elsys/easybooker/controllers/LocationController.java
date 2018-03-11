@@ -6,6 +6,7 @@ import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
+import com.elsys.easybooker.services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,41 +20,42 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @RequestMapping("/locations")
 public class LocationController {
 
-    @Autowired
-    private LocationRepository locationRepository;
-    @Autowired
-    private ServiceRepository serviceRepository;
+    private final LocationService locationService;
+
+    public LocationController(LocationService locationService) {
+        this.locationService = locationService;
+    }
 
     @GetMapping
-    public List<Location> getServices(){
-        return locationRepository.findAll();
+    public Iterable getLocations(){
+        return locationService.getLocations();
     }
 
     @GetMapping("/{locationId}")
-    public Location getServiceById(@PathVariable long locationId){
-        return locationRepository.findById(locationId);
+    public Location geLocationById(@PathVariable long locationId){
+        return locationService.geLocationById(locationId);
     }
 
     @GetMapping("/{locationId}/services")
-    public List<Service> getLocationsForService(@PathVariable long locationId) {
-        return locationRepository.findById(locationId).getServices();
+    public List<Service> getServicesForLocation(@PathVariable long locationId) {
+        return locationService.getServicesForLocation(locationId);
 
     }
 
     @PostMapping("/{locationId}/services")
-    public List<Service> getLocationsForService(@PathVariable long locationId, @RequestBody List<ServiceDTO> servicesDTO) {
-        return null;
+    public void createServicesForLocation(@PathVariable long locationId, @RequestBody List<Long> serviceIds) {
+        locationService.addServicesForLocation(locationId, serviceIds);
 
     }
 
     @GetMapping("/{locationId}/services/{serviceId}/freeHours")
-    public long getLocationsForService(@PathVariable long locationId, @PathVariable long serviceId,
+    public void getLocationsForService(@PathVariable long locationId, @PathVariable long serviceId,
                                           @RequestBody LocalDate dateForBooking ) {
-        Location location = locationRepository.findById(locationId);
-        Service service = serviceRepository.findById(serviceId);
-        Business business = location.getBusiness();
-
-        return  DAYS.between(business.getCreatedAt(), dateForBooking);
+//        Location location = locationRepository.findById(locationId);
+//        Service service = serviceRepository.findById(serviceId);
+//        Business business = location.getBusiness();
+//
+//        return  DAYS.between(business.getCreatedAt(), dateForBooking);
 
     }
 
