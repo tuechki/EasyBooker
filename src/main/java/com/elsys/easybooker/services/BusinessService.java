@@ -96,6 +96,7 @@ public class BusinessService {
             serviceDTO.setSummary(service.getSummary());
             serviceDTO.setTimeDuration(service.getTimeDuration());
             serviceDTO.setPrice(service.getPrice());
+            serviceDTO.setBusinessId(service.getBusiness().getId());
 
             services.add(serviceDTO);
         }
@@ -137,39 +138,46 @@ public class BusinessService {
 
 
     public Iterable getBusinessLocations(long businessId) {
-       return  locationRepository.findAll();
 
-        List<LocationDTO> services = new ArrayList<>();
+        List<LocationDTO> locationsDTO = new ArrayList<>();
         for(Location location: locationRepository.findByBusinessId(businessId)){
 
-            LocationDTO locationDTO = new ServiceDTO();
+            LocationDTO locationDTO = new LocationDTO();
             locationDTO.setId(location.getId());
-            locationDTO.setName(service.getName());
-            locationDTO.setSummary(service.getSummary());
-            locationDTO.setTimeDuration(service.getTimeDuration());
-            locationDTO.setPrice(service.getPrice());
+            locationDTO.setAddress(location.getAddress());
+            locationDTO.setSummary(location.getSummary());
+            locationDTO.setEmail(location.getEmail());
+            locationDTO.setNumber(location.getNumber());
+            locationDTO.setBusinessId(location.getBusiness().getId());
 
-            services.add(serviceDTO);
+            locationsDTO.add(locationDTO);
         }
 
-        return services;
+        return locationsDTO;
     }
 
 
-    public void createOrUpdateBusinessLocations(long businessId, List<Location> locations) throws UnauthorizedClientException {
+    public void createOrUpdateBusinessLocations(long businessId, LocationDTO locationDTO) throws UnauthorizedClientException {
         if(isUserBusinessAdmin(businessId)) {
             Business business = businessRepository.findById(businessId);
-            for (Location location : locations) {
+
+                Location location = new Location();
+                location.setAddress(locationDTO.getAddress());
+                location.setSummary(locationDTO.getSummary());
+                location.setEmail(locationDTO.getEmail());
+                location.setNumber(locationDTO.getNumber());
                 location.setBusiness(business);
+                location.setServices(locationDTO.getServices());
+                location.setScheduleOfDays(locationDTO.getSchedulesOfDays());
 
                 location = setScheduleOfDaysForLocation(location);
                 location = setMinTimeBetweenServicesForLocation(location);
                 location = saveServicesToLocation(location);
 
                 locationRepository.save(location);
-            }
-            business.getLocations().addAll(locations);
-            businessRepository.save(business);
+
+                business.getLocations().add(location);
+                businessRepository.save(business);
 
         }
     }

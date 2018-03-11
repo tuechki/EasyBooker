@@ -1,5 +1,6 @@
 package com.elsys.easybooker.controllers;
 
+import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
@@ -36,6 +37,12 @@ public class LocationController {
     @GetMapping("/{locationId}/services")
     public List<Service> getLocationsForService(@PathVariable long locationId) {
         return locationRepository.findById(locationId).getServices();
+
+    }
+
+    @PostMapping("/{locationId}/services")
+    public List<Service> getLocationsForService(@PathVariable long locationId, @RequestBody List<ServiceDTO> servicesDTO) {
+        return null;
 
     }
 

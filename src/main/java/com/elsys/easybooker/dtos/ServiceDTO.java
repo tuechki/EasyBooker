@@ -16,6 +16,8 @@ public class ServiceDTO {
 
     private double price;
 
+    private long businessId;
+
     public ServiceDTO(){
 
     }
@@ -67,6 +69,13 @@ public class ServiceDTO {
         this.price = price;
     }
 
+    public long getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(long businessId) {
+        this.businessId = businessId;
+    }
 
     @Override
     public boolean equals(Object o) {

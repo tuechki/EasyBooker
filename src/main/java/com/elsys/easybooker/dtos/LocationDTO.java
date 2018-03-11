@@ -24,6 +24,10 @@ public class LocationDTO {
 
     private long businessId;
 
+    private List<Service> services = new ArrayList<>();
+
+    private List<DaySchedule> schedulesOfDays = new ArrayList<>();
+
     public LocationDTO(){ }
 
     public LocationDTO(long id){
@@ -76,6 +80,22 @@ public class LocationDTO {
 
     public void setBusinessId(long businessId) {
         this.businessId = businessId;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public List<DaySchedule> getSchedulesOfDays() {
+        return schedulesOfDays;
+    }
+
+    public void setSchedulesOfDays(List<DaySchedule> schedulesOfDays) {
+        this.schedulesOfDays = schedulesOfDays;
     }
 
     @Override
