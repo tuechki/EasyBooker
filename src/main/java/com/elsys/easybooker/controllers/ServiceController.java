@@ -1,9 +1,6 @@
 package com.elsys.easybooker.controllers;
-
-import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
-import com.elsys.easybooker.repositories.ServiceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.elsys.easybooker.services.ServiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,23 +12,25 @@ import java.util.Map;
 @RequestMapping("/services")
 public class ServiceController {
 
-    @Autowired
-    private ServiceRepository serviceRepository;
+    private final ServiceService serviceService;
+
+    public ServiceController(ServiceService serviceService) {
+        this.serviceService = serviceService;
+    }
 
     @GetMapping
-    public List<Service> getServices(){
-        return serviceRepository.findAll();
+    public Iterable getServices(){
+        return serviceService.getServices();
     }
 
     @GetMapping("/{serviceId}")
     public Service getServiceById(@PathVariable long serviceId){
-        return serviceRepository.findById(serviceId);
+        return serviceService.getServiceById(serviceId);
     }
 
     @GetMapping("/{serviceId}/locations")
-    public List<Location> getLocationsForService(@PathVariable long serviceId){
-        //TO DO Implement //
-        return null;
+    public Iterable getLocationsForService(@PathVariable long serviceId){
+        return serviceService.getLocationsForService(serviceId);
     }
 
 

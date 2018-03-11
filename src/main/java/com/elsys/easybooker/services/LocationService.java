@@ -7,6 +7,7 @@ import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -34,8 +35,19 @@ public class LocationService {
 
     }
 
-    public void addServicesForLocation(long locationId, List<Long> serviceIds) {
+    public void addServicesToLocation(long locationId, List<Long> serviceIds) {
 
+        Location location = locationRepository.findById(locationId);
+        List<Service> servicesForLocation = new ArrayList<>();
+
+        for(Long serviceId : serviceIds){
+          Service service = serviceRepository.findById(serviceId);
+          service.getLocations().add(location);
+          servicesForLocation.add(service);
+        }
+
+        location.setServices(servicesForLocation);
+        locationRepository.save(location);
 
     }
 }

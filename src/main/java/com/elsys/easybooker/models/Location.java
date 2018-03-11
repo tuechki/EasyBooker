@@ -2,6 +2,8 @@ package com.elsys.easybooker.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.postgresql.util.PGInterval;
 
 import java.util.*;
@@ -34,6 +36,7 @@ public class Location {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_id", nullable = false)
+    @JsonIgnore
     private Business business;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -44,6 +47,7 @@ public class Location {
     @JoinTable(name = "locations_services",
             joinColumns = { @JoinColumn(name = "location_id") },
             inverseJoinColumns = { @JoinColumn(name = "service_id") })
+    @JsonIgnore
     private List<Service> services = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,
@@ -54,6 +58,7 @@ public class Location {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "location")
+    @JsonIgnore
     private List<BookingRecord> bookingRecords = new ArrayList<>();
 
     public Location(){ }

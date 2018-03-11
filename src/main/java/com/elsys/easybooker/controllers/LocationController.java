@@ -43,8 +43,8 @@ public class LocationController {
     }
 
     @PostMapping("/{locationId}/services")
-    public void createServicesForLocation(@PathVariable long locationId, @RequestBody List<Long> serviceIds) {
-        locationService.addServicesForLocation(locationId, serviceIds);
+    public void addServicesToLocation(@PathVariable long locationId, @RequestBody List<Long> serviceIds) {
+        locationService.addServicesToLocation(locationId, serviceIds);
 
     }
 

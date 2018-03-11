@@ -167,12 +167,12 @@ public class BusinessService {
                 location.setEmail(locationDTO.getEmail());
                 location.setNumber(locationDTO.getNumber());
                 location.setBusiness(business);
-                location.setServices(locationDTO.getServices());
-                location.setScheduleOfDays(locationDTO.getSchedulesOfDays());
+//                location.setServices(locationDTO.getServices());
+//                location.setScheduleOfDays(locationDTO.getSchedulesOfDays());
 
-                location = setScheduleOfDaysForLocation(location);
-                location = setMinTimeBetweenServicesForLocation(location);
-                location = saveServicesToLocation(location);
+//                location = setScheduleOfDaysForLocation(location);
+//                location = setMinTimeBetweenServicesForLocation(location);
+//                location = saveServicesToLocation(location);
 
                 locationRepository.save(location);
 
