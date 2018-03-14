@@ -1,4 +1,5 @@
 package com.elsys.easybooker.controllers;
+import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.services.ServiceService;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,11 @@ public class ServiceController {
     @GetMapping("/{serviceId}/locations")
     public Iterable getLocationsForService(@PathVariable long serviceId){
         return serviceService.getLocationsForService(serviceId);
+    }
+
+    @GetMapping("/{serviceId}/business")
+    public Business getBusinessForService(@PathVariable long serviceId){
+        return serviceService.getBusinessForService(serviceId);
     }
 
 

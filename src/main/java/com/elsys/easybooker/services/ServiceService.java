@@ -1,5 +1,7 @@
 package com.elsys.easybooker.services;
 
+import com.elsys.easybooker.models.Business;
+import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
@@ -29,5 +31,10 @@ public class ServiceService {
 
     public Iterable getLocationsForService( long serviceId){
         return serviceRepository.findById(serviceId).getLocations();
+    }
+
+    public Business getBusinessForService(long serviceId){
+        Service service = serviceRepository.findById(serviceId);
+        return service.getBusiness();
     }
 }
