@@ -35,8 +35,8 @@ public class BusinessController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createBusiness(@Valid @RequestBody BusinessDTO businessDTO ) {
-        businessService.createBusiness(businessDTO);
+    public Business createBusiness(@Valid @RequestBody BusinessDTO businessDTO ) {
+       return  businessService.createBusiness(businessDTO);
     }
 
     @PutMapping

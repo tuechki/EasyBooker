@@ -46,7 +46,7 @@ public class BusinessService {
         return businessRepository.findById(businessId);
     }
 
-    public void createBusiness(BusinessDTO businessDTO ) {
+    public Business createBusiness(BusinessDTO businessDTO ) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User owner = userRepository.findByUsername(auth.getName());
@@ -65,8 +65,9 @@ public class BusinessService {
 
         business.getUserAssoc().add(userBusiness);
         owner.getBusinessAssoc().add(userBusiness);
-        businessRepository.save(business);
         userRepository.save(owner);
+        return businessRepository.save(business);
+
     }
 
     public void updateBusiness( Business business) throws UnauthorizedClientException{
@@ -106,20 +107,25 @@ public class BusinessService {
 
 
     public void createOrUpdateBusinessService(long businessId, ServiceDTO serviceDTO) throws UnauthorizedClientException{
+
+        Service service = new Service();
+
         if(isUserBusinessAdmin(businessId)) {
             Business business = businessRepository.findById(businessId);
 
-            Service service = new Service();
             service.setName(serviceDTO.getName());
             service.setSummary(serviceDTO.getSummary());
             service.setTimeDuration(serviceDTO.getTimeDuration());
             service.setPrice(serviceDTO.getPrice());
 
             service.setBusiness(business);
+            service = serviceRepository.save(service);
+
             business.getServices().add(service);
             businessRepository.save(business);
-        }
 
+
+        }
     }
 
     public void deleteBusinessServices(long businessId) throws UnauthorizedClientException{
