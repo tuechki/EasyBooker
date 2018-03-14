@@ -1,19 +1,19 @@
 <mat-card>
   <mat-card-content>
-    <h2 class="example-h2">{{business.name}}</h2>
+    <h2 class="example-h2">{{location.address}}</h2>
     <mat-tab-group class="demo-tab-group">
-      <mat-tab label="Business info">
+      <mat-tab label="Location info">
         <div class="demo-tab-content">
-          {{business.summary}}
+          {{location.summary}}
           <br>
           <br>
-          <p> Email: {{business.email}} </p>
+          <p> Email: {{location.email}} </p>
         </div>
       </mat-tab>
-      <mat-tab label="Locations">
+      <mat-tab label="Day schedule">
         <div class="col">
-        <span *ngFor="let location of locations">
-          <button mat-raised-button (click)="showLocation(location)">{{location['address']}}</button> <br>
+        <span *ngFor="let scheduleOfDay of scheduleOfDays">
+          <button mat-raised-button >{{location['openTime']}}</button> <br>
         </span>
         </div>
       </mat-tab>
@@ -23,9 +23,6 @@
           <button mat-raised-button >{{service['name']}} timeDuration: {{(service['timeDuration'])['hours']}}</button> <br>
         </span>
         </div>
-      </mat-tab>
-      <mat-tab label="Employees">
-        No content
       </mat-tab>
 
     </mat-tab-group>

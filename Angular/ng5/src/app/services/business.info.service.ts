@@ -4,17 +4,43 @@ import { Injectable } from '@angular/core';
 export class BusinessInfoService {
 
   private currentBusiness: any;
+  private currentLocation: any;
+  private currentService: any;
 
   public getCurrentBusiness(){
     return this.currentBusiness;
   }
 
-  public setCurrentBusiness(currentBusiness){
-    this.currentBusiness = currentBusiness;
+  public setCurrentBusiness(business){
+    this.currentBusiness = business;
   }
 
   public clearCurrentBusiness() {
     this.currentBusiness = null;
+  }
+
+  public getCurrentLocation(){
+    return this.currentLocation;
+  }
+
+  public setCurrentLocation(location){
+    this.currentLocation = location;
+  }
+
+  public clearCurrentLocation() {
+    this.currentLocation = null;
+  }
+
+  public getCurrentService(){
+    return this.currentService;
+  }
+
+  public setCurrentService(service){
+    this.currentService = service;
+  }
+
+  public clearCurrentService() {
+    this.currentLocation = null;
   }
 
 }

@@ -56,6 +56,16 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['business-info']);
   }
 
+  showLocation(location){
+    this.businessInfoService.setCurrentLocation(location);
+    this.router.navigate(['location-info']);
+  }
+
+  showService(service){
+    this.businessInfoService.setCurrentService(service);
+    this.router.navigate(['service-info']);
+  }
+
   addItem(){
     this.goals.push(this.goalText);
     this.goalText = "";

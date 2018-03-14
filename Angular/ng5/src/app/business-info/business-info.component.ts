@@ -38,6 +38,10 @@ export class BusinessInfoComponent implements OnInit {
     });
   }
 
+  showLocation(location){
+    this.businessInfoService.setCurrentLocation(location);
+    this.router.navigate(['location-info']);
+  }
 
 
 }

@@ -28,6 +28,7 @@ import { BusinessInfoService } from './services/business.info.service';
 import {UploadService} from "./services/upload.service";
 import {FileUploadModule} from 'primeng/fileupload';
 import { DataTableModule } from 'primeng/primeng';
+import { LocationInfoComponent } from './location-info/location-info.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DataTableModule } from 'primeng/primeng';
     LocationComponent,
     AuthComponent,
     ServiceComponent,
-    BusinessInfoComponent
+    BusinessInfoComponent,
+    LocationInfoComponent
   ],
   imports: [
     BrowserModule,

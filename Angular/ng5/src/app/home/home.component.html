@@ -13,7 +13,7 @@
       <mat-tab label="Locations">
         <div class="col">
         <span *ngFor="let location of locations">
-          <button mat-raised-button >{{location['address']}}</button> <br>
+          <button mat-raised-button (click)="showLocation(location)">{{location['address']}}</button> <br>
         </span>
         </div>
       </mat-tab>
