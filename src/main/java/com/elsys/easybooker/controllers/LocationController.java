@@ -32,8 +32,13 @@ public class LocationController {
     }
 
     @GetMapping("/{locationId}")
-    public Location geLocationById(@PathVariable long locationId){
-        return locationService.geLocationById(locationId);
+    public Location getLocationById(@PathVariable long locationId){
+        return locationService.getLocationById(locationId);
+    }
+
+    @GetMapping("/{locationId}/business")
+    public Business getBusinessForLocation(@PathVariable long locationId){
+        return locationService.getBusinessForLocation(locationId);
     }
 
     @GetMapping("/{locationId}/services")

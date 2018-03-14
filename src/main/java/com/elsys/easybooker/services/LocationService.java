@@ -2,6 +2,7 @@ package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.dtos.LocationDTO;
 import com.elsys.easybooker.dtos.ServiceDTO;
+import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.repositories.LocationRepository;
@@ -26,8 +27,13 @@ public class LocationService {
         return locationRepository.findAll();
     }
 
-    public Location geLocationById(long locationId){
+    public Location getLocationById(long locationId){
         return locationRepository.findById(locationId);
+    }
+
+    public Business getBusinessForLocation(long locationId){
+        Location location = locationRepository.findById(locationId);
+        return location.getBusiness();
     }
 
     public List<Service> getServicesForLocation(long locationId) {
