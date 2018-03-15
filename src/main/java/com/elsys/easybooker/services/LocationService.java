@@ -1,5 +1,6 @@
 package com.elsys.easybooker.services;
 
+import com.elsys.easybooker.dtos.BusinessDTO;
 import com.elsys.easybooker.dtos.LocationDTO;
 import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.models.Business;
@@ -31,9 +32,17 @@ public class LocationService {
         return locationRepository.findById(locationId);
     }
 
-    public Business getBusinessForLocation(long locationId){
+    public BusinessDTO getBusinessForLocation(long locationId){
         Location location = locationRepository.findById(locationId);
-        return location.getBusiness();
+        Business business = location.getBusiness();
+        BusinessDTO businessDTO = new BusinessDTO();
+        businessDTO.setId(business.getId());
+        businessDTO.setName(business.getName());
+        businessDTO.setSummary(business.getSummary());
+        businessDTO.setEmail(business.getEmail());
+
+        return businessDTO;
+
     }
 
     public List<Service> getServicesForLocation(long locationId) {
