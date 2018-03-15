@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BusinessInfoService} from "../services/business.info.service";
 import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
+import {error} from "util";
 
 @Component({
   selector: 'app-location-info',
@@ -13,7 +14,6 @@ export class LocationInfoComponent implements OnInit {
 
   location: any;
   services: any;
-  business: any;
 
   constructor(private httpClient: HttpClient, private router: Router,
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
@@ -33,5 +33,15 @@ export class LocationInfoComponent implements OnInit {
   }
 
 
+  goToBusiness(){
+    this.httpClient.get('http://localhost:8080/locations/'
+      + this.businessInfoService.getCurrentLocation()['id'] + "/business",
+      {observe: 'response'}
+    ).subscribe(resp => {
+      this.businessInfoService.setCurrentBusiness(resp.body);
+      this.router.navigate(['business-info']);
+    });
+
+  }
 
 }
