@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class BusinessInfoService {
 
-  private currentBusiness: any;
-  private currentLocation: any;
-  private currentService: any;
+  private currentBusiness: any = null;
+  private currentLocation: any = null;
+  private currentService: any = null;
 
   public getCurrentBusiness(){
     return this.currentBusiness;

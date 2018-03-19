@@ -63,7 +63,9 @@ export class HomeComponent implements OnInit {
 
   showService(service){
     this.businessInfoService.setCurrentService(service);
+    this.businessInfoService.clearCurrentLocation();
     this.router.navigate(['service-info']);
+
   }
 
   addItem(){

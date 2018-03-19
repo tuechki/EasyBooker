@@ -32,7 +32,6 @@ export class LocationInfoComponent implements OnInit {
 
   }
 
-
   goToBusiness(){
     this.httpClient.get('http://localhost:8080/locations/'
       + this.businessInfoService.getCurrentLocation()['id'] + "/business",
@@ -42,6 +41,11 @@ export class LocationInfoComponent implements OnInit {
       this.router.navigate(['business-info']);
     });
 
+  }
+
+  showService(service){
+    this.businessInfoService.setCurrentService(service);
+    this.router.navigate(['service-info']);
   }
 
 }

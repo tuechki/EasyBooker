@@ -21,7 +21,8 @@
       <mat-tab label="Services">
         <div class="col">
         <span *ngFor="let service of services">
-          <button mat-raised-button >{{service['name']}} timeDuration: {{(service['timeDuration'])['hours']}}</button> <br>
+          <button mat-raised-button (click)="showService(service)">{{service['name']}}
+            timeDuration: {{(service['timeDuration'])['hours']}}</button> <br>
         </span>
         </div>
       </mat-tab>
@@ -29,3 +30,7 @@
     </mat-tab-group>
   </mat-card-content>
 </mat-card>
+
+<ng-container *ngIf="this.businessInfoService.getCurrentService()">
+  <button mat-button>BOOK IT !</button>
+</ng-container>

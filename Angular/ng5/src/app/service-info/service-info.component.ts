@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {BusinessInfoService} from "../services/business.info.service";
+import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-service-info',
@@ -7,9 +11,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceInfoComponent implements OnInit {
 
-  constructor() { }
+
+  service: any;
+  locations: any;
+
+  constructor(private httpClient: HttpClient, private router: Router,
+              public authService: AuthService, public businessInfoService: BusinessInfoService) { }
 
   ngOnInit() {
+    this.service = this.businessInfoService.getCurrentService();
+
+    this.httpClient.get('http://localhost:8080/services/'
+      + this.businessInfoService.getCurrentService()['id'] + "/locations",
+      {observe: 'response'}
+    ).subscribe(resp => {
+      this.locations = resp.body;
+    });
+
+  }
+
+  goToBusiness(){
+    this.httpClient.get('http://localhost:8080/services/'
+      + this.businessInfoService.getCurrentService()['id'] + "/business",
+      {observe: 'response'}
+    ).subscribe(resp => {
+      this.businessInfoService.setCurrentBusiness(resp.body);
+      this.router.navigate(['business-info']);
+    });
+
+  }
+
+  showLocation(location){
+    this.businessInfoService.setCurrentLocation(location);
+    this.router.navigate(['location-info']);
   }
 
 }
