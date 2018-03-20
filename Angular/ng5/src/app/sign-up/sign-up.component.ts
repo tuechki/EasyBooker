@@ -43,7 +43,7 @@ export class SignUpComponent implements OnInit {
     this.showSpinner = true;
     console.log(this.user['firstName']);
 
-    this.httpClient.post('http://localhost:8080/users/sign-up',
+    this.httpClient.post('http://localhost:8080/users',
       this.user,
       {observe: 'response'}).subscribe(resp => {
               console.log(resp.headers);

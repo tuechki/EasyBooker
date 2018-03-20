@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-    this.showSpinner = true;
+    this.showSpinner =   true;
 
     this.httpClient.post('http://localhost:8080/login',
       {

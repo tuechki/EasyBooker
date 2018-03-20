@@ -6,19 +6,16 @@ import javax.validation.constraints.NotNull;
 import org.postgresql.util.PGInterval;
 
 import java.sql.Time;
+import java.util.Objects;
 
 @Entity
-@Table(name = "DaySchedule")
+@Table(name = "day_schedules")
 public class DaySchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-
-    @NotNull
-    @Column(name = "locationId")
-    private long locationId;
 
     @NotNull
     @Column(name = "dayOfWeek")
@@ -31,6 +28,10 @@ public class DaySchedule {
     @Column(name = "CloseTime")
     private Time closeTime;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
+
     public DaySchedule(){ }
 
     public DaySchedule(long id){
@@ -38,9 +39,7 @@ public class DaySchedule {
     }
 
 
-    public DaySchedule(long locationIdId,
-                   int dayOfWeek, Time openTime, Time closeTime){
-        this.locationId = locationIdId;
+    public DaySchedule(int dayOfWeek, Time openTime, Time closeTime){
         this.dayOfWeek = dayOfWeek;
         this.openTime = openTime;
         this.closeTime = closeTime;
@@ -53,14 +52,6 @@ public class DaySchedule {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(long locationId) {
-        this.locationId = locationId;
     }
 
     public int getDayOfWeek() {
@@ -85,5 +76,29 @@ public class DaySchedule {
 
     public void setCloseTime(Time closeTime) {
         this.closeTime = closeTime;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DaySchedule)) return false;
+        DaySchedule that = (DaySchedule) o;
+        return getId() == that.getId() &&
+                getDayOfWeek() == that.getDayOfWeek() &&
+                Objects.equals(getLocation(), that.getLocation());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getDayOfWeek(), getLocation());
     }
 }

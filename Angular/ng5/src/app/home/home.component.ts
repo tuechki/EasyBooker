@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   goalText: string = "My first goal...";
   goals = ['asdasd', 'anotherThing'];
   businesses: any;
+  locations: any;
+  services: any;
 
   constructor(private httpClient: HttpClient, private router: Router,
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
@@ -30,12 +32,40 @@ export class HomeComponent implements OnInit {
           this.businesses = resp.body;
         }
       )
+
+    this.httpClient.get('http://localhost:8080/locations', {observe: 'response'})
+      .subscribe(resp => {
+          console.log(resp.headers);
+          console.log(resp.body);
+          this.locations = resp.body;
+        }
+      )
+
+    this.httpClient.get('http://localhost:8080/services', {observe: 'response'})
+      .subscribe(resp => {
+          console.log(resp.headers);
+          console.log(resp.body);
+          this.services = resp.body;
+        }
+      )
   }
 
   showBusiness(business){
     console.log(business);
     this.businessInfoService.setCurrentBusiness(business);
     this.router.navigate(['business-info']);
+  }
+
+  showLocation(location){
+    this.businessInfoService.setCurrentLocation(location);
+    this.router.navigate(['location-info']);
+  }
+
+  showService(service){
+    this.businessInfoService.setCurrentService(service);
+    this.businessInfoService.clearCurrentLocation();
+    this.router.navigate(['service-info']);
+
   }
 
   addItem(){

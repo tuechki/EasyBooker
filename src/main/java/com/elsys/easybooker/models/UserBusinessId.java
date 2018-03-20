@@ -2,30 +2,29 @@ package com.elsys.easybooker.models;
 
 import java.io.Serializable;
 
-public class LocationsServicesId implements Serializable{
-    private long locationId;
-    private long serviceId;
+public class UserBusinessId  implements Serializable{
+    private long user;
+    private long business;
 
-    public LocationsServicesId(){}
+    public UserBusinessId(){}
 
-    public LocationsServicesId(long locationId, long serviceId){
-        this.locationId = locationId;
-        this.serviceId = serviceId;
-
+    public UserBusinessId(long user, long business){
+        this.user = user;
+        this.business = business;
     }
 
-    public long getLocationId() {
-        return locationId;
+    public long getUser() {
+        return user;
     }
 
-    public long getServiceId() {
-        return serviceId;
+    public long getBusiness() {
+        return business;
     }
 
     @Override
     public int hashCode() {
-        Long locationIdLong = new Long(locationId);
-        Long serviceIdLong = new Long(serviceId);
+        Long locationIdLong = new Long(business);
+        Long serviceIdLong = new Long(user);
         final int prime = 31;
         int result = 1;
         result = prime * result + locationIdLong.hashCode();
@@ -41,12 +40,12 @@ public class LocationsServicesId implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        LocationsServicesId other = (LocationsServicesId) obj;
+        UserBusinessId other = (UserBusinessId) obj;
 
-        if(other.getLocationId() != this.locationId){
+        if(other.getBusiness() != this.business){
             return false;
         }else {
-            if(other.getServiceId() != this.serviceId){
+            if(other.getUser() != this.user){
                 return false;
             }
 

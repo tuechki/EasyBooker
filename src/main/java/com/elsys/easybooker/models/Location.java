@@ -2,20 +2,20 @@ package com.elsys.easybooker.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.postgresql.util.PGInterval;
 
+import java.util.*;
+
 @Entity
-@Table(name = "Locations")
+@Table(name = "locations")
 public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-
-    @NotNull
-    @Column(name = "businessId")
-    private long businessId;
 
     @NotNull
     @Column(name = "address")
@@ -34,14 +34,40 @@ public class Location {
     @Column(name = "minTimeBetweenServices")
     private PGInterval minTimeBetweenServices;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id", nullable = false)
+    @JsonIgnore
+    private Business business;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "locations_services",
+            joinColumns = { @JoinColumn(name = "location_id") },
+            inverseJoinColumns = { @JoinColumn(name = "service_id") })
+    @JsonIgnore
+    private List<Service> services = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "location")
+    private List<DaySchedule> scheduleOfDays = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "location")
+    @JsonIgnore
+    private List<BookingRecord> bookingRecords = new ArrayList<>();
+
     public Location(){ }
 
     public Location(long id){
         this.id = id;
     }
 
-    public Location(long businessId, String address, String summary, String email){
-        this.businessId = businessId;
+    public Location(String address, String summary, String email){
         this.address = address;
         this.summary = summary;
         this.email = email;
@@ -54,14 +80,6 @@ public class Location {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getBusinessId() {
-        return businessId;
-    }
-
-    public void setBusinessId(long businessId) {
-        this.businessId = businessId;
     }
 
     public String getAddress() {
@@ -102,5 +120,51 @@ public class Location {
 
     public void setMinTimeBetweenServices(PGInterval minTimeBetweenServices){
         this.minTimeBetweenServices = minTimeBetweenServices;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public List<DaySchedule> getScheduleOfDays() {
+        return scheduleOfDays;
+    }
+
+    public void setScheduleOfDays(List<DaySchedule> scheduleOfDays) {
+        this.scheduleOfDays = scheduleOfDays;
+    }
+
+    public List<BookingRecord> getBookingRecords() {
+        return bookingRecords;
+    }
+
+    public void setBookingRecords(List<BookingRecord> bookingRecords) {
+        this.bookingRecords = bookingRecords;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Location)) return false;
+        Location location = (Location) o;
+        return getId() == location.getId();
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId());
     }
 }

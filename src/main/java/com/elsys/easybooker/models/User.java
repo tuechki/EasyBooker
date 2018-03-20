@@ -1,13 +1,17 @@
 package com.elsys.easybooker.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.awt.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,6 +49,14 @@ public class User {
 //    private Image image;
 
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<UserBusiness> businessAssoc = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private List<BookingRecord> bookingRecords = new ArrayList<>();
 
 
     public User(){ }
@@ -146,5 +158,35 @@ public class User {
         return this.firstName.concat(this.lastName);
     }
 
+    public List<UserBusiness> getBusinessAssoc() {
+        return businessAssoc;
+    }
 
+    public void setBusinessAssoc(List<UserBusiness> businessAssoc) {
+        this.businessAssoc = businessAssoc;
+    }
+
+    public List<BookingRecord> getBookingRecords() {
+        return bookingRecords;
+    }
+
+    public void setBookingRecords(List<BookingRecord> bookingRecords) {
+        this.bookingRecords = bookingRecords;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId() == user.getId() &&
+                Objects.equals(getUsername(), user.getUsername()) &&
+                Objects.equals(getEmail(), user.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getUsername(), getEmail());
+    }
 }

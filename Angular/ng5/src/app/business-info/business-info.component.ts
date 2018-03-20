@@ -21,8 +21,8 @@ export class BusinessInfoComponent implements OnInit {
   ngOnInit() {
     this.business = this.businessInfoService.getCurrentBusiness();
 
-    this.httpClient.get('http://localhost:8080/services?businessId='
-      + this.businessInfoService.getCurrentBusiness()['id'],
+    this.httpClient.get('http://localhost:8080/businesses/'
+      + this.businessInfoService.getCurrentBusiness()['id'] + "/services",
       {observe: 'response'}
     ).subscribe(resp => {
       this.services = resp.body;
@@ -30,14 +30,18 @@ export class BusinessInfoComponent implements OnInit {
       console.log(resp.body);
     });
 
-    this.httpClient.get('http://localhost:8080/locations?businessId='
-      + this.businessInfoService.getCurrentBusiness()['id'],
+    this.httpClient.get('http://localhost:8080/businesses/'
+      + this.businessInfoService.getCurrentBusiness()['id'] + "/locations",
       {observe: 'response'}
     ).subscribe(resp => {
       this.locations = resp.body;
     });
   }
 
+  showLocation(location){
+    this.businessInfoService.setCurrentLocation(location);
+    this.router.navigate(['location-info']);
+  }
 
 
 }

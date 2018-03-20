@@ -1,56 +1,43 @@
 package com.elsys.easybooker.controllers;
-
+import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.Service;
-import com.elsys.easybooker.repositories.ServiceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.elsys.easybooker.services.ServiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/services")
 public class ServiceController {
 
-    @Autowired
-    private ServiceRepository serviceRepository;
+    private final ServiceService serviceService;
+
+    public ServiceController(ServiceService serviceService) {
+        this.serviceService = serviceService;
+    }
 
     @GetMapping
-    public Iterable findAll(@RequestParam Map<String, String> queryMap) {
-
-        System.out.println(queryMap.toString());
-        if(queryMap.containsKey("businessId")){
-           return  serviceRepository.findByBusinessId(Long.parseLong(queryMap.get("businessId")));
-        }
-        return serviceRepository.findAll();
+    public Iterable getServices(){
+        return serviceService.getServices();
     }
 
-    @GetMapping("/{id}")
-    public Service findById(@PathVariable long id) {
-        return serviceRepository.findById(id);
+    @GetMapping("/{serviceId}")
+    public Service getServiceById(@PathVariable long serviceId){
+        return serviceService.getServiceById(serviceId);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Service create(@Valid @RequestBody Service service) {
-        return serviceRepository.save(service);
+    @GetMapping("/{serviceId}/locations")
+    public Iterable getLocationsForService(@PathVariable long serviceId){
+        return serviceService.getLocationsForService(serviceId);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        try {
-            serviceRepository.delete(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-
+    @GetMapping("/{serviceId}/business")
+    public Business getBusinessForService(@PathVariable long serviceId){
+        return serviceService.getBusinessForService(serviceId);
     }
 
-    @PutMapping("/{id}")
-    public Service update(@RequestBody Service service, @PathVariable Long id) {
-
-        return serviceRepository.save(service);
-    }
 
 }

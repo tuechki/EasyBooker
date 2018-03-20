@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-content>
+    <button mat-raised-button (click)="goToBusiness()">Go to business</button>
+    <h2 class="example-h2">{{location.address}}</h2>
+    <mat-tab-group class="demo-tab-group">
+      <mat-tab label="Location info">
+        <div class="demo-tab-content">
+          {{location.summary}}
+          <br>
+          <br>
+          <p> Email: {{location.email}} </p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Day schedule">
+        <div class="col">
+        <span *ngFor="let scheduleOfDay of scheduleOfDays">
+          <button mat-raised-button >{{location['openTime']}}</button> <br>
+        </span>
+        </div>
+      </mat-tab>
+      <mat-tab label="Services">
+        <div class="col">
+        <span *ngFor="let service of services">
+          <button mat-raised-button (click)="showService(service)">{{service['name']}}
+            timeDuration: {{(service['timeDuration'])['hours']}}</button> <br>
+        </span>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
+
+<ng-container *ngIf="this.businessInfoService.getCurrentService()">
+  <button mat-button>BOOK IT !</button>
+</ng-container>

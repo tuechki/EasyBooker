@@ -3,20 +3,20 @@ package com.elsys.easybooker.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.postgresql.util.PGInterval;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "Services")
+@Table(name = "services")
 public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-
-    @NotNull
-    @Column(name = "businessId")
-    private long businessId;
 
     @NotNull
     @Column(name = "name")
@@ -31,11 +31,27 @@ public class Service {
 
     @NotNull
     @Column(name = "price")
-    private int price;
+    private double price;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "business_id")
-//    private Business business;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id", nullable = false)
+    @JsonIgnore
+    private Business business;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "services")
+    @JsonIgnore
+    private List<Location> locations = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "service")
+    @JsonIgnore
+    private List<BookingRecord> bookingRecords = new ArrayList<>();
 
     public Service(){ }
 
@@ -43,10 +59,7 @@ public class Service {
         this.id = id;
     }
 
-
-   public Service(long businessId,
-                   String name, PGInterval timeDuration, int price){
-        this.businessId = businessId;
+   public Service(String name, PGInterval timeDuration, int price){
         this.name = name;
         this.timeDuration = timeDuration;
         this.price = price;
@@ -59,14 +72,6 @@ public class Service {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getBusinessId() {
-        return businessId;
-    }
-
-    public void setBusinessId(long businessId) {
-        this.businessId = businessId;
     }
 
     public String getSummary() {
@@ -85,11 +90,11 @@ public class Service {
         this.timeDuration = timeDuration;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -101,12 +106,29 @@ public class Service {
         this.name = name;
     }
 
-//    public Business getBusiness(){
-//        return business;
-//    }
-//
-//    public void setBusiness(Business business){
-//        this.business = business;
-//    }
+    public Business getBusiness(){
+        return business;
+    }
+
+    public void setBusiness(Business business){
+        this.business = business;
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
+    }
+
+    public List<BookingRecord> getBookingRecords() {
+        return bookingRecords;
+    }
+
+    public void setBookingRecords(List<BookingRecord> bookingRecords) {
+        this.bookingRecords = bookingRecords;
+    }
+
 
 }

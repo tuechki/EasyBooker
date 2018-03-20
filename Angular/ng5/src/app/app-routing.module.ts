@@ -10,6 +10,8 @@ import {AuthGuardService} from "./auth/auth.guard.service";
 import {LocationComponent} from "./location/location.component";
 import {ServiceComponent} from "./service/service.component";
 import {BusinessInfoComponent} from "./business-info/business-info.component";
+import {LocationInfoComponent} from "./location-info/location-info.component";
+import {ServiceInfoComponent} from "./service-info/service-info.component";
 
 
 const routes: Routes = [
@@ -47,6 +49,14 @@ const routes: Routes = [
   {
     path: 'business-info',
     component: BusinessInfoComponent
+  },
+  {
+    path: 'location-info',
+    component: LocationInfoComponent
+  },
+  {
+    path: 'service-info',
+    component: ServiceInfoComponent
   }
 ];
 

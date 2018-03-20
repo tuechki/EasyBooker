@@ -1,12 +1,19 @@
 package com.elsys.easybooker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.jdbc.support.incrementer.AbstractDataFieldMaxValueIncrementer;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.time.LocalDate;
+
+import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 
 @Entity
-@Table(name = "Businesses")
+@Table(name = "businesses")
 public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,14 +31,29 @@ public class Business {
     @Column(name = "email")
     private String email;
 
-    @Lob
-    @Column(name="image")
-    private byte[] image;
+    @Column(name = "cratedAt")
+    @JsonIgnore
+    private LocalDate createdAt;
 
-//    @OneToMany(cascade = CascadeType.ALL,
-//            fetch = FetchType.LAZY,
-//            mappedBy = "business")
-//    private Set<Service> services = new HashSet<>();
+//    @Lob
+//    @Column(name="image")
+//    private byte[] image;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "business")
+    @JsonIgnore
+    private List<Service> services = new ArrayList();
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "business")
+    @JsonIgnore
+    private List<Location> locations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "business")
+    @JsonIgnore
+    private List<UserBusiness> userAssoc = new ArrayList<>();
 
     public Business(){ }
 
@@ -39,12 +61,10 @@ public class Business {
         this.id = id;
     }
 
-    public Business(String name, String summary, String email, byte[] image){
+    public Business(String name, String summary, String email){
         this.name = name;
         this.summary = summary;
         this.email = email;
-        this.image = image;
-
     }
 
     public long getId() {
@@ -79,19 +99,49 @@ public class Business {
         this.email = email;
     }
 
-    public byte[] getPic() {
-        return image;
+    public LocalDate getCreatedAt() {
+        return createdAt;
     }
 
-    public void setPic(byte[] pic) {
-        this.image = pic;
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 
-//    public Set<Service> getServices(){
-//        return this.services;
-//    }
-//
-//    public void addServices(Service service){
-//        this.services.add(service);
-//    }
+    public List<Service> getServices(){
+        return this.services;
+    }
+
+    public void setServices(List<Service> services){
+        this.services = services;
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
+    }
+
+    public List<UserBusiness> getUserAssoc() {
+        return userAssoc;
+    }
+
+    public void setUserAssoc(List<UserBusiness> userAssoc) {
+        this.userAssoc = userAssoc;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Business)) return false;
+        Business business = (Business) o;
+        return getId() == business.getId();
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId());
+    }
 }

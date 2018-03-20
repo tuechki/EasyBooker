@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-content>
+    <button mat-raised-button (click)="goToBusiness()">Go to business</button>
+    <h2 class="example-h2">{{service.name}}</h2>
+    <mat-tab-group class="demo-tab-group">
+      <mat-tab label="Service info">
+        <div class="demo-tab-content">
+          {{service.summary}}
+          <br>
+          <br>
+          <p> Price: {{service.price}} </p>
+          <p> TimeDuration: {{service.timeDuration}} </p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Locations">
+        <div class="col">
+        <span *ngFor="let location of locations">
+           <button mat-raised-button (click)="showLocation(location)">{{location.address}}</button> <br>
+        </span>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
+
+<ng-container *ngIf="this.businessInfoService.getCurrentLocation()">
+  <button mat-button>BOOK IT !</button>
+</ng-container>

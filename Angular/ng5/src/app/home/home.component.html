@@ -1,9 +1,32 @@
-<h2>All businesses available </h2>
-<br>
+<h2>EasyBooker makes booking easier than ever ! </h2>
+<mat-card>
+  <mat-card-content>
+    <mat-tab-group class="demo-tab-group">
+      <mat-tab label="Businesses">
+        <div class="col">
+          <p class="life-container" *ngFor="let business of businesses">
+            <button mat-raised-button (click)="showBusiness(business)">{{business.name}}</button>
+            <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+          </p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Locations">
+        <div class="col">
+        <span *ngFor="let location of locations">
+          <button mat-raised-button (click)="showLocation(location)">{{location['address']}}</button> <br>
+        </span>
+        </div>
+      </mat-tab>
+      <mat-tab label="Services">
+        <div class="col">
+        <span *ngFor="let service of services">
+          <button mat-raised-button (click)="showService(service)">{{service['name']}}
+            timeDuration: {{(service['timeDuration'])['hours']}}</button> <br>
+        </span>
+        </div>
+      </mat-tab>
 
-  <div class="col">
-    <p class="life-container" *ngFor="let business of businesses">
-      <button mat-raised-button (click)="showBusiness(business)">{{business.name}}</button>
-      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-    </p>
-  </div>
+
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

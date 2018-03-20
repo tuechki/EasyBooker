@@ -32,7 +32,6 @@ export class BusinessComponent implements OnInit {
       this.business,
       {observe: 'response'}
     ).subscribe(resp => {
-      console.log(resp);
       this.createBusinessService.setBusinessId(resp.body["id"]);
       this.router.navigate(['/services']);
     });
