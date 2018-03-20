@@ -9,7 +9,13 @@ import org.postgresql.util.PGInterval;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
@@ -17,6 +23,7 @@ import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 @org.springframework.stereotype.Service
 public class BusinessService {
 
+    private final Path rootBusinessImagesLocation = Paths.get("src\\main\\resources\\static\\images\\businesses");
     private final BusinessRepository businessRepository;
     private final UserRepository userRepository;
     private final ServiceRepository serviceRepository;
@@ -68,6 +75,12 @@ public class BusinessService {
         userRepository.save(owner);
         return businessRepository.save(business);
 
+    }
+
+    public void addImageToBusiness(long businessId, MultipartFile image) throws IOException{
+
+        new File(this.rootBusinessImagesLocation.toString() + "/" + businessId ).mkdirs();
+        Files.copy(image.getInputStream(), this.rootBusinessImagesLocation.resolve( businessId + "/" + image.getOriginalFilename()));
     }
 
     public void updateBusiness( Business business) throws UnauthorizedClientException{
