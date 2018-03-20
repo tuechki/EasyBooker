@@ -9,7 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MaterialModule } from './material.module';
+
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LoginComponent } from './login/login.component';
 
@@ -26,10 +26,11 @@ import { CreateBusinessService } from './services/message.service';
 import { BusinessInfoComponent } from './business-info/business-info.component';
 import { BusinessInfoService } from './services/business.info.service';
 import {UploadService} from "./services/upload.service";
-import {FileUploadModule} from 'primeng/fileupload';
-import { DataTableModule } from 'primeng/primeng';
 import { LocationInfoComponent } from './location-info/location-info.component';
 import { ServiceInfoComponent } from './service-info/service-info.component';
+
+import { MaterialModule } from './material.module';
+import { PrimengModule } from './primeng.module';
 
 @NgModule({
   declarations: [
@@ -54,8 +55,7 @@ import { ServiceInfoComponent } from './service-info/service-info.component';
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FileUploadModule,
-    DataTableModule
+    PrimengModule
 
 ],
   providers: [
