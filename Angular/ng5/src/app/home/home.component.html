@@ -5,11 +5,12 @@
       <mat-tab label="Businesses">
         <div class="col">
           <p class="life-container" *ngFor="let business of businesses">
-            <img src='http://localhost:8080/images/businesses/2/'/>
 
-            <!--<iframe width="100%" height="550px" src="src/main/resources/static/images/businesses/2/lulin.PNG"></iframe>-->
+            <button  mat-raised-button (click)="showBusiness(business)">
+                <img class="img" src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
+                <p>{{business.name}}</p>
+            </button>
 
-            <button mat-raised-button (click)="showBusiness(business)">{{business.name}}</button>
             <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
           </p>
         </div>

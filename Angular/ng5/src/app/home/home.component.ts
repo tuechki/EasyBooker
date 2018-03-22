@@ -25,11 +25,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/businesses/2/images', )
-      .subscribe(resp => {
-          console.log(resp);
-        }
-      );
+    // this.httpClient.get('http://localhost:8080/images/businesses/12/image.PNG', )
+    //   .subscribe(resp => {
+    //       console.log("RESPONSE: " + resp);
+    //     }
+    //   );
 
 
     this.itemCount = this.goals.length;
