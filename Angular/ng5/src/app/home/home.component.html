@@ -4,29 +4,37 @@
     <mat-tab-group class="demo-tab-group">
       <mat-tab label="Businesses">
         <div class="col">
-          <p class="life-container" *ngFor="let business of businesses">
+          <span class="life-container" *ngFor="let business of businesses">
 
-            <button  mat-raised-button (click)="showBusiness(business)">
+            <button class="block" mat-raised-button (click)="showBusiness(business)">
                 <img class="img" src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
                 <p>{{business.name}}</p>
             </button>
 
-            <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-          </p>
+          </span>
         </div>
       </mat-tab>
       <mat-tab label="Locations">
         <div class="col">
-        <span *ngFor="let location of locations">
-          <button mat-raised-button (click)="showLocation(location)">{{location['address']}}</button> <br>
+        <span class="life-container" *ngFor="let location of locations">
+
+          <button class="block" mat-raised-button (click)="showLocation(location)">
+             <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
+             <p>{{location.address}}</p>
+          </button>
+
         </span>
         </div>
       </mat-tab>
       <mat-tab label="Services">
         <div class="col">
         <span *ngFor="let service of services">
-          <button mat-raised-button (click)="showService(service)">{{service['name']}}
-            timeDuration: {{(service['timeDuration'])['hours']}}</button> <br>
+
+          <button class="block" mat-raised-button (click)="showService(service)">
+            <img class="img" src='http://localhost:8080/images/services/{{service.id}}/image.png'/>
+             <p>{{service.name}}</p>
+          </button>
+
         </span>
         </div>
       </mat-tab>
