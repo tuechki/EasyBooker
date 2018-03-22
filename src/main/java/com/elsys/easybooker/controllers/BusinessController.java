@@ -9,11 +9,19 @@ import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.services.BusinessService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import javax.servlet.*;
+import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 @RestController
 @RequestMapping("/businesses")
@@ -59,7 +67,6 @@ public class BusinessController {
     public void deleteBusinessById(@PathVariable Long businessId) {
         businessService.deleteBusinessById(businessId);
     }
-
 
 
     @GetMapping("/{businessId}/services")

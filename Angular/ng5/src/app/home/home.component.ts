@@ -18,10 +18,19 @@ export class HomeComponent implements OnInit {
   locations: any;
   services: any;
 
+  image: File = null;
+
   constructor(private httpClient: HttpClient, private router: Router,
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
 
   ngOnInit() {
+
+    this.httpClient.get('http://localhost:8080/businesses/2/images', )
+      .subscribe(resp => {
+          console.log(resp);
+        }
+      );
+
 
     this.itemCount = this.goals.length;
 
@@ -31,7 +40,7 @@ export class HomeComponent implements OnInit {
           console.log(resp.body);
           this.businesses = resp.body;
         }
-      )
+      );
 
     this.httpClient.get('http://localhost:8080/locations', {observe: 'response'})
       .subscribe(resp => {
@@ -39,7 +48,7 @@ export class HomeComponent implements OnInit {
           console.log(resp.body);
           this.locations = resp.body;
         }
-      )
+      );
 
     this.httpClient.get('http://localhost:8080/services', {observe: 'response'})
       .subscribe(resp => {

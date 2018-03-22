@@ -16,12 +16,19 @@ export class BusinessComponent implements OnInit {
     email: ''
   };
 
+  selectedFile: File = null;
+
   constructor(private httpClient: HttpClient, private router: Router, private createBusinessService: CreateBusinessService) {}
 
   // answerDisplay: string = '';
   showSpinner: boolean = false;
 
   ngOnInit() {
+
+  }
+
+  onFileSelected(event){
+    this.selectedFile = <File>event.target.files[0];
 
   }
 
@@ -33,6 +40,17 @@ export class BusinessComponent implements OnInit {
       {observe: 'response'}
     ).subscribe(resp => {
       this.createBusinessService.setBusinessId(resp.body["id"]);
+
+      if(this.selectedFile) {
+        const fd = new FormData();
+        fd.append('image', this.selectedFile, this.selectedFile.name);
+        this.httpClient.post('http://localhost:8080/businesses/' + resp.body["id"] + '/images',
+          fd
+        ).subscribe(resp => {
+          console.log(fd);
+        });
+      }
+
       this.router.navigate(['/services']);
     });
     setTimeout(() => {
