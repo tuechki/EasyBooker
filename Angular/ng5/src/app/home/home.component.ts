@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
 import {BusinessInfoService} from "../services/business.info.service";
 import {Router} from "@angular/router";
+import {FormControl} from "@angular/forms";
+import {MapsAPILoader} from "@agm/core";
 
 @Component({
   selector: 'app-home',
@@ -10,29 +12,65 @@ import {Router} from "@angular/router";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  itemCount: number = 4;
-  btnText: string = "Add an item";
-  goalText: string = "My first goal...";
-  goals = ['asdasd', 'anotherThing'];
+
   businesses: any;
   locations: any;
   services: any;
 
   image: File = null;
 
-  constructor(private httpClient: HttpClient, private router: Router,
-              public authService: AuthService, public businessInfoService: BusinessInfoService) { }
+  public latitude: number;
+  public longitude: number;
+  public searchControl: FormControl;
+  public zoom: number;
+
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
+
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    public authService: AuthService,
+    private router: Router,
+    private httpClient: HttpClient,
+    public businessInfoService: BusinessInfoService
+  ) {}
+
 
   ngOnInit() {
+    //set google maps defaults
+    this.zoom = 4;
+    this.latitude = 42.698334;
+    this.longitude = 23.319941;
 
-    // this.httpClient.get('http://localhost:8080/images/businesses/12/image.PNG', )
-    //   .subscribe(resp => {
-    //       console.log("RESPONSE: " + resp);
-    //     }
-    //   );
+    //create search FormControl
+    this.searchControl = new FormControl();
 
+    //set current position
+    this.setCurrentPosition();
 
-    this.itemCount = this.goals.length;
+    //load Places Autocomplete
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          //set latitude, longitude and zoom
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          this.zoom = 12;
+        });
+      });
+    });
 
     this.httpClient.get('http://localhost:8080/businesses', {observe: 'response'})
       .subscribe(resp => {
@@ -56,8 +94,21 @@ export class HomeComponent implements OnInit {
           console.log(resp.body);
           this.services = resp.body;
         }
-      )
+      );
+
+
   }
+
+  private setCurrentPosition() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 12;
+      });
+    }
+  }
+
 
   showBusiness(business){
     console.log(business);
@@ -77,9 +128,4 @@ export class HomeComponent implements OnInit {
 
   }
 
-  addItem(){
-    this.goals.push(this.goalText);
-    this.goalText = "";
-    this.itemCount = this.goals.length;
-  }
 }

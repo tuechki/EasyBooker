@@ -31,6 +31,7 @@ import { ServiceInfoComponent } from './service-info/service-info.component';
 
 import { MaterialModule } from './material.module';
 import { PrimengModule } from './primeng.module';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,11 @@ import { PrimengModule } from './primeng.module';
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PrimengModule
+    PrimengModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCuxNJz1x-vTL9ggD0ELJ9p357RyzKHUZg',
+      libraries: ["places"]
+    })
 
 ],
   providers: [

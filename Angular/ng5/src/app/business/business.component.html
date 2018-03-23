@@ -40,9 +40,10 @@
   <form>
 
     <!--<p-fileUpload name="image" url="http://localhost:8080/businesses/5/images" method="POST">Upload</p-fileUpload>-->
-    <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
-    <button mat-raised-button (click)="fileInput.click()">Pick an image</button>
+    <input style="" type="file" (change)="onFileSelected($event)" #fileInput>
+    <button mat-raised-button *ngIf(click)="fileInput.click()">Pick an image</button>
     <!--<button mat-raised-button (click)="onUpload()" >Upload</button>-->
+
 
 
     <mat-form-field class="example-full-width">
