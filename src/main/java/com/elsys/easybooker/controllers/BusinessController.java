@@ -1,6 +1,6 @@
 package com.elsys.easybooker.controllers;
 
-import com.elsys.easybooker.dtos.ServiceDTO;
+import com.elsys.easybooker.dtos.ServiceDTOPrevious;
 import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
@@ -69,12 +69,12 @@ public class BusinessController {
 
 
     @PostMapping("/{businessId}/services")
-    public void createBusinessService(@PathVariable long businessId, @RequestBody ServiceDTO serviceDTO) {
+    public void createBusinessService(@PathVariable long businessId, @RequestBody ServiceDTOPrevious serviceDTO) {
         businessService.createOrUpdateBusinessService(businessId, serviceDTO);
     }
 
     @PutMapping("/{businessId}/services")
-    public void updateBusinessService(@PathVariable long businessId, @RequestBody ServiceDTO serviceDTO) {
+    public void updateBusinessService(@PathVariable long businessId, @RequestBody ServiceDTOPrevious serviceDTO) {
         businessService.createOrUpdateBusinessService(businessId, serviceDTO);
     }
 

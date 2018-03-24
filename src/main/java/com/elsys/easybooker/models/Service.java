@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.postgresql.util.PGInterval;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +53,12 @@ public class Service {
             mappedBy = "service")
     @JsonIgnore
     private List<BookingRecord> bookingRecords = new ArrayList<>();
+
+    @JsonIgnore
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
+    private LocalDateTime editedAt;
 
     public Service(){ }
 
@@ -131,5 +138,19 @@ public class Service {
         this.bookingRecords = bookingRecords;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getEditedAt() {
+        return editedAt;
+    }
+
+    public void setEditedAt(LocalDateTime editedAt) {
+        this.editedAt = editedAt;
+    }
 }

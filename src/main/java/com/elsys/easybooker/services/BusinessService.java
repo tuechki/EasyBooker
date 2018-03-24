@@ -1,6 +1,6 @@
 package com.elsys.easybooker.services;
 
-import com.elsys.easybooker.dtos.ServiceDTO;
+import com.elsys.easybooker.dtos.ServiceDTOPrevious;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessDTO;
@@ -117,10 +117,10 @@ public class BusinessService {
 
 
     public Iterable getBusinessServices(long businessId) {
-         List<ServiceDTO> servicesDTO = new ArrayList<>();
+         List<ServiceDTOPrevious> servicesDTO = new ArrayList<>();
         for(Service service: serviceRepository.findByBusinessId(businessId)){
 
-            ServiceDTO serviceDTO = new ServiceDTO();
+            ServiceDTOPrevious serviceDTO = new ServiceDTOPrevious();
 
             serviceDTO.setId(service.getId());
             serviceDTO.setName(service.getName());
@@ -136,7 +136,7 @@ public class BusinessService {
     }
 
 
-    public void createOrUpdateBusinessService(long businessId, ServiceDTO serviceDTO) throws UnauthorizedClientException{
+    public void createOrUpdateBusinessService(long businessId, ServiceDTOPrevious serviceDTO) throws UnauthorizedClientException{
 
         Service service = modelMapper.map(serviceDTO, Service.class);
 

@@ -4,7 +4,7 @@ import org.postgresql.util.PGInterval;
 
 import java.util.Objects;
 
-public class ServiceDTO {
+public class ServiceDTOPrevious {
 
     private long id;
 
@@ -18,11 +18,11 @@ public class ServiceDTO {
 
     private long businessId;
 
-    public ServiceDTO(){
+    public ServiceDTOPrevious(){
 
     }
 
-    public ServiceDTO(String name, String description, PGInterval timeDuration, double price){
+    public ServiceDTOPrevious(String name, String description, PGInterval timeDuration, double price){
         this.name = name;
         this.description = description;
         this.timeDuration = timeDuration;
@@ -80,8 +80,8 @@ public class ServiceDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ServiceDTO)) return false;
-        ServiceDTO that = (ServiceDTO) o;
+        if (!(o instanceof ServiceDTOPrevious)) return false;
+        ServiceDTOPrevious that = (ServiceDTOPrevious) o;
         return getId() == that.getId();
     }
 

@@ -32,12 +32,6 @@ public class Business {
     @Column(name = "email")
     private String email;
 
-    @JsonIgnore
-    private LocalDateTime createdAt;
-
-    @JsonIgnore
-    private LocalDateTime editedAt;
-
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "business")
@@ -53,6 +47,12 @@ public class Business {
     @OneToMany(mappedBy = "business")
     @JsonIgnore
     private List<UserBusiness> userAssoc = new ArrayList<>();
+
+    @JsonIgnore
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
+    private LocalDateTime editedAt;
 
     public Business(){ }
 
@@ -98,22 +98,6 @@ public class Business {
         this.email = email;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getEditedAt() {
-        return editedAt;
-    }
-
-    public void setEditedAt(LocalDateTime editedAt) {
-        this.editedAt = editedAt;
-    }
-
     public List<Service> getServices(){
         return this.services;
     }
@@ -136,6 +120,22 @@ public class Business {
 
     public void setUserAssoc(List<UserBusiness> userAssoc) {
         this.userAssoc = userAssoc;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getEditedAt() {
+        return editedAt;
+    }
+
+    public void setEditedAt(LocalDateTime editedAt) {
+        this.editedAt = editedAt;
     }
 
     @Override
