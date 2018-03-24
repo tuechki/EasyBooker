@@ -21,11 +21,11 @@ public class Location {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "number")
-    private String number;
-
     @Column(name = "description")
     private String description;
+
+    @Column(name = "number")
+    private String number;
 
     @NotNull
     @Column(name = "email")

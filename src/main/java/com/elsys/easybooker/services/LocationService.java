@@ -1,46 +1,72 @@
 package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.dtos.BusinessDTOPrevious;
-import com.elsys.easybooker.models.Business;
-import com.elsys.easybooker.models.Location;
-import com.elsys.easybooker.models.Service;
+import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
+import com.elsys.easybooker.dtos.locations.LocationBriefDTO;
+import com.elsys.easybooker.dtos.locations.LocationDTO;
+import com.elsys.easybooker.dtos.locations.LocationUpdateDTO;
+import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
+import com.elsys.easybooker.repositories.UserRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 
 @org.springframework.stereotype.Service
 public class LocationService {
     private final ServiceRepository serviceRepository;
     private final LocationRepository locationRepository;
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public LocationService(
                            ServiceRepository serviceRepository,
-                           LocationRepository locationRepository){
+                           LocationRepository locationRepository,
+                           UserRepository userRepository){
         this.serviceRepository = serviceRepository;
         this.locationRepository = locationRepository;
+        this.userRepository = userRepository;
     }
 
-    public Iterable getLocations() {
-        return locationRepository.findAll();
+    public List<LocationBriefDTO> getLocations() {
+
+        List<LocationBriefDTO> locationBriefDTOList = new ArrayList<>();
+        for( Location location : locationRepository.findAll()){
+            locationBriefDTOList.add(modelMapper.map(location, LocationBriefDTO.class));
+        }
+
+        return locationBriefDTOList;
     }
 
-    public Location getLocationById(long locationId){
-        return locationRepository.findById(locationId);
+    public LocationDTO getLocationById(long locationId){
+        return modelMapper.map(locationRepository.findById(locationId), LocationDTO.class);
     }
 
-    public BusinessDTOPrevious getBusinessForLocation(long locationId){
+    public BusinessBriefDTO getBusinessForLocation(long locationId){
         Location location = locationRepository.findById(locationId);
-        Business business = location.getBusiness();
-        BusinessDTOPrevious businessDTO = new BusinessDTOPrevious();
-        businessDTO.setId(business.getId());
-        businessDTO.setName(business.getName());
-        businessDTO.setDescription(business.getDescription());
-        businessDTO.setEmail(business.getEmail());
+        return modelMapper.map(location.getBusiness(), BusinessBriefDTO.class);
+    }
 
-        return businessDTO;
+    public LocationBriefDTO updateLocationById(LocationUpdateDTO locationUpdateDTO){
+        Location location = modelMapper.map(locationUpdateDTO, Location.class);
+        if(isUserBusinessAdmin(location.getBusiness().getId())){
+            locationRepository.save(location);
+        }
 
+        return modelMapper.map(location, LocationBriefDTO.class);
+    }
+
+    public void deleteLocationById(long locationId){
+        if(isUserBusinessAdmin(locationRepository.findById(locationId).getBusiness().getId())){
+            locationRepository.delete(locationId);
+        }
     }
 
     public List<Service> getServicesForLocation(long locationId) {
@@ -64,5 +90,20 @@ public class LocationService {
 
     }
 
+
+
+    public boolean isUserBusinessAdmin(long businessId) throws UnauthorizedClientException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName());
+
+        for(UserBusiness userBusiness : user.getBusinessAssoc()){
+            if(userBusiness.getBusiness().getId() == businessId
+                    && userBusiness.getPermission() == ADMIN){
+                return true;
+            }
+        }
+
+        throw new UnauthorizedClientException("No permissions for requested operation.");
+    }
 
 }

@@ -1,11 +1,14 @@
 package com.elsys.easybooker.controllers;
 
-import com.elsys.easybooker.dtos.LocationDTO;
+import com.elsys.easybooker.dtos.LocationDTOPrevious;
 import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessUpdateDTO;
+import com.elsys.easybooker.dtos.locations.LocationBriefDTO;
+import com.elsys.easybooker.dtos.locations.LocationCreationDTO;
+import com.elsys.easybooker.dtos.locations.LocationUpdateDTO;
 import com.elsys.easybooker.services.BusinessService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -89,30 +92,21 @@ public class BusinessController {
 
 
     @GetMapping("/{businessId}/locations")
-    public Iterable getBusinessLocations(@PathVariable long businessId) {
+    public List<LocationBriefDTO> getBusinessLocations(@PathVariable long businessId) {
         return businessService.getBusinessLocations(businessId);
     }
 
 
     @PostMapping("/{businessId}/locations")
-    public void createBusinessLocation(@PathVariable long businessId, @RequestBody LocationDTO locationDTO) {
-        businessService.createOrUpdateBusinessLocations(businessId, locationDTO);
-    }
-
-    @PutMapping("/{businessId}/locations")
-    public void updateBusinessLocation(@PathVariable long businessId,  @RequestBody LocationDTO locationDTO) {
-        businessService.createOrUpdateBusinessLocations(businessId, locationDTO);
+    public LocationBriefDTO createBusinessLocation(@PathVariable long businessId,
+                                                   @RequestBody LocationCreationDTO locationCreationDTO) {
+       return businessService.createBusinessLocation(businessId, locationCreationDTO);
     }
 
 
     @DeleteMapping("/{businessId}/locations")
     public void deleteBusinessLocations(@PathVariable long businessId) {
         businessService.deleteBusinessLocations(businessId);
-    }
-
-    @DeleteMapping("/{businessId}/locations/{locationId}")
-    public void deleteBusinessLocationById(@PathVariable long businessId, @PathVariable long locationId) {
-        businessService.deleteBusinessLocationById(businessId, locationId);
     }
 
 }

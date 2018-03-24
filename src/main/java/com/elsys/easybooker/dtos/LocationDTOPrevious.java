@@ -1,16 +1,12 @@
 package com.elsys.easybooker.dtos;
 
-import com.elsys.easybooker.models.BookingRecord;
-import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.DaySchedule;
-import com.elsys.easybooker.models.Service;
-import org.postgresql.util.PGInterval;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class LocationDTO {
+public class LocationDTOPrevious {
 
     private long id;
 
@@ -26,9 +22,9 @@ public class LocationDTO {
 
     private List<DaySchedule> schedulesOfDays = new ArrayList<>();
 
-    public LocationDTO(){ }
+    public LocationDTOPrevious(){ }
 
-    public LocationDTO(long id){
+    public LocationDTOPrevious(long id){
         this.id = id;
     }
 
@@ -92,8 +88,8 @@ public class LocationDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof LocationDTO)) return false;
-        LocationDTO that = (LocationDTO) o;
+        if (!(o instanceof LocationDTOPrevious)) return false;
+        LocationDTOPrevious that = (LocationDTOPrevious) o;
         return getId() == that.getId();
     }
 

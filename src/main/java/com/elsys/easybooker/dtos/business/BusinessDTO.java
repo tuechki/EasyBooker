@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 public class BusinessDTO {
     @Id
     @NotNull
-    private Long id;
+    private long id;
 
     @NotNull
     private String name;
@@ -17,11 +17,11 @@ public class BusinessDTO {
     @NotNull
     private String email;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

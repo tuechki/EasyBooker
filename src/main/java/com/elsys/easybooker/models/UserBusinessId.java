@@ -23,12 +23,12 @@ public class UserBusinessId  implements Serializable{
 
     @Override
     public int hashCode() {
-        Long locationIdLong = new Long(business);
-        Long serviceIdLong = new Long(user);
+        Long businessIdLong = new Long(business);
+        Long userIdLong = new Long(user);
         final int prime = 31;
         int result = 1;
-        result = prime * result + locationIdLong.hashCode();
-        result = prime * result + serviceIdLong.hashCode();
+        result = prime * result + businessIdLong.hashCode();
+        result = prime * result + userIdLong.hashCode();
         return result;
     }
 

@@ -1,12 +1,13 @@
 package com.elsys.easybooker.services;
 
-import com.elsys.easybooker.dtos.BusinessDTOPrevious;
-import com.elsys.easybooker.dtos.LocationDTO;
+import com.elsys.easybooker.dtos.LocationDTOPrevious;
 import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessDTO;
 import com.elsys.easybooker.dtos.business.BusinessUpdateDTO;
+import com.elsys.easybooker.dtos.locations.LocationBriefDTO;
+import com.elsys.easybooker.dtos.locations.LocationCreationDTO;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
 import org.modelmapper.ModelMapper;
@@ -66,10 +67,6 @@ public class BusinessService {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User owner = userRepository.findByUsername(auth.getName());
-//        Business business = new Business();
-//        business.setName(businessDTO.getName());
-//        business.setDescription(businessDTO.getDescription());
-//        business.setEmail(businessDTO.getEmail());
 
         Business business = modelMapper.map(businessCreationDTO, Business.class);
         UserBusiness userBusiness = new UserBusiness();
@@ -113,6 +110,10 @@ public class BusinessService {
             businessRepository.delete(businessId);
         }
     }
+
+
+
+    //----Services----//
 
 
 
@@ -165,43 +166,44 @@ public class BusinessService {
 
 
 
-    public Iterable getBusinessLocations(long businessId) {
 
-        List<LocationDTO> locationsDTO = new ArrayList<>();
+   //----Locations---//
+
+
+
+
+    public List<LocationBriefDTO> getBusinessLocations(long businessId) {
+
+        List<LocationBriefDTO> locationBriefDTOList = new ArrayList<>();
+
         for(Location location: locationRepository.findByBusinessId(businessId)){
-
-              LocationDTO locationDTO = modelMapper.map(location, LocationDTO.class);
-              locationsDTO.add(locationDTO);
+              locationBriefDTOList.add(modelMapper.map(location, LocationBriefDTO.class));
         }
 
-        return locationsDTO;
+        return locationBriefDTOList;
     }
 
 
-    public void createOrUpdateBusinessLocations(long businessId, LocationDTO locationDTO) throws UnauthorizedClientException {
+    public LocationBriefDTO createBusinessLocation(long businessId, LocationCreationDTO locationCreationDTO)
+                                                                                        throws UnauthorizedClientException {
+        Location location = modelMapper.map(locationCreationDTO, Location.class);
+
         if(isUserBusinessAdmin(businessId)) {
             Business business = businessRepository.findById(businessId);
-
-                Location location = new Location();
-                location.setAddress(locationDTO.getAddress());
-                location.setDescription(locationDTO.getDescription());
-                location.setEmail(locationDTO.getEmail());
-                location.setNumber(locationDTO.getNumber());
                 location.setBusiness(business);
 
-
 //              location.setScheduleOfDays(locationDTO.getSchedulesOfDays());
-
 //              location = setScheduleOfDaysForLocation(location);
 //              location = setMinTimeBetweenServicesForLocation(location);
 //              location = saveServicesToLocation(location);
 
-                locationRepository.save(location);
-
+                location = locationRepository.save(location);
                 business.getLocations().add(location);
                 businessRepository.save(business);
 
         }
+
+        return modelMapper.map(location, LocationBriefDTO.class);
     }
 
 //    public Location setScheduleOfDaysForLocation (Location location){
@@ -237,13 +239,6 @@ public class BusinessService {
             locationRepository.deleteByBusinessId(businessId);
         }
     }
-
-    public void deleteBusinessLocationById(long businessId, long locationId) throws UnauthorizedClientException {
-        if(isUserBusinessAdmin(businessId)) {
-            locationRepository.delete(locationId);
-        }
-    }
-
 
     public boolean isUserBusinessAdmin(long businessId) throws UnauthorizedClientException{
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

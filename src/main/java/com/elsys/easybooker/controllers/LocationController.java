@@ -1,6 +1,11 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.dtos.BusinessDTOPrevious;
+import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
+import com.elsys.easybooker.dtos.business.BusinessDTO;
+import com.elsys.easybooker.dtos.locations.LocationBriefDTO;
+import com.elsys.easybooker.dtos.locations.LocationDTO;
+import com.elsys.easybooker.dtos.locations.LocationUpdateDTO;
 import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.services.LocationService;
@@ -20,19 +25,30 @@ public class LocationController {
     }
 
     @GetMapping
-    public Iterable getLocations(){
+    public List<LocationBriefDTO> getLocations(){
         return locationService.getLocations();
     }
 
     @GetMapping("/{locationId}")
-    public Location getLocationById(@PathVariable long locationId){
+    public LocationDTO getLocationById(@PathVariable long locationId){
         return locationService.getLocationById(locationId);
     }
 
+    @PutMapping
+    public LocationBriefDTO updateLocationById(@RequestBody LocationUpdateDTO locationUpdateDTO){
+        return locationService.updateLocationById(locationUpdateDTO);
+    }
+
+    @DeleteMapping("/{locationId}")
+    public void deleteLocationById(@PathVariable long locationId){
+         locationService.deleteLocationById(locationId);
+    }
+
     @GetMapping("/{locationId}/business")
-    public BusinessDTOPrevious getBusinessForLocation(@PathVariable long locationId){
+    public BusinessBriefDTO getBusinessForLocation(@PathVariable long locationId){
         return locationService.getBusinessForLocation(locationId);
     }
+
 
     @GetMapping("/{locationId}/services")
     public List<Service> getServicesForLocation(@PathVariable long locationId) {

@@ -1,15 +1,15 @@
-package com.elsys.easybooker.dtos.business;
+package com.elsys.easybooker.dtos.locations;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-public class BusinessBriefDTO {
+public class LocationBriefDTO {
     @Id
     @NotNull
     private long id;
 
     @NotNull
-    private String name;
+    private String address;
 
     public long getId() {
         return id;
@@ -19,11 +19,11 @@ public class BusinessBriefDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getAddress() {
+        return address;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
