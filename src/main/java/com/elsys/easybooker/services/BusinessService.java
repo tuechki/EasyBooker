@@ -5,14 +5,17 @@ import com.elsys.easybooker.dtos.LocationDTO;
 import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
+import javassist.bytecode.ByteArray;
+import org.apache.commons.io.IOUtils;
+import org.modelmapper.ModelMapper;
 import org.postgresql.util.PGInterval;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,6 +33,7 @@ public class BusinessService {
     private final LocationRepository locationRepository;
     private final DayScheduleRepository dayScheduleRepository;
     private final UsersBusinessesRepository usersBusinessesRepository;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public BusinessService(BusinessRepository businessRepository,
                            UserRepository userRepository,
@@ -79,8 +83,11 @@ public class BusinessService {
 
     public void addImageToBusiness(long businessId, MultipartFile image) throws IOException{
 
+        String imageName = "image";
+        String imageExtension = ".png";
+
         new File(this.rootBusinessImagesLocation.toString() + "/" + businessId ).mkdirs();
-        Files.copy(image.getInputStream(), this.rootBusinessImagesLocation.resolve( businessId + "/" + image.getOriginalFilename()));
+        Files.copy(image.getInputStream(), this.rootBusinessImagesLocation.resolve( businessId + "/" + imageName + imageExtension));
     }
 
     public void updateBusiness( Business business) throws UnauthorizedClientException{
@@ -101,10 +108,11 @@ public class BusinessService {
 
 
     public Iterable getBusinessServices(long businessId) {
-         List<ServiceDTO> services = new ArrayList<>();
+         List<ServiceDTO> servicesDTO = new ArrayList<>();
         for(Service service: serviceRepository.findByBusinessId(businessId)){
 
             ServiceDTO serviceDTO = new ServiceDTO();
+
             serviceDTO.setId(service.getId());
             serviceDTO.setName(service.getName());
             serviceDTO.setSummary(service.getSummary());
@@ -112,31 +120,23 @@ public class BusinessService {
             serviceDTO.setPrice(service.getPrice());
             serviceDTO.setBusinessId(service.getBusiness().getId());
 
-            services.add(serviceDTO);
+            servicesDTO.add(serviceDTO);
         }
 
-        return services;
+        return servicesDTO;
     }
 
 
     public void createOrUpdateBusinessService(long businessId, ServiceDTO serviceDTO) throws UnauthorizedClientException{
 
-        Service service = new Service();
+        Service service = modelMapper.map(serviceDTO, Service.class);
 
         if(isUserBusinessAdmin(businessId)) {
             Business business = businessRepository.findById(businessId);
-
-            service.setName(serviceDTO.getName());
-            service.setSummary(serviceDTO.getSummary());
-            service.setTimeDuration(serviceDTO.getTimeDuration());
-            service.setPrice(serviceDTO.getPrice());
-
             service.setBusiness(business);
             service = serviceRepository.save(service);
-
             business.getServices().add(service);
             businessRepository.save(business);
-
 
         }
     }
@@ -161,15 +161,8 @@ public class BusinessService {
         List<LocationDTO> locationsDTO = new ArrayList<>();
         for(Location location: locationRepository.findByBusinessId(businessId)){
 
-            LocationDTO locationDTO = new LocationDTO();
-            locationDTO.setId(location.getId());
-            locationDTO.setAddress(location.getAddress());
-            locationDTO.setSummary(location.getSummary());
-            locationDTO.setEmail(location.getEmail());
-            locationDTO.setNumber(location.getNumber());
-            locationDTO.setBusinessId(location.getBusiness().getId());
-
-            locationsDTO.add(locationDTO);
+              LocationDTO locationDTO = modelMapper.map(location, LocationDTO.class);
+              locationsDTO.add(locationDTO);
         }
 
         return locationsDTO;
@@ -186,12 +179,13 @@ public class BusinessService {
                 location.setEmail(locationDTO.getEmail());
                 location.setNumber(locationDTO.getNumber());
                 location.setBusiness(business);
-//                location.setServices(locationDTO.getServices());
-//                location.setScheduleOfDays(locationDTO.getSchedulesOfDays());
 
-//                location = setScheduleOfDaysForLocation(location);
-//                location = setMinTimeBetweenServicesForLocation(location);
-//                location = saveServicesToLocation(location);
+
+//              location.setScheduleOfDays(locationDTO.getSchedulesOfDays());
+
+//              location = setScheduleOfDaysForLocation(location);
+//              location = setMinTimeBetweenServicesForLocation(location);
+//              location = saveServicesToLocation(location);
 
                 locationRepository.save(location);
 
@@ -201,43 +195,33 @@ public class BusinessService {
         }
     }
 
-    public Location setScheduleOfDaysForLocation (Location location){
-        for(DaySchedule daySchedule : location.getScheduleOfDays()){
-            daySchedule.setLocation(location);
-            dayScheduleRepository.save(daySchedule);
-            location.getScheduleOfDays().add(daySchedule);
-        }
-
-        return location;
-    }
-
-    public Location setMinTimeBetweenServicesForLocation(Location location){
-        PGInterval minInterval = location.getServices().get(0).getTimeDuration();
-        for(Service service : location.getServices()){
-
-            if(minInterval.getDays() >= service.getTimeDuration().getDays()){
-                if(minInterval.getHours() >= service.getTimeDuration().getHours()){
-                    if(minInterval.getMinutes() >= service.getTimeDuration().getMinutes()){
-                        minInterval = service.getTimeDuration();
-                    }
-                }
-            }
-
-        }
-
-        location.setMinTimeBetweenServices(minInterval);
-        return location;
-    }
-
-    public Location saveServicesToLocation(Location location){
-        for(Service service : location.getServices()){
-            service.getLocations().add(location);
-            serviceRepository.save(service);
-            location.getServices().add(service);
-        }
-
-        return  location;
-    }
+//    public Location setScheduleOfDaysForLocation (Location location){
+//        for(DaySchedule daySchedule : location.getScheduleOfDays()){
+//            daySchedule.setLocation(location);
+//            dayScheduleRepository.save(daySchedule);
+//            location.getScheduleOfDays().add(daySchedule);
+//        }
+//
+//        return location;
+//    }
+//
+//    public Location setMinTimeBetweenServicesForLocation(Location location){
+//        PGInterval minInterval = location.getServices().get(0).getTimeDuration();
+//        for(Service service : location.getServices()){
+//
+//            if(minInterval.getDays() >= service.getTimeDuration().getDays()){
+//                if(minInterval.getHours() >= service.getTimeDuration().getHours()){
+//                    if(minInterval.getMinutes() >= service.getTimeDuration().getMinutes()){
+//                        minInterval = service.getTimeDuration();
+//                    }
+//                }
+//            }
+//
+//        }
+//
+//        location.setMinTimeBetweenServices(minInterval);
+//        return location;
+//    }
 
     public void deleteBusinessLocations(long businessId) throws UnauthorizedClientException{
         if(isUserBusinessAdmin(businessId)) {

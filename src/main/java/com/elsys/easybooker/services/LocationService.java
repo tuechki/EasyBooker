@@ -4,10 +4,12 @@ import com.elsys.easybooker.dtos.BusinessDTO;
 import com.elsys.easybooker.dtos.LocationDTO;
 import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.models.Business;
+import com.elsys.easybooker.models.DaySchedule;
 import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
+import org.postgresql.util.PGInterval;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,4 +67,6 @@ public class LocationService {
         locationRepository.save(location);
 
     }
+
+
 }
