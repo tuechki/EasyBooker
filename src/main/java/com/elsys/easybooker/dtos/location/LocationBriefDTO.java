@@ -1,4 +1,4 @@
-package com.elsys.easybooker.dtos.locations;
+package com.elsys.easybooker.dtos.location;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;

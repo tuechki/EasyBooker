@@ -1,13 +1,12 @@
 package com.elsys.easybooker.services;
 
-import com.elsys.easybooker.dtos.LocationDTOPrevious;
 import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessDTO;
 import com.elsys.easybooker.dtos.business.BusinessUpdateDTO;
-import com.elsys.easybooker.dtos.locations.LocationBriefDTO;
-import com.elsys.easybooker.dtos.locations.LocationCreationDTO;
+import com.elsys.easybooker.dtos.location.LocationBriefDTO;
+import com.elsys.easybooker.dtos.location.LocationCreationDTO;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
 import org.modelmapper.ModelMapper;

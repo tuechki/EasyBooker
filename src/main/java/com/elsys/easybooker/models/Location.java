@@ -9,7 +9,7 @@ import org.postgresql.util.PGInterval;
 import java.util.*;
 
 @Entity
-@Table(name = "locations")
+@Table(name = "location")
 public class Location {
 
     @Id

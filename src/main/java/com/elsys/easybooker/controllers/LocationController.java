@@ -1,12 +1,9 @@
 package com.elsys.easybooker.controllers;
 
-import com.elsys.easybooker.dtos.BusinessDTOPrevious;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
-import com.elsys.easybooker.dtos.business.BusinessDTO;
-import com.elsys.easybooker.dtos.locations.LocationBriefDTO;
-import com.elsys.easybooker.dtos.locations.LocationDTO;
-import com.elsys.easybooker.dtos.locations.LocationUpdateDTO;
-import com.elsys.easybooker.models.Location;
+import com.elsys.easybooker.dtos.location.LocationBriefDTO;
+import com.elsys.easybooker.dtos.location.LocationDTO;
+import com.elsys.easybooker.dtos.location.LocationUpdateDTO;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.services.LocationService;
 import org.springframework.web.bind.annotation.*;

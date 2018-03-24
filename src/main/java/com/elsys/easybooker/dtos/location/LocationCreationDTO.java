@@ -1,4 +1,4 @@
-package com.elsys.easybooker.dtos.locations;
+package com.elsys.easybooker.dtos.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

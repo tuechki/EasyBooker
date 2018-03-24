@@ -1,12 +1,9 @@
-package com.elsys.easybooker.dtos.locations;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package com.elsys.easybooker.dtos.location;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
-public class LocationUpdateDTO {
+public class LocationDTO {
     @Id
     @NotNull
     private long id;
@@ -28,9 +25,6 @@ public class LocationUpdateDTO {
 
     @NotNull
     private String businessName;
-
-    @JsonIgnore
-    private final LocalDateTime editedAt = LocalDateTime.now();
 
     public long getId() {
         return id;
@@ -70,10 +64,6 @@ public class LocationUpdateDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public LocalDateTime getEditedAt() {
-        return editedAt;
     }
 
     public long getBusinessId() {
