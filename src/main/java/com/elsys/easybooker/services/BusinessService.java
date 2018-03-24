@@ -59,6 +59,18 @@ public class BusinessService {
         return businessBriefDTOList;
     }
 
+    public List<BusinessBriefDTO> getBusinessesForLoggedUser() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName());
+        List<BusinessBriefDTO> businessBriefDTOList = new ArrayList<>();
+
+        for (UserBusiness userBusiness : user.getBusinessAssoc()){
+            businessBriefDTOList.add(modelMapper.map(userBusiness.getBusiness(), BusinessBriefDTO.class));
+        }
+        return businessBriefDTOList;
+    }
+
     public BusinessDTO getBusinessById(long businessId) {
         return modelMapper.map(businessRepository.findById(businessId), BusinessDTO.class);
     }

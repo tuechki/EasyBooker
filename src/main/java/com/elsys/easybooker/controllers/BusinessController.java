@@ -33,6 +33,11 @@ public class BusinessController {
         return businessService.getBusinesses();
     }
 
+    @GetMapping
+    public List<BusinessBriefDTO> getBusinessesForLoggedUser() {
+        return businessService.getBusinessesForLoggedUser();
+    }
+
     @GetMapping("/{businessId}")
     public BusinessDTO getBusinessById(@PathVariable long businessId) {
         return businessService.getBusinessById(businessId);

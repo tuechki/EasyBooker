@@ -19,9 +19,6 @@ public class UserUpdateDTO {
     private String lastName;
 
     @NotNull
-    private String username;
-
-    @NotNull
     private String password;
 
     @NotNull
@@ -56,14 +53,6 @@ public class UserUpdateDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
