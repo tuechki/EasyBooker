@@ -18,12 +18,11 @@ export class BusinessComponent implements OnInit {
 
   selectedFile: File = null;
   url: string = null;
-  public noImageURL: string  = "../../assets/images/noImageSelected.jpg";
+  noImageURL: string  = "../../assets/images/noImageSelected.jpg";
+  showSpinner: boolean = false;
 
   constructor(private httpClient: HttpClient, private router: Router, private createBusinessService: CreateBusinessService) {}
 
-  // answerDisplay: string = '';
-  showSpinner: boolean = false;
 
   ngOnInit() {
 

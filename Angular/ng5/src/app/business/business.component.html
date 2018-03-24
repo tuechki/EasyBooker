@@ -2,27 +2,24 @@
 <h2>Add new business</h2>
 <br>
 
-<br>
-
 <div class="easybooker-div">
 
   <form>
 
+
     <div id="preview" class="preview">
-      <!--<img [src]="{{!this.selectedFile ? noImageURL : url}}">-->
-      <!--<img id="selectedImage" *ngIf="this.selectedFile" [src]="url">-->
       <img id="selectedImage" [src]="this.selectedFile ? url : noImageURL" />
     </div>
+
     <br>
 
-
-
-    <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
-    <button mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
-    <button mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
-    <button mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change image</button>
+    <div id="previewButtons">
+      <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+      <button mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+      <button mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+      <button mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
+    </div>
     <br>
-
 
     <mat-form-field class="example-full-width">
       <input matInput  type="text" placeholder="Name" name="name" [(ngModel)]="business['name']" />
