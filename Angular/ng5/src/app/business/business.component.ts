@@ -17,6 +17,8 @@ export class BusinessComponent implements OnInit {
   };
 
   selectedFile: File = null;
+  url: string = null;
+  public noImageURL: string  = "../../assets/images/noImageSelected.jpg";
 
   constructor(private httpClient: HttpClient, private router: Router, private createBusinessService: CreateBusinessService) {}
 
@@ -27,9 +29,19 @@ export class BusinessComponent implements OnInit {
 
   }
 
-  onFileSelected(event){
+  onFileSelected(event:any){
     this.selectedFile = <File>event.target.files[0];
 
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.url = event.target.result;
+    }
+
+    reader.readAsDataURL(this.selectedFile);
+  }
+
+  removeFile(){
+    this.selectedFile = null;
   }
 
   addBusiness() {

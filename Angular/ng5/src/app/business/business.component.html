@@ -2,48 +2,26 @@
 <h2>Add new business</h2>
 <br>
 
-
-
-
-
-
-<!--<p-growl [value]="msgs"></p-growl>-->
-
-<!--<h3 class="first">Advanced</h3>-->
-<!--<p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"-->
-              <!--multiple="multiple" accept="image/*" maxFileSize="1000000">-->
-  <!--<ng-template pTemplate="content">-->
-    <!--<ul *ngIf="uploadedFiles.length">-->
-      <!--<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>-->
-    <!--</ul>-->
-  <!--</ng-template>-->
-<!--</p-fileUpload>-->
-
-<!--<h3>Basic</h3>-->
-<!--<p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBa
-<h3>Basic with Auto</h3>sicUpload($event)"></p-fileUpload>-->
-
-<!--<p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Browse"></p-fileUpload>-->
-
-
-
-
-
-
-
-
-
 <br>
 
 <div class="easybooker-div">
 
   <form>
 
-    <!--<p-fileUpload name="image" url="http://localhost:8080/businesses/5/images" method="POST">Upload</p-fileUpload>-->
-    <input style="" type="file" (change)="onFileSelected($event)" #fileInput>
-    <button mat-raised-button *ngIf(click)="fileInput.click()">Pick an image</button>
-    <!--<button mat-raised-button (click)="onUpload()" >Upload</button>-->
+    <div id="preview" class="preview">
+      <!--<img [src]="{{!this.selectedFile ? noImageURL : url}}">-->
+      <!--<img id="selectedImage" *ngIf="this.selectedFile" [src]="url">-->
+      <img id="selectedImage" [src]="this.selectedFile ? url : noImageURL" />
+    </div>
+    <br>
 
+
+
+    <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+    <button mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+    <button mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+    <button mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change image</button>
+    <br>
 
 
     <mat-form-field class="example-full-width">

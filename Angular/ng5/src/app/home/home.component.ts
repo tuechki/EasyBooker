@@ -5,6 +5,7 @@ import {BusinessInfoService} from "../services/business.info.service";
 import {Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {MapsAPILoader} from "@agm/core";
+import {} from '@types/googlemaps'
 
 @Component({
   selector: 'app-home',
