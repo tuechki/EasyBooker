@@ -5,17 +5,13 @@ import com.elsys.easybooker.dtos.LocationDTO;
 import com.elsys.easybooker.dtos.ServiceDTO;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
-import javassist.bytecode.ByteArray;
-import org.apache.commons.io.IOUtils;
 import org.modelmapper.ModelMapper;
-import org.postgresql.util.PGInterval;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,7 +60,7 @@ public class BusinessService {
 
         Business business = new Business();
         business.setName(businessDTO.getName());
-        business.setSummary(businessDTO.getSummary());
+        business.setDescription(businessDTO.getDescription());
         business.setEmail(businessDTO.getEmail());
 
         UserBusiness userBusiness = new UserBusiness();
@@ -115,7 +111,7 @@ public class BusinessService {
 
             serviceDTO.setId(service.getId());
             serviceDTO.setName(service.getName());
-            serviceDTO.setSummary(service.getSummary());
+            serviceDTO.setDescription(service.getDescription());
             serviceDTO.setTimeDuration(service.getTimeDuration());
             serviceDTO.setPrice(service.getPrice());
             serviceDTO.setBusinessId(service.getBusiness().getId());
@@ -175,7 +171,7 @@ public class BusinessService {
 
                 Location location = new Location();
                 location.setAddress(locationDTO.getAddress());
-                location.setSummary(locationDTO.getSummary());
+                location.setDescription(locationDTO.getDescription());
                 location.setEmail(locationDTO.getEmail());
                 location.setNumber(locationDTO.getNumber());
                 location.setBusiness(business);

@@ -22,8 +22,8 @@ public class Service {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "summary")
-    private String summary;
+    @Column(name = "description")
+    private String description;
 
     @NotNull
     @Column(name = "timeDuration")
@@ -59,8 +59,9 @@ public class Service {
         this.id = id;
     }
 
-   public Service(String name, PGInterval timeDuration, int price){
+   public Service(String name, String description, PGInterval timeDuration, int price){
         this.name = name;
+        this.description = description;
         this.timeDuration = timeDuration;
         this.price = price;
 
@@ -74,12 +75,12 @@ public class Service {
         this.id = id;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public PGInterval getTimeDuration() {

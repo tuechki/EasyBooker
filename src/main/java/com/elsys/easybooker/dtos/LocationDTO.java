@@ -18,13 +18,11 @@ public class LocationDTO {
 
     private String number;
 
-    private String summary;
+    private String description;
 
     private String email;
 
     private long businessId;
-
-    private List<Service> services = new ArrayList<>();
 
     private List<DaySchedule> schedulesOfDays = new ArrayList<>();
 
@@ -33,6 +31,7 @@ public class LocationDTO {
     public LocationDTO(long id){
         this.id = id;
     }
+
 
     public long getId() {
         return id;
@@ -58,12 +57,12 @@ public class LocationDTO {
         this.number = number;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getEmail() {
@@ -80,14 +79,6 @@ public class LocationDTO {
 
     public void setBusinessId(long businessId) {
         this.businessId = businessId;
-    }
-
-    public List<Service> getServices() {
-        return services;
-    }
-
-    public void setServices(List<Service> services) {
-        this.services = services;
     }
 
     public List<DaySchedule> getSchedulesOfDays() {

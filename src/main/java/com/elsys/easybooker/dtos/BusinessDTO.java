@@ -8,7 +8,7 @@ public class BusinessDTO {
 
     private String name;
 
-    private String summary;
+    private String description;
 
     private String email;
 
@@ -16,9 +16,9 @@ public class BusinessDTO {
 
     }
 
-    public BusinessDTO(String name, String summary, String email){
+    public BusinessDTO(String name, String description, String email){
         this.name = name;
-        this.summary = summary;
+        this.description = description;
         this.email = email;
     }
 
@@ -38,12 +38,12 @@ public class BusinessDTO {
         this.name = name;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getEmail() {

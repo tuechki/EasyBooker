@@ -10,7 +10,7 @@ public class ServiceDTO {
 
     private String name;
 
-    private String summary;
+    private String description;
 
     private PGInterval timeDuration;
 
@@ -22,9 +22,9 @@ public class ServiceDTO {
 
     }
 
-    public ServiceDTO(String name, String summary, PGInterval timeDuration, double price){
+    public ServiceDTO(String name, String description, PGInterval timeDuration, double price){
         this.name = name;
-        this.summary = summary;
+        this.description = description;
         this.timeDuration = timeDuration;
         this.price = price;
     }
@@ -45,12 +45,12 @@ public class ServiceDTO {
         this.name = name;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public PGInterval getTimeDuration() {

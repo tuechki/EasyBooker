@@ -50,7 +50,7 @@ public class    UserService {
             BusinessDTO businessDTO = new BusinessDTO();
             businessDTO.setId(userBusiness.getBusiness().getId());
             businessDTO.setName(userBusiness.getBusiness().getName());
-            businessDTO.setSummary(userBusiness.getBusiness().getSummary());
+            businessDTO.setDescription(userBusiness.getBusiness().getDescription());
             businessDTO.setEmail(userBusiness.getBusiness().getEmail());
 
             businessesDTO.add(businessDTO);

@@ -24,8 +24,8 @@ public class Location {
     @Column(name = "number")
     private String number;
 
-    @Column(name = "summary")
-    private String summary;
+    @Column(name = "description")
+    private String description;
 
     @NotNull
     @Column(name = "email")
@@ -67,9 +67,9 @@ public class Location {
         this.id = id;
     }
 
-    public Location(String address, String summary, String email){
+    public Location(String address, String description, String email){
         this.address = address;
-        this.summary = summary;
+        this.description = description;
         this.email = email;
 
     }
@@ -98,12 +98,12 @@ public class Location {
         this.number = number;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getEmail() {

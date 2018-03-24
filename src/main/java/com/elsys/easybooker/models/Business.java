@@ -24,8 +24,8 @@ public class Business {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "summary")
-    private String summary;
+    @Column(name = "description")
+    private String description;
 
     @NotNull
     @Column(name = "email")
@@ -34,10 +34,6 @@ public class Business {
     @Column(name = "cratedAt")
     @JsonIgnore
     private LocalDate createdAt;
-
-//    @Lob
-//    @Column(name="image")
-//    private byte[] image;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -61,9 +57,9 @@ public class Business {
         this.id = id;
     }
 
-    public Business(String name, String summary, String email){
+    public Business(String name, String description, String email){
         this.name = name;
-        this.summary = summary;
+        this.description = description;
         this.email = email;
     }
 
@@ -83,12 +79,12 @@ public class Business {
         this.name = name;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getEmail() {

@@ -40,7 +40,7 @@ public class LocationService {
         BusinessDTO businessDTO = new BusinessDTO();
         businessDTO.setId(business.getId());
         businessDTO.setName(business.getName());
-        businessDTO.setSummary(business.getSummary());
+        businessDTO.setDescription(business.getDescription());
         businessDTO.setEmail(business.getEmail());
 
         return businessDTO;
