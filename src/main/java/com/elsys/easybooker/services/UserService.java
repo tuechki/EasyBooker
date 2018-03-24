@@ -1,19 +1,15 @@
 package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.ResourceNotFoundException;
-import com.elsys.easybooker.dtos.BusinessDTO;
-import com.elsys.easybooker.models.Business;
+import com.elsys.easybooker.dtos.BusinessDTOPrevious;
 import com.elsys.easybooker.models.User;
 import com.elsys.easybooker.models.UserBusiness;
 import com.elsys.easybooker.repositories.UserRepository;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class    UserService {
@@ -45,9 +41,9 @@ public class    UserService {
 
         System.out.println("------------------------" + loggedInUser.getUsername());
 
-        List<BusinessDTO> businessesDTO = new ArrayList<>();
+        List<BusinessDTOPrevious> businessesDTO = new ArrayList<>();
         for (UserBusiness userBusiness : loggedInUser.getBusinessAssoc()){
-            BusinessDTO businessDTO = new BusinessDTO();
+            BusinessDTOPrevious businessDTO = new BusinessDTOPrevious();
             businessDTO.setId(userBusiness.getBusiness().getId());
             businessDTO.setName(userBusiness.getBusiness().getName());
             businessDTO.setDescription(userBusiness.getBusiness().getDescription());

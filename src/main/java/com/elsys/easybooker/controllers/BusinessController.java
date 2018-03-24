@@ -1,27 +1,19 @@
 package com.elsys.easybooker.controllers;
 
-import com.elsys.easybooker.dtos.BusinessDTO;
 import com.elsys.easybooker.dtos.LocationDTO;
 import com.elsys.easybooker.dtos.ServiceDTO;
-import com.elsys.easybooker.models.Business;
-import com.elsys.easybooker.models.Location;
-import com.elsys.easybooker.models.Service;
+import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
+import com.elsys.easybooker.dtos.business.BusinessDTO;
+import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
+import com.elsys.easybooker.dtos.business.BusinessUpdateDTO;
 import com.elsys.easybooker.services.BusinessService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import javax.servlet.*;
-import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/businesses")
@@ -35,19 +27,19 @@ public class BusinessController {
 
 
     @GetMapping
-    public Iterable getBusinesses() {
+    public List<BusinessBriefDTO> getBusinesses() {
         return businessService.getBusinesses();
     }
 
     @GetMapping("/{businessId}")
-    public Business getBusinessById(@PathVariable long businessId) {
+    public BusinessDTO getBusinessById(@PathVariable long businessId) {
         return businessService.getBusinessById(businessId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Business createBusiness(@Valid @RequestBody BusinessDTO businessDTO ) {
-        return  businessService.createBusiness(businessDTO);
+    public BusinessBriefDTO createBusiness(@Valid @RequestBody BusinessCreationDTO businessCreationDTO ) {
+        return  businessService.createBusiness(businessCreationDTO);
     }
 
     @PostMapping("/{businessId}/images")
@@ -58,8 +50,8 @@ public class BusinessController {
     }
 
     @PutMapping
-    public void updateBusinesses(@Valid @RequestBody Business business) {
-        businessService.updateBusiness(business);
+    public BusinessBriefDTO updateBusinesses(@Valid @RequestBody BusinessUpdateDTO businessUpdateDTO) {
+       return  businessService.updateBusiness(businessUpdateDTO);
     }
 
 

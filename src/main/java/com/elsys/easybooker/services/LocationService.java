@@ -1,15 +1,11 @@
 package com.elsys.easybooker.services;
 
-import com.elsys.easybooker.dtos.BusinessDTO;
-import com.elsys.easybooker.dtos.LocationDTO;
-import com.elsys.easybooker.dtos.ServiceDTO;
+import com.elsys.easybooker.dtos.BusinessDTOPrevious;
 import com.elsys.easybooker.models.Business;
-import com.elsys.easybooker.models.DaySchedule;
 import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
-import org.postgresql.util.PGInterval;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +30,10 @@ public class LocationService {
         return locationRepository.findById(locationId);
     }
 
-    public BusinessDTO getBusinessForLocation(long locationId){
+    public BusinessDTOPrevious getBusinessForLocation(long locationId){
         Location location = locationRepository.findById(locationId);
         Business business = location.getBusiness();
-        BusinessDTO businessDTO = new BusinessDTO();
+        BusinessDTOPrevious businessDTO = new BusinessDTOPrevious();
         businessDTO.setId(business.getId());
         businessDTO.setName(business.getName());
         businessDTO.setDescription(business.getDescription());

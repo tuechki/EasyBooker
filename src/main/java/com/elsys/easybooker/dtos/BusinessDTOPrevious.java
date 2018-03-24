@@ -2,7 +2,7 @@ package com.elsys.easybooker.dtos;
 
 import java.util.Objects;
 
-public class BusinessDTO {
+public class BusinessDTOPrevious {
 
     private long id;
 
@@ -12,11 +12,11 @@ public class BusinessDTO {
 
     private String email;
 
-    public BusinessDTO(){
+    public BusinessDTOPrevious(){
 
     }
 
-    public BusinessDTO(String name, String description, String email){
+    public BusinessDTOPrevious(String name, String description, String email){
         this.name = name;
         this.description = description;
         this.email = email;
@@ -57,8 +57,8 @@ public class BusinessDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BusinessDTO)) return false;
-        BusinessDTO that = (BusinessDTO) o;
+        if (!(o instanceof BusinessDTOPrevious)) return false;
+        BusinessDTOPrevious that = (BusinessDTOPrevious) o;
         return Objects.equals(getName(), that.getName()) &&
                 Objects.equals(getEmail(), that.getEmail());
     }

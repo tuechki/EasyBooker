@@ -1,21 +1,13 @@
 package com.elsys.easybooker.controllers;
 
-import com.elsys.easybooker.dtos.BusinessDTO;
-import com.elsys.easybooker.dtos.ServiceDTO;
-import com.elsys.easybooker.models.Business;
+import com.elsys.easybooker.dtos.BusinessDTOPrevious;
 import com.elsys.easybooker.models.Location;
 import com.elsys.easybooker.models.Service;
-import com.elsys.easybooker.repositories.LocationRepository;
-import com.elsys.easybooker.repositories.ServiceRepository;
 import com.elsys.easybooker.services.LocationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import static java.time.temporal.ChronoUnit.DAYS;
 
 @RestController
 @RequestMapping("/locations")
@@ -38,7 +30,7 @@ public class LocationController {
     }
 
     @GetMapping("/{locationId}/business")
-    public BusinessDTO getBusinessForLocation(@PathVariable long locationId){
+    public BusinessDTOPrevious getBusinessForLocation(@PathVariable long locationId){
         return locationService.getBusinessForLocation(locationId);
     }
 

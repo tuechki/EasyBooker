@@ -1,8 +1,12 @@
 package com.elsys.easybooker.services;
 
-import com.elsys.easybooker.dtos.BusinessDTO;
+import com.elsys.easybooker.dtos.BusinessDTOPrevious;
 import com.elsys.easybooker.dtos.LocationDTO;
 import com.elsys.easybooker.dtos.ServiceDTO;
+import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
+import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
+import com.elsys.easybooker.dtos.business.BusinessDTO;
+import com.elsys.easybooker.dtos.business.BusinessUpdateDTO;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
 import org.modelmapper.ModelMapper;
@@ -45,26 +49,30 @@ public class BusinessService {
         this.usersBusinessesRepository = usersBusinessesRepository;
     }
 
-    public Iterable getBusinesses() {
-        return businessRepository.findAll();
+    public List<BusinessBriefDTO> getBusinesses() {
+        List<BusinessBriefDTO> businessBriefDTOList = new ArrayList<>();
+        for (Business business : businessRepository.findAll()){
+            businessBriefDTOList.add(modelMapper.map(business, BusinessBriefDTO.class));
+        }
+
+        return businessBriefDTOList;
     }
 
-    public Business getBusinessById( long businessId) {
-        return businessRepository.findById(businessId);
+    public BusinessDTO getBusinessById(long businessId) {
+        return modelMapper.map(businessRepository.findById(businessId), BusinessDTO.class);
     }
 
-    public Business createBusiness(BusinessDTO businessDTO ) {
+    public BusinessBriefDTO createBusiness(BusinessCreationDTO businessCreationDTO) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User owner = userRepository.findByUsername(auth.getName());
+//        Business business = new Business();
+//        business.setName(businessDTO.getName());
+//        business.setDescription(businessDTO.getDescription());
+//        business.setEmail(businessDTO.getEmail());
 
-        Business business = new Business();
-        business.setName(businessDTO.getName());
-        business.setDescription(businessDTO.getDescription());
-        business.setEmail(businessDTO.getEmail());
-
+        Business business = modelMapper.map(businessCreationDTO, Business.class);
         UserBusiness userBusiness = new UserBusiness();
-
         userBusiness.setBusiness(business);
         userBusiness.setUser(owner);
         userBusiness.setPermission(ADMIN);
@@ -73,7 +81,9 @@ public class BusinessService {
         business.getUserAssoc().add(userBusiness);
         owner.getBusinessAssoc().add(userBusiness);
         userRepository.save(owner);
-        return businessRepository.save(business);
+        business = businessRepository.save(business);
+
+        return modelMapper.map(business, BusinessBriefDTO.class);
 
     }
 
@@ -86,10 +96,13 @@ public class BusinessService {
         Files.copy(image.getInputStream(), this.rootBusinessImagesLocation.resolve( businessId + "/" + imageName + imageExtension));
     }
 
-    public void updateBusiness( Business business) throws UnauthorizedClientException{
-        if(isUserBusinessAdmin(business.getId())){
-            businessRepository.save(business);
+    public BusinessBriefDTO updateBusiness(BusinessUpdateDTO businessUpdateDTO) throws UnauthorizedClientException{
+        Business business = new Business();
+        if(isUserBusinessAdmin(businessUpdateDTO.getId())){
+           business = businessRepository.save(modelMapper.map(businessUpdateDTO, Business.class));
         }
+
+        return modelMapper.map(business, BusinessBriefDTO.class);
 
          // TO DO implement equals and hashcode to entities //
     }

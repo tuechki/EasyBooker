@@ -6,6 +6,7 @@ import org.springframework.jdbc.support.incrementer.AbstractDataFieldMaxValueInc
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @NotNull
     @Column(name = "name")
@@ -31,9 +32,11 @@ public class Business {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "cratedAt")
     @JsonIgnore
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
+    private LocalDateTime editedAt;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -63,11 +66,11 @@ public class Business {
         this.email = email;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -95,12 +98,20 @@ public class Business {
         this.email = email;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getEditedAt() {
+        return editedAt;
+    }
+
+    public void setEditedAt(LocalDateTime editedAt) {
+        this.editedAt = editedAt;
     }
 
     public List<Service> getServices(){
