@@ -1,10 +1,11 @@
 package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.ResourceNotFoundException;
-import com.elsys.easybooker.dtos.BusinessDTOPrevious;
+import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.models.User;
 import com.elsys.easybooker.models.UserBusiness;
 import com.elsys.easybooker.repositories.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class    UserService {
+public class  UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public UserService(UserRepository userRepository,
                           BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -41,19 +43,15 @@ public class    UserService {
 
         System.out.println("------------------------" + loggedInUser.getUsername());
 
-        List<BusinessDTOPrevious> businessesDTO = new ArrayList<>();
+        List<BusinessBriefDTO> businessBriefDTOList = new ArrayList<>();
         for (UserBusiness userBusiness : loggedInUser.getBusinessAssoc()){
-            BusinessDTOPrevious businessDTO = new BusinessDTOPrevious();
-            businessDTO.setId(userBusiness.getBusiness().getId());
-            businessDTO.setName(userBusiness.getBusiness().getName());
-            businessDTO.setDescription(userBusiness.getBusiness().getDescription());
-            businessDTO.setEmail(userBusiness.getBusiness().getEmail());
 
-            businessesDTO.add(businessDTO);
+
+            businessBriefDTOList.add(modelMapper.map(userBusiness.getBusiness(), BusinessBriefDTO.class));
             System.out.println("---///---///---" + userBusiness.getBusiness().getId());
         }
 
-        return businessesDTO;
+        return businessBriefDTOList;
     }
 
     public void createUser(User user) {

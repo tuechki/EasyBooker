@@ -1,12 +1,13 @@
 package com.elsys.easybooker.controllers;
 
-import com.elsys.easybooker.dtos.ServiceDTOPrevious;
 import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessUpdateDTO;
 import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationCreationDTO;
+import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
+import com.elsys.easybooker.dtos.service.ServiceCreationDTO;
 import com.elsys.easybooker.services.BusinessService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -63,29 +64,20 @@ public class BusinessController {
 
 
     @GetMapping("/{businessId}/services")
-    public Iterable getBusinessServices(@PathVariable long businessId) {
+    public List<ServiceBriefDTO> getBusinessServices(@PathVariable long businessId) {
        return  businessService.getBusinessServices(businessId);
     }
 
 
     @PostMapping("/{businessId}/services")
-    public void createBusinessService(@PathVariable long businessId, @RequestBody ServiceDTOPrevious serviceDTO) {
-        businessService.createOrUpdateBusinessService(businessId, serviceDTO);
+    public void createBusinessService(@PathVariable long businessId, @RequestBody ServiceCreationDTO serviceCreationDTO) {
+        businessService.createBusinessService(businessId, serviceCreationDTO);
     }
 
-    @PutMapping("/{businessId}/services")
-    public void updateBusinessService(@PathVariable long businessId, @RequestBody ServiceDTOPrevious serviceDTO) {
-        businessService.createOrUpdateBusinessService(businessId, serviceDTO);
-    }
 
     @DeleteMapping("/{businessId}/services")
     public void deleteBusinessServices(@PathVariable long businessId) {
         businessService.deleteBusinessServices(businessId);
-    }
-
-    @DeleteMapping("/{businessId}/services/{serviceId}")
-    public void deleteBusinessServices(@PathVariable long businessId, @PathVariable long serviceId) {
-        businessService.deleteBusinessServiceById(businessId,serviceId);
     }
 
 

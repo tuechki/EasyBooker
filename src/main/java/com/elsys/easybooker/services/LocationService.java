@@ -4,6 +4,7 @@ import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationDTO;
 import com.elsys.easybooker.dtos.location.LocationUpdateDTO;
+import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
@@ -68,9 +69,13 @@ public class LocationService {
         }
     }
 
-    public List<Service> getServicesForLocation(long locationId) {
-        return locationRepository.findById(locationId).getServices();
+    public List<ServiceBriefDTO> getServicesForLocation(long locationId) {
+        List<ServiceBriefDTO> serviceBriefDTOList = new ArrayList<>();
+        for (Service service : locationRepository.findById(locationId).getServices()){
+            serviceBriefDTOList.add(modelMapper.map(service, ServiceBriefDTO.class));
+        }
 
+        return serviceBriefDTOList;
     }
 
     public void addServicesToLocation(long locationId, List<Long> serviceIds) {
@@ -88,7 +93,6 @@ public class LocationService {
         locationRepository.save(location);
 
     }
-
 
 
     public boolean isUserBusinessAdmin(long businessId) throws UnauthorizedClientException {

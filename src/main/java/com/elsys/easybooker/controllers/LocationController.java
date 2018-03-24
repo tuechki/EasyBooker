@@ -4,6 +4,7 @@ import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationDTO;
 import com.elsys.easybooker.dtos.location.LocationUpdateDTO;
+import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.services.LocationService;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +49,7 @@ public class LocationController {
 
 
     @GetMapping("/{locationId}/services")
-    public List<Service> getServicesForLocation(@PathVariable long locationId) {
+    public List<ServiceBriefDTO> getServicesForLocation(@PathVariable long locationId) {
         return locationService.getServicesForLocation(locationId);
 
     }

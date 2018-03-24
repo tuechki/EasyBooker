@@ -1,12 +1,13 @@
 package com.elsys.easybooker.services;
 
-import com.elsys.easybooker.dtos.ServiceDTOPrevious;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessDTO;
 import com.elsys.easybooker.dtos.business.BusinessUpdateDTO;
 import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationCreationDTO;
+import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
+import com.elsys.easybooker.dtos.service.ServiceCreationDTO;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
 import org.modelmapper.ModelMapper;
@@ -116,29 +117,21 @@ public class BusinessService {
 
 
 
-    public Iterable getBusinessServices(long businessId) {
-         List<ServiceDTOPrevious> servicesDTO = new ArrayList<>();
+    public List<ServiceBriefDTO> getBusinessServices(long businessId) {
+         List<ServiceBriefDTO> serviceBriefDTOList = new ArrayList<>();
         for(Service service: serviceRepository.findByBusinessId(businessId)){
 
-            ServiceDTOPrevious serviceDTO = new ServiceDTOPrevious();
-
-            serviceDTO.setId(service.getId());
-            serviceDTO.setName(service.getName());
-            serviceDTO.setDescription(service.getDescription());
-            serviceDTO.setTimeDuration(service.getTimeDuration());
-            serviceDTO.setPrice(service.getPrice());
-            serviceDTO.setBusinessId(service.getBusiness().getId());
-
-            servicesDTO.add(serviceDTO);
+            serviceBriefDTOList.add(modelMapper.map(service, ServiceBriefDTO.class));
         }
 
-        return servicesDTO;
+        return serviceBriefDTOList;
     }
 
 
-    public void createOrUpdateBusinessService(long businessId, ServiceDTOPrevious serviceDTO) throws UnauthorizedClientException{
+    public ServiceBriefDTO createBusinessService(long businessId, ServiceCreationDTO serviceCreationDTO)
+                                                                        throws UnauthorizedClientException{
 
-        Service service = modelMapper.map(serviceDTO, Service.class);
+        Service service = modelMapper.map(serviceCreationDTO, Service.class);
 
         if(isUserBusinessAdmin(businessId)) {
             Business business = businessRepository.findById(businessId);
@@ -148,6 +141,8 @@ public class BusinessService {
             businessRepository.save(business);
 
         }
+
+        return modelMapper.map(service, ServiceBriefDTO.class);
     }
 
     public void deleteBusinessServices(long businessId) throws UnauthorizedClientException{
@@ -155,15 +150,6 @@ public class BusinessService {
             serviceRepository.deleteByBusinessId(businessId);
         }
     }
-
-
-    public void deleteBusinessServiceById(long businessId, long serviceId) throws UnauthorizedClientException {
-        if(isUserBusinessAdmin(businessId)) {
-            serviceRepository.delete(serviceId);
-        }
-    }
-
-
 
 
    //----Locations---//
