@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,9 +47,6 @@ public class User {
 
 //    private Date dateOfBirth;
 
-//    private Image image;
-
-
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<UserBusiness> businessAssoc = new ArrayList<>();
@@ -57,6 +55,12 @@ public class User {
             fetch = FetchType.LAZY,
             mappedBy = "user")
     private List<BookingRecord> bookingRecords = new ArrayList<>();
+
+    @JsonIgnore
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
+    private  LocalDateTime editedAt;
 
 
     public User(){ }
@@ -172,6 +176,22 @@ public class User {
 
     public void setBookingRecords(List<BookingRecord> bookingRecords) {
         this.bookingRecords = bookingRecords;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getEditedAt() {
+        return editedAt;
+    }
+
+    public void setEditedAt(LocalDateTime editedAt) {
+        this.editedAt = editedAt;
     }
 
     @Override
