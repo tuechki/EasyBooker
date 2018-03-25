@@ -33,7 +33,7 @@ public class BusinessController {
         return businessService.getBusinesses();
     }
 
-    @GetMapping
+    @GetMapping("/loggedInUser")
     public List<BusinessBriefDTO> getBusinessesForLoggedUser() {
         return businessService.getBusinessesForLoggedUser();
     }

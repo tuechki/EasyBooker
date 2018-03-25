@@ -19,7 +19,13 @@ export class ServiceInfoComponent implements OnInit {
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
 
   ngOnInit() {
-    this.service = this.businessInfoService.getCurrentService();
+
+    this.httpClient.get('http://localhost:8080/services/'
+      + this.businessInfoService.getCurrentService()['id'],
+      {observe: 'response'}
+    ).subscribe(resp => {
+      this.service = resp.body;
+    });
 
     this.httpClient.get('http://localhost:8080/services/'
       + this.businessInfoService.getCurrentService()['id'] + "/locations",

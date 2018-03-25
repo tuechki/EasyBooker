@@ -4,7 +4,7 @@
     <mat-tab-group class="demo-tab-group">
       <mat-tab label="Business info">
         <div class="demo-tab-content">
-          {{business.summary}}
+          {{business.description}}
           <br>
           <br>
           <p> Email: {{business.email}} </p>
@@ -20,7 +20,7 @@
       <mat-tab label="Services">
         <div class="col">
         <span *ngFor="let service of services">
-          <button mat-raised-button >{{service['name']}} timeDuration: {{(service['timeDuration'])['hours']}}</button> <br>
+          <button mat-raised-button (click)="showService(service)">{{service['name']}}</button> <br>
         </span>
         </div>
       </mat-tab>

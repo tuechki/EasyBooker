@@ -19,7 +19,14 @@ export class LocationInfoComponent implements OnInit {
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
 
   ngOnInit() {
-    this.location = this.businessInfoService.getCurrentLocation();
+
+    this.httpClient.get('http://localhost:8080/locations/'
+      + this.businessInfoService.getCurrentLocation()['id'],
+      {observe: 'response'}
+    ).subscribe(resp => {
+      this.location = resp.body;
+    });
+
 
     this.httpClient.get('http://localhost:8080/locations/'
       + this.businessInfoService.getCurrentLocation()['id'] + "/services",

@@ -12,7 +12,7 @@ export class BusinessComponent implements OnInit {
 
   business: object = {
     name: '',
-    summary: '',
+    description: '',
     email: ''
   };
 
