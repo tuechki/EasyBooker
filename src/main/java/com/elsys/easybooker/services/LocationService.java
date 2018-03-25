@@ -13,7 +13,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +27,8 @@ import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 
 @org.springframework.stereotype.Service
 public class LocationService {
+
+    private final Path rootLocationImagesLocation = Paths.get("src\\main\\resources\\static\\images\\locations");
     private final ServiceRepository serviceRepository;
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
@@ -61,6 +69,15 @@ public class LocationService {
         }
 
         return modelMapper.map(location, LocationBriefDTO.class);
+    }
+
+    public void addImageToLocation(long locationId, MultipartFile image) throws IOException {
+
+        String imageName = "image";
+        String imageExtension = ".png";
+
+        new File(this.rootLocationImagesLocation.toString() + "/" + locationId ).mkdirs();
+        Files.copy(image.getInputStream(), this.rootLocationImagesLocation.resolve( locationId + "/" + imageName + imageExtension));
     }
 
     public void deleteLocationById(long locationId){

@@ -5,8 +5,10 @@
     <mat-tab-group class="demo-tab-group">
       <mat-tab label="Location info">
         <div class="demo-tab-content">
-          {{location.description}}
+          <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
           <br>
+          <br>
+          <p> Description: {{location.description}} </p>
           <br>
           <p> Email: {{location.email}} </p>
         </div>
@@ -21,7 +23,12 @@
       <mat-tab label="Services">
         <div class="col">
         <span *ngFor="let service of services">
-          <button mat-raised-button (click)="showService(service)">{{service['name']}}</button> <br>
+
+          <button class="block" mat-raised-button (click)="showService(service)">
+            <img class="img" src='http://localhost:8080/images/services/{{service.id}}/image.png'/>
+             <p>{{service.name}}</p>
+          </button>
+
         </span>
         </div>
       </mat-tab>

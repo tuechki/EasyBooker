@@ -21,8 +21,26 @@ export class ServiceComponent{
     price: ''
   };
 
-  // answerDisplay: string = '';
+  selectedFile: File = null;
+  url: string = null;
+  noImageURL: string  = "../../assets/images/noImageSelected.jpg";
   showSpinner: boolean = false;
+
+
+  onFileSelected(event:any){
+    this.selectedFile = <File>event.target.files[0];
+
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.url = event.target.result;
+    }
+
+    reader.readAsDataURL(this.selectedFile);
+  }
+
+  removeFile(){
+    this.selectedFile = null;
+  }
 
 
   addService() {
@@ -33,7 +51,17 @@ export class ServiceComponent{
       this.service,
       {observe: 'response'}
     ).subscribe(resp => {
-      console.log(resp);
+
+      if(this.selectedFile) {
+        const fd = new FormData();
+        fd.append('image', this.selectedFile, this.selectedFile.name);
+        this.httpClient.post('http://localhost:8080/services/' + resp.body["id"] + '/images',
+          fd
+        ).subscribe(resp => {
+          this.selectedFile = null;
+        });
+      }
+
     });
     setTimeout(() => {
       // this.answerDisplay = this.name;
@@ -41,7 +69,7 @@ export class ServiceComponent{
     }, 2000);
 
     this.service['name'] = '';
-    this.service['summary'] = '';
+    this.service['description'] = '';
     this.service['timeDuration'] = '';
     this.service['price'] = '';
   }

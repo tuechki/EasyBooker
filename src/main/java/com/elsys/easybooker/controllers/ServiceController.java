@@ -9,8 +9,10 @@ import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.services.ServiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +39,13 @@ public class ServiceController {
     @PutMapping
     public ServiceBriefDTO updateServiceById(@RequestBody ServiceUpdateDTO serviceUpdateDTO){
         return serviceService.updateServiceById(serviceUpdateDTO);
+    }
+
+    @PostMapping("/{serviceId}/images")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addImageToService(@Valid @PathVariable long serviceId, @RequestParam("image") MultipartFile image)
+            throws IOException {
+        serviceService.addImageToService(serviceId, image);
     }
 
     @DeleteMapping("/{serviceId}")

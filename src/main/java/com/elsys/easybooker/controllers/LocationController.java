@@ -7,8 +7,12 @@ import com.elsys.easybooker.dtos.location.LocationUpdateDTO;
 import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.services.LocationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -35,6 +39,13 @@ public class LocationController {
     @PutMapping
     public LocationBriefDTO updateLocationById(@RequestBody LocationUpdateDTO locationUpdateDTO){
         return locationService.updateLocationById(locationUpdateDTO);
+    }
+
+    @PostMapping("/{locationId}/images")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addImageToLocation(@Valid @PathVariable long locationId, @RequestParam("image") MultipartFile image)
+            throws IOException {
+        locationService.addImageToLocation(locationId, image);
     }
 
     @DeleteMapping("/{locationId}")

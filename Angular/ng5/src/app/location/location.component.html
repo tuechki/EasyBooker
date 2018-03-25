@@ -4,12 +4,26 @@
 <div class="easybooker-div">
 <form>
 
+  <div id="preview" class="preview">
+    <img id="selectedImage" [src]="this.selectedFile ? url : noImageURL" />
+  </div>
+
+  <br>
+
+  <div id="previewButtons">
+    <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+    <button mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+    <button mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+    <button mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
+  </div>
+  <br>
+
   <mat-form-field class="example-full-width">
     <input matInput  type="text" placeholder="Address" name="locationAddress" [(ngModel)]="location['address']" />
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput  type="text" placeholder="Summary" name="serviceSummary" [(ngModel)]="location['summary']"/>
+    <input matInput  type="text" placeholder="Description" name="serviceDescription" [(ngModel)]="location['description']"/>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">

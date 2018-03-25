@@ -32,10 +32,12 @@
       <mat-tab label="Locations">
         <div class="col">
         <span class="life-container" *ngFor="let location of locations">
+
           <button class="block" mat-raised-button (click)="showLocation(location)">
              <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
              <p>{{location.address}}</p>
           </button>
+
         </span>
         </div>
       </mat-tab>

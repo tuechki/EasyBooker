@@ -13,7 +13,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +28,7 @@ import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 @org.springframework.stereotype.Service
 public class ServiceService {
 
+    private final Path rootServiceImagesLocation = Paths.get("src\\main\\resources\\static\\images\\services");
     private final ServiceRepository serviceRepository;
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
@@ -73,6 +80,15 @@ public class ServiceService {
         }
 
         return modelMapper.map(service, ServiceBriefDTO.class);
+    }
+
+    public void addImageToService(long serviceId, MultipartFile image) throws IOException {
+
+        String imageName = "image";
+        String imageExtension = ".png";
+
+        new File(this.rootServiceImagesLocation.toString() + "/" + serviceId ).mkdirs();
+        Files.copy(image.getInputStream(), this.rootServiceImagesLocation.resolve( serviceId + "/" + imageName + imageExtension));
     }
 
     public void deleteServiceById(long serviceId){

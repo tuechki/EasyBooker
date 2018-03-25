@@ -32,28 +32,9 @@ findIndexToUpdate(service) {
   return service['name'] === this;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  selectedFile: File = null;
+  url: string = null;
+  noImageURL: string  = "../../assets/images/noImageSelected.jpg";
 
 
   constructor(private httpClient: HttpClient, private router: Router, private createBusinessService: CreateBusinessService) {}
@@ -79,6 +60,21 @@ findIndexToUpdate(service) {
     });
   }
 
+  onFileSelected(event:any){
+    this.selectedFile = <File>event.target.files[0];
+
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.url = event.target.result;
+    }
+
+    reader.readAsDataURL(this.selectedFile);
+  }
+
+  removeFile(){
+    this.selectedFile = null;
+  }
+
   showSpinner: boolean = false;
 
   addLocation() {
@@ -90,12 +86,26 @@ findIndexToUpdate(service) {
       {observe: 'response'}
     ).subscribe(resp => {
 
+
       this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + "/services",
         this.selectedServices,
         {observe: 'response'}
       ).subscribe(resp => {
         console.log(resp);
       });
+
+
+      if(this.selectedFile) {
+        const fd = new FormData();
+        fd.append('image', this.selectedFile, this.selectedFile.name);
+        this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + '/images',
+          fd
+        ).subscribe(resp => {
+          this.selectedFile = null;
+        });
+      }
+
+
     });
 
 
@@ -106,7 +116,7 @@ findIndexToUpdate(service) {
     }, 2000);
 
     this.location['address'] = '';
-    this.location['summary'] = '';
+    this.location['description'] = '';
     this.location['number'] = '';
     this.location['email'] = '';
   }
