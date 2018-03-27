@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, LOCALE_ID, OnInit} from '@angular/core';
 import {tokenNotExpired} from "angular2-jwt";
 import {AuthService} from "./auth/auth.service";
 import {Router} from "@angular/router";
@@ -11,7 +11,12 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit{
 
-  constructor(public authService: AuthService, private router: Router){}
+  languages = [
+    { code: 'en', label: 'English'},
+    { code: 'bg', label: 'Български'}
+  ];
+
+  constructor(@Inject(LOCALE_ID) protected localeId: string, public authService: AuthService, private router: Router){}
 
   ngOnInit() {
   }

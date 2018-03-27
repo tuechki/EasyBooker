@@ -1,10 +1,10 @@
-<h2>EasyBooker makes booking easier than ever ! </h2>
+<h2 i18n>EasyBooker makes booking easier than ever ! </h2>
 
 <div class="container">
 
   <div class="easybooker-div form-group">
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+      <input matInput i18n-placeholder placeholder="Search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
     </mat-form-field>
   </div>
 
@@ -17,7 +17,7 @@
 <mat-card>
   <mat-card-content>
     <mat-tab-group class="demo-tab-group">
-      <mat-tab label="Businesses">
+      <mat-tab i18n-label label="Businesses">
         <div class="col">
           <span class="life-container" *ngFor="let business of businesses">
 
@@ -29,7 +29,7 @@
           </span>
         </div>
       </mat-tab>
-      <mat-tab label="Locations">
+      <mat-tab i18n-label label="Locations">
         <div class="col">
         <span class="life-container" *ngFor="let location of locations">
 
@@ -41,7 +41,7 @@
         </span>
         </div>
       </mat-tab>
-      <mat-tab label="Services">
+      <mat-tab i18n-label label="Services">
         <div class="col">
         <span *ngFor="let service of services">
 

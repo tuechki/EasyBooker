@@ -32,6 +32,7 @@ import { ServiceInfoComponent } from './service-info/service-info.component';
 import { MaterialModule } from './material.module';
 import { PrimengModule } from './primeng.module';
 import { AgmCoreModule } from '@agm/core';
+import { UserBusinessesComponent } from './user-businesses/user-businesses.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AgmCoreModule } from '@agm/core';
     ServiceComponent,
     BusinessInfoComponent,
     LocationInfoComponent,
-    ServiceInfoComponent
+    ServiceInfoComponent,
+    UserBusinessesComponent
   ],
   imports: [
     BrowserModule,

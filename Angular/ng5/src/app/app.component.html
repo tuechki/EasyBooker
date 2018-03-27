@@ -3,22 +3,29 @@
   <mat-toolbar-row>
     <span>Easybooker</span>
 
+    <!--<div ngFor let-lang [ngForOf]="languages">-->
+  <!--<span *ngIf="lang.code !== localeId">-->
+    <!--<a href="/{{lang.code}}/">{{lang.label}}</a> </span>-->
+      <!--<span *ngIf="lang.code === localeId">{{lang.label}} </span>-->
+    <!--</div>-->
+
+
     <span class="example-spacer"></span>
 
     <ng-container *ngIf="!this.authService.isAuthenticated()">
-      <button mat-button routerLink="">Home</button>
-      <button mat-button routerLink="about">What's this</button>
-      <button mat-button routerLink="sign-up" >Sign up</button>
-      <button mat-button routerLink="login">Log in</button>
+      <button i18n mat-button routerLink="">Home</button>
+      <button i18n mat-button routerLink="about">What's this</button>
+      <button i18n mat-button routerLink="sign-up" >Sign up</button>
+      <button i18n mat-button routerLink="login">Log in</button>
     </ng-container>
 
     <ng-container *ngIf="this.authService.isAuthenticated()">
-      <button mat-button routerLink="">Home</button>
-      <button mat-button routerLink="businesses" >Add business</button>
-      <button mat-button (click)="removeToken()">Log out</button>
+      <button i18n mat-button routerLink="">Home</button>
+      <button i18n mat-button routerLink="businesses" >Add business</button>
+      <button i18n mat-button routerLink="my-businesses" >My businesses</button>
+      <button i18n mat-button (click)="removeToken()">Log out</button>
     </ng-container>
   </mat-toolbar-row>
 </mat-toolbar>
-
 
 <router-outlet></router-outlet>

@@ -1,21 +1,21 @@
 <mat-card>
   <mat-card-content>
-    <button mat-raised-button (click)="goToBusiness()">Go to business</button>
+    <button i18n mat-raised-button (click)="goToBusiness()">Go to business</button>
     <h2 class="example-h2">{{service.name}}</h2>
     <mat-tab-group class="demo-tab-group">
-      <mat-tab label="Service info">
+      <mat-tab i18n-label label="Service info">
         <div class="demo-tab-content">
           <img class="img" src='http://localhost:8080/images/services/{{service.id}}/image.png'/>
           <br>
           <br>
-          <p> Description: {{service.description}} </p>
+          <p i18n> Description: </p><p>{{service.description}} </p>
           <br>
           <br>
-          <p> Price: {{service.price}} </p>
-          <p> TimeDuration: {{service.timeDuration}} </p>
+          <p i18n> Price: </p><p>{{service.price}} </p>
+          <p i18n> TimeDuration: </p><p>{{service.timeDuration}} </p>
         </div>
       </mat-tab>
-      <mat-tab label="Locations">
+      <mat-tab i18n-label label="Locations">
         <div class="col">
         <span *ngFor="let location of locations">
 
@@ -32,6 +32,6 @@
   </mat-card-content>
 </mat-card>
 
-<ng-container *ngIf="this.businessInfoService.getCurrentLocation()">
-  <button mat-button>BOOK IT !</button>
-</ng-container>
+<!--<ng-container *ngIf="this.businessInfoService.getCurrentLocation()">-->
+  <!--<button mat-button>BOOK IT !</button>-->
+<!--</ng-container>-->

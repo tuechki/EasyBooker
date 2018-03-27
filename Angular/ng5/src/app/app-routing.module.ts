@@ -12,6 +12,7 @@ import {ServiceComponent} from "./service/service.component";
 import {BusinessInfoComponent} from "./business-info/business-info.component";
 import {LocationInfoComponent} from "./location-info/location-info.component";
 import {ServiceInfoComponent} from "./service-info/service-info.component";
+import {UserBusinessesComponent} from "./user-businesses/user-businesses.component";
 
 
 const routes: Routes = [
@@ -57,6 +58,10 @@ const routes: Routes = [
   {
     path: 'service-info',
     component: ServiceInfoComponent
+  },
+  {
+    path: 'my-businesses',
+    component: UserBusinessesComponent
   }
 ];
 

@@ -1,4 +1,4 @@
-<h2>Add locations to the business</h2>
+<h2 i18n>Add locations to the business</h2>
 <br>
 
 <div class="easybooker-div">
@@ -12,26 +12,26 @@
 
   <div id="previewButtons">
     <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
-    <button mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
-    <button mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
-    <button mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
+    <button mat-raised-button i18n *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+    <button mat-raised-button i18n *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+    <button mat-raised-button i18n *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
   </div>
   <br>
 
   <mat-form-field class="example-full-width">
-    <input matInput  type="text" placeholder="Address" name="locationAddress" [(ngModel)]="location['address']" />
+    <input matInput i18n-placeholder type="text" placeholder="Address" name="locationAddress" [(ngModel)]="location['address']" />
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput  type="text" placeholder="Description" name="serviceDescription" [(ngModel)]="location['description']"/>
+    <input matInput i18n-placeholder type="text" placeholder="Description" name="serviceDescription" [(ngModel)]="location['description']"/>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput  type="text" placeholder="Number" name="locationNumber" [(ngModel)]="location['number']"/>
+    <input matInput i18n-placeholder type="text" placeholder="Number" name="locationNumber" [(ngModel)]="location['number']"/>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput  type="text" placeholder="Email" name="locationEmail" [(ngModel)]="location['email']"/>
+    <input matInput i18n-placeholder type="text" placeholder="Email" name="locationEmail" [(ngModel)]="location['email']"/>
   </mat-form-field>
 
   <div class="col">
