@@ -68,12 +68,12 @@ public class  UserService {
         return modelMapper.map(user, UserBriefDTO.class);
     }
 
-    public UserDTO getLoggedInUserInfo(){
+    public UserDTO getLoggedInUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return modelMapper.map(userRepository.findByUsername(auth.getName()), UserDTO.class);
     }
 
-    public UserBriefDTO updateLoggedInUserInfo(UserUpdateDTO userUpdateDTO){
+    public UserBriefDTO updateLoggedInUser(UserUpdateDTO userUpdateDTO){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(auth.getName());
         User updateUser = userRepository.save(modelMapper.map(userUpdateDTO, User.class));
