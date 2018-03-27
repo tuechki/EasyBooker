@@ -8,8 +8,8 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "booking_records")
-public class BookingRecord {
+@Table(name = "bookings")
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,13 +38,13 @@ public class BookingRecord {
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
 
-    public BookingRecord(){ }
+    public Booking(){ }
 
-    public BookingRecord(long id){
+    public Booking(long id){
         this.id = id;
     }
 
-    public BookingRecord(long dayNumber, Time beginTime, Timestamp createdAt){
+    public Booking(long dayNumber, Time beginTime, Timestamp createdAt){
         this.dayNumber = dayNumber;
         this.beginTime = beginTime;
         this.createdAt = createdAt;
@@ -110,8 +110,8 @@ public class BookingRecord {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BookingRecord)) return false;
-        BookingRecord that = (BookingRecord) o;
+        if (!(o instanceof Booking)) return false;
+        Booking that = (Booking) o;
         return getId() == that.getId() &&
                 getDayNumber() == that.getDayNumber() &&
                 Objects.equals(getBeginTime(), that.getBeginTime()) &&

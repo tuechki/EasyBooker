@@ -1,9 +1,9 @@
 package com.elsys.easybooker.models;
 
+import com.elsys.easybooker.enums.WeekDay;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
-import org.postgresql.util.PGInterval;
 
 import java.sql.Time;
 import java.util.Objects;
@@ -18,8 +18,8 @@ public class DaySchedule {
     private long id;
 
     @NotNull
-    @Column(name = "dayOfWeek")
-    private int dayOfWeek;
+    @Column(name = "weekDay")
+    private WeekDay weekDay;
 
     @Column(name = "openTime")
     private Time openTime;
@@ -39,8 +39,8 @@ public class DaySchedule {
     }
 
 
-    public DaySchedule(int dayOfWeek, Time openTime, Time closeTime){
-        this.dayOfWeek = dayOfWeek;
+    public DaySchedule(WeekDay weekDay, Time openTime, Time closeTime){
+        this.weekDay = weekDay;
         this.openTime = openTime;
         this.closeTime = closeTime;
 
@@ -54,12 +54,12 @@ public class DaySchedule {
         this.id = id;
     }
 
-    public int getDayOfWeek() {
-        return dayOfWeek;
+    public WeekDay getWeekDay() {
+        return weekDay;
     }
 
-    public void setDayOfWeek(int dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public void setWeekDay(WeekDay weekDay) {
+        this.weekDay = weekDay;
     }
 
     public Time getOpenTime() {
@@ -92,13 +92,13 @@ public class DaySchedule {
         if (!(o instanceof DaySchedule)) return false;
         DaySchedule that = (DaySchedule) o;
         return getId() == that.getId() &&
-                getDayOfWeek() == that.getDayOfWeek() &&
+                getWeekDay() == that.getWeekDay() &&
                 Objects.equals(getLocation(), that.getLocation());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getDayOfWeek(), getLocation());
+        return Objects.hash(getId(), getWeekDay(), getLocation());
     }
 }

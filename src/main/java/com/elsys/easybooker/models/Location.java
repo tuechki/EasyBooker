@@ -60,7 +60,7 @@ public class Location {
             fetch = FetchType.LAZY,
             mappedBy = "location")
     @JsonIgnore
-    private List<BookRecord> bookRecords = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
 
     @JsonIgnore
     private  LocalDateTime createdAt;
@@ -153,12 +153,12 @@ public class Location {
         this.scheduleOfDays = scheduleOfDays;
     }
 
-    public List<BookRecord> getBookRecords() {
-        return bookRecords;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setBookRecords(List<BookRecord> bookRecords) {
-        this.bookRecords = bookRecords;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public LocalDateTime getCreatedAt() {

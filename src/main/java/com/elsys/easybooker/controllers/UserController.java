@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@RestController("/users")
 public class UserController {
 
     private final UserService userService;
@@ -27,28 +27,28 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public List<UserBriefDTO> getUsers() {
         return userService.getUsers();
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/{userId}")
     public UserDTO getUserById(@PathVariable long userId) throws ResourceNotFoundException {
         return userService.getUserById(userId);
     }
 
-    @GetMapping("/users/{username}")
+    @GetMapping("/{username}")
     public UserDTO getUserByUsername(@PathVariable String username) throws ResourceNotFoundException {
         return userService.getUserByUsername(username);
     }
 
-    @GetMapping("/users/{username}/businesses")
+    @GetMapping("/{username}/businesses")
     public List<BusinessBriefDTO> getBusinessesForUser(@PathVariable String username) {
          return userService.getBusinessesForUser(username);
     }
 
 
-    @PostMapping("/users")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserBriefDTO createUser(@Valid @RequestBody UserCreationDTO userCreationDTO) {
        return userService.createUser(userCreationDTO);
