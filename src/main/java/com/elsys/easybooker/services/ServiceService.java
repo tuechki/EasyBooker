@@ -5,6 +5,7 @@ import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
 import com.elsys.easybooker.dtos.service.ServiceDTO;
 import com.elsys.easybooker.dtos.service.ServiceUpdateDTO;
+import com.elsys.easybooker.enums.Role;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
@@ -22,8 +23,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 
 @org.springframework.stereotype.Service
 public class ServiceService {
@@ -104,7 +103,7 @@ public class ServiceService {
 
         for(UserBusiness userBusiness : user.getBusinessAssoc()){
             if(userBusiness.getBusiness().getId() == businessId
-                    && userBusiness.getPermission() == ADMIN){
+                    && userBusiness.getRole() == Role.ADMIN){
                 return true;
             }
         }

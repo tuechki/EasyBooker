@@ -5,13 +5,9 @@ import org.springframework.jdbc.support.incrementer.AbstractDataFieldMaxValueInc
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.time.LocalDate;
 
-import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 
 @Entity
 @Table(name = "businesses")
