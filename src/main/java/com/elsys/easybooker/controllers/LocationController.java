@@ -5,6 +5,7 @@ import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationDTO;
 import com.elsys.easybooker.dtos.location.LocationUpdateDTO;
 import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
+import com.elsys.easybooker.models.DaySchedule;
 import com.elsys.easybooker.models.Service;
 import com.elsys.easybooker.services.LocationService;
 import org.springframework.http.HttpStatus;

@@ -183,6 +183,7 @@ public class BusinessService {
 
     public LocationBriefDTO createBusinessLocation(long businessId, LocationCreationDTO locationCreationDTO)
                                                                                         throws UnauthorizedClientException {
+
         Location location = modelMapper.map(locationCreationDTO, Location.class);
 
         if(isUserBusinessAdmin(businessId)) {

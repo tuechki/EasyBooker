@@ -1,9 +1,11 @@
 package com.elsys.easybooker.dtos.location;
 
+import com.elsys.easybooker.models.DaySchedule;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class LocationCreationDTO {
     @NotNull
@@ -17,6 +19,9 @@ public class LocationCreationDTO {
 
     @NotNull
     private String email;
+
+    @NotNull
+    private List<DaySchedule> dayScheduleList;
 
     @JsonIgnore
     private final LocalDateTime createdAt = LocalDateTime.now();
@@ -55,6 +60,14 @@ public class LocationCreationDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<DaySchedule> getDayScheduleList() {
+        return dayScheduleList;
+    }
+
+    public void setDayScheduleList(List<DaySchedule> dayScheduleList) {
+        this.dayScheduleList = dayScheduleList;
     }
 
     public LocalDateTime getCreatedAt() {
