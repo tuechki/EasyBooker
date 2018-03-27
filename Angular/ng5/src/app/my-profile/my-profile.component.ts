@@ -32,7 +32,7 @@ export class MyProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/loggedInUser',
+    this.httpClient.get('http://localhost:8080/users/loggedInUser',
       {observe: 'response'}).subscribe(resp => {
       this.user = resp.body;
     });
@@ -48,10 +48,10 @@ export class MyProfileComponent implements OnInit {
       this.user['password'] = this.newPassword;
     }
 
-    this.httpClient.put('http://localhost:8080/loggedInUser',
+    this.httpClient.put('http://localhost:8080/users/loggedInUser',
       this.user,
       {observe: 'response'}).subscribe(resp => {
-          this.httpClient.get('http://localhost:8080/loggedInUser',
+          this.httpClient.get('http://localhost:8080/users/loggedInUser',
             {observe: 'response'}).subscribe(resp => {
             this.user = resp.body;
           });
