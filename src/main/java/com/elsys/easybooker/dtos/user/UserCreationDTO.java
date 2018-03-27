@@ -22,8 +22,6 @@ public class UserCreationDTO {
     @NotNull
     private String email;
 
-    private String number;
-
     private String gender;
 
 
@@ -71,14 +69,6 @@ public class UserCreationDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public String getGender() {

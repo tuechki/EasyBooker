@@ -24,8 +24,6 @@ public class UserUpdateDTO {
     @NotNull
     private String email;
 
-    private String number;
-
     private String gender;
 
     @JsonIgnore
@@ -69,14 +67,6 @@ public class UserUpdateDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public String getGender() {
