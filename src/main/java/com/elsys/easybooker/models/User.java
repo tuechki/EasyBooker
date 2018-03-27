@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "user")
-    private List<BookingRecord> bookingRecords = new ArrayList<>();
+    private List<BookRecord> bookRecords = new ArrayList<>();
 
     @JsonIgnore
     private LocalDateTime createdAt;
@@ -158,12 +157,12 @@ public class User {
         this.businessAssoc = businessAssoc;
     }
 
-    public List<BookingRecord> getBookingRecords() {
-        return bookingRecords;
+    public List<BookRecord> getBookRecords() {
+        return bookRecords;
     }
 
-    public void setBookingRecords(List<BookingRecord> bookingRecords) {
-        this.bookingRecords = bookingRecords;
+    public void setBookRecords(List<BookRecord> bookRecords) {
+        this.bookRecords = bookRecords;
     }
 
     public LocalDateTime getCreatedAt() {
