@@ -14,6 +14,7 @@ export class ServiceInfoComponent implements OnInit {
 
   service: any;
   locations: any;
+  canBook: boolean;
 
   constructor(private httpClient: HttpClient, private router: Router,
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
@@ -34,6 +35,11 @@ export class ServiceInfoComponent implements OnInit {
       this.locations = resp.body;
     });
 
+    if(this.businessInfoService.getCurrentLocation() != null){
+      this.canBook = true;
+      console.log(this.canBook);
+    }
+
   }
 
   goToBusiness(){
@@ -49,6 +55,7 @@ export class ServiceInfoComponent implements OnInit {
 
   showLocation(location){
     this.businessInfoService.setCurrentLocation(location);
+    this.businessInfoService.setBookingService(this.businessInfoService.getBookingService());
     this.router.navigate(['location-info']);
   }
 

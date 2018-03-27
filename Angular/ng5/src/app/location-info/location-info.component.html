@@ -1,17 +1,22 @@
 <mat-card>
   <mat-card-content>
     <button i18n mat-raised-button (click)="goToBusiness()">Go to business</button>
+
+    <ng-container *ngIf="this.canBook == true">
+      <button i18n mat-raised-button >BOOK IT </button>
+    </ng-container>
+
     <h2 class="example-h2">{{location.address}}</h2>
     <mat-tab-group class="demo-tab-group">
       <mat-tab i18n-label label="Location info">
         <div class="demo-tab-content">
           <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
           <br>
-          <br>
           <p i18n> Description: </p><p>{{location.description}} </p>
           <br>
           <p i18n> Email: </p><p>{{location.email}} </p>
         </div>
+
       </mat-tab>
       <!--<mat-tab label="Day schedule">-->
         <!--<div class="col">-->
@@ -36,7 +41,3 @@
     </mat-tab-group>
   </mat-card-content>
 </mat-card>
-
-<!--<ng-container *ngIf="this.businessInfoService.getCurrentService()">-->
-  <!--<button mat-button>BOOK IT !</button>-->
-<!--</ng-container>-->

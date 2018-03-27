@@ -42,6 +42,9 @@ export class BusinessInfoComponent implements OnInit {
     ).subscribe(resp => {
       this.locations = resp.body;
     });
+
+    this.businessInfoService.clearBookingLocation();
+    this.businessInfoService.clearBookingService();
   }
 
   showLocation(location){

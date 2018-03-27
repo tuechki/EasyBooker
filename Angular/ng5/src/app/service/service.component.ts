@@ -1,16 +1,15 @@
-import { Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CreateBusinessService} from "../services/message.service";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {BusinessInfoService} from "../services/business.info.service";
 
 @Component({
   selector: 'app-service',
   templateUrl: './service.component.html',
   styleUrls: ['./service.component.scss']
 })
-export class ServiceComponent{
-
-  constructor(private httpClient: HttpClient, private router: Router, private createBusinessService: CreateBusinessService) {}
+export class ServiceComponent implements OnInit{
 
   services: object[] = [];
 
@@ -25,6 +24,18 @@ export class ServiceComponent{
   url: string = null;
   noImageURL: string  = "../../assets/images/noImageSelected.jpg";
   showSpinner: boolean = false;
+
+  constructor(private httpClient: HttpClient, private router: Router,
+              private createBusinessService: CreateBusinessService,
+              private businessInfoService: BusinessInfoService) {}
+
+
+   ngOnInit(){
+
+     this.businessInfoService.clearBookingLocation();
+     this.businessInfoService.clearBookingService();
+
+   }
 
 
   onFileSelected(event:any){

@@ -43,4 +43,31 @@ export class BusinessInfoService {
     this.currentLocation = null;
   }
 
+  public getBookingLocation(){
+    return this.currentLocation;
+  }
+
+  public setBookingLocation(location){
+    this.currentLocation = location;
+  }
+
+  public clearBookingLocation() {
+    this.currentLocation = null;
+  }
+
+  public getBookingService(){
+    return this.currentService;
+  }
+
+  public setBookingService(service){
+    this.currentService = service;
+  }
+
+  public clearBookingService() {
+    this.currentLocation = null;
+  }
+
+
+
+
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {CreateBusinessService} from "../services/message.service";
+import {BusinessInfoService} from "../services/business.info.service";
 
 @Component({
   selector: 'app-business',
@@ -21,11 +22,14 @@ export class BusinessComponent implements OnInit {
   noImageURL: string  = "../../assets/images/noImageSelected.jpg";
   showSpinner: boolean = false;
 
-  constructor(private httpClient: HttpClient, private router: Router, private createBusinessService: CreateBusinessService) {}
+  constructor(private httpClient: HttpClient, private router: Router,
+              private createBusinessService: CreateBusinessService,
+              private businessInfoService: BusinessInfoService) {}
 
 
   ngOnInit() {
-
+      this.businessInfoService.clearBookingLocation();
+      this.businessInfoService.clearBookingService();
   }
 
   onFileSelected(event:any){

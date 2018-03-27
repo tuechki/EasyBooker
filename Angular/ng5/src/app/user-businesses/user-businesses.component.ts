@@ -68,6 +68,9 @@ export class UserBusinessesComponent implements OnInit {
         }
       );
 
+    this.businessInfoService.clearBookingLocation();
+    this.businessInfoService.clearBookingService();
+
   }
 
   showBusiness(business){

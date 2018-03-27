@@ -1,4 +1,4 @@
-<h2 i18n>Sign up now and start the journey of booking</h2>
+<h2 i18n>My profile</h2>
 <br>
 
 <div class="easybooker-div">
@@ -18,11 +18,7 @@
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder type="password" placeholder="Password" name="password" [(ngModel)]="user['password']" />
-    </mat-form-field>
-
-    <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder type="password" placeholder="Confirm Password" name="confirmPassword" [(ngModel)]="confirmPassword"/>
+      <input matInput i18n-placeholder type="password" placeholder="Change password" name="password" [(ngModel)]="this.newPassword" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
@@ -38,16 +34,16 @@
     </mat-form-field>
 
     <!--<mat-form-field class="example-full-width">-->
-      <!--<input matInput  type="text" placeholder="Enter number" name="number" [(ngModel)]="number"/>-->
+    <!--<input matInput  type="text" placeholder="Enter number" name="number" [(ngModel)]="number"/>-->
     <!--</mat-form-field>-->
     <br/>
     <br>
 
-    <button i18n  mat-raised-button (click)="addUser()">Sign up</button>
+    <button i18n  mat-raised-button (click)="updateUser()">Update</button>
     <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
 
     <!--<mat-card *ngIf="answerDisplay">-->
-      <!--<h1>{{ answerDisplay }}, successfully created account.</h1>-->
+    <!--<h1>{{ answerDisplay }}, successfully created account.</h1>-->
     <!--</mat-card>-->
 
   </form>

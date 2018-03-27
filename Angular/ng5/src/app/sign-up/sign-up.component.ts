@@ -11,19 +11,13 @@ import {Router} from "@angular/router";
 })
 export class SignUpComponent implements OnInit {
 
-  genders = [
-    {value: 'male', viewValue: 'Male'},
-    {value: 'female', viewValue: 'Female'},
-    {value: 'other', viewValue: 'Other'}
-  ];
-
   user: object ={
     firstName: '',
     lastName: '',
     username: '',
     password: '',
     email: '',
-    number: ''
+    gender: ''
   };
 
   confirmPassword: '';
@@ -38,6 +32,8 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
 
   };
+
+
 
   addUser() {
     this.showSpinner = true;

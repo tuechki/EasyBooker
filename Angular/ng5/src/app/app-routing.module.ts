@@ -13,6 +13,7 @@ import {BusinessInfoComponent} from "./business-info/business-info.component";
 import {LocationInfoComponent} from "./location-info/location-info.component";
 import {ServiceInfoComponent} from "./service-info/service-info.component";
 import {UserBusinessesComponent} from "./user-businesses/user-businesses.component";
+import {MyProfileComponent} from "./my-profile/my-profile.component";
 
 
 const routes: Routes = [
@@ -62,6 +63,10 @@ const routes: Routes = [
   {
     path: 'my-businesses',
     component: UserBusinessesComponent
+  },
+  {
+    path: 'my-profile',
+    component: MyProfileComponent
   }
 ];
 

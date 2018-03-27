@@ -97,7 +97,8 @@ export class HomeComponent implements OnInit {
         }
       );
 
-
+    this.businessInfoService.clearBookingLocation();
+    this.businessInfoService.clearBookingService();
   }
 
   private setCurrentPosition() {

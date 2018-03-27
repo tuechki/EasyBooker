@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {CreateBusinessService} from "../services/message.service";
+import {BusinessInfoService} from "../services/business.info.service";
 
 @Component({
   selector: 'app-location',
@@ -37,7 +38,9 @@ findIndexToUpdate(service) {
   noImageURL: string  = "../../assets/images/noImageSelected.jpg";
 
 
-  constructor(private httpClient: HttpClient, private router: Router, private createBusinessService: CreateBusinessService) {}
+  constructor(private httpClient: HttpClient, private router: Router,
+              private createBusinessService: CreateBusinessService,
+              private businessInfoService: BusinessInfoService) {}
 
   locations: object[] = [];
 
@@ -58,6 +61,9 @@ findIndexToUpdate(service) {
     ).subscribe(resp => {
       this.services = resp.body;
     });
+
+    this.businessInfoService.clearBookingLocation();
+    this.businessInfoService.clearBookingService();
   }
 
   onFileSelected(event:any){
