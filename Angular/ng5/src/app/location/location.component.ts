@@ -44,11 +44,55 @@ findIndexToUpdate(service) {
 
   locations: object[] = [];
 
+  dayScheduleMonday: object = {
+    weekDay:'MONDAY',
+    openTime: '',
+    closeTime: ''
+  };
+
+  dayScheduleTuesday: object = {
+    weekDay:'TUESDAY',
+    openTime: '',
+    closeTime: ''
+  };
+
+  dayScheduleWednesday: object = {
+    weekDay:'WEDNESDAY',
+    openTime: '',
+    closeTime: ''
+  };
+
+  dayScheduleThursday: object = {
+    weekDay:'THURSDAY',
+    openTime: '',
+    closeTime: ''
+  };
+
+  dayScheduleFriday: object = {
+    weekDay:'FRIDAY',
+    openTime: '',
+    closeTime: ''
+  };
+
+  dayScheduleSaturday: object = {
+    weekDay:'SATURDAY',
+    openTime: '',
+    closeTime: ''
+  };
+
+  dayScheduleSunday: object = {
+    weekDay:'SUNDAY',
+    openTime: '',
+    closeTime: ''
+  };
+
+
   location: object = {
     address: '',
     summary: '',
     number: '',
-    email: ''
+    email: '',
+    dayScheduleList: [] = []
   };
 
   services: any;
@@ -83,7 +127,17 @@ findIndexToUpdate(service) {
 
   showSpinner: boolean = false;
 
-  addLocation() {
+   addLocation() {
+
+     // this.location['dayScheduleList'].push(this.dayScheduleMonday);
+     // this.location['dayScheduleList'].push(this.dayScheduleTuesday);
+     // this.location['dayScheduleList'].push(this.dayScheduleWednesday);
+     // this.location['dayScheduleList'].push(this.dayScheduleThursday);
+     // this.location['dayScheduleList'].push(this.dayScheduleFriday);
+     // this.location['dayScheduleList'].push(this.dayScheduleSaturday);
+     // this.location['dayScheduleList'].push(this.dayScheduleSunday);
+     // console.log(this.location['dayScheduleList']);
+
     this.showSpinner = true;
 
     this.httpClient.post('http://localhost:8080/businesses/'
@@ -111,9 +165,7 @@ findIndexToUpdate(service) {
         });
       }
 
-
     });
-
 
 
     setTimeout(() => {

@@ -35,6 +35,8 @@ export class MyProfileComponent implements OnInit {
     this.httpClient.get('http://localhost:8080/users/loggedInUser',
       {observe: 'response'}).subscribe(resp => {
       this.user = resp.body;
+      console.log(resp.body);
+      console.log(this.user);
     });
 
     this.businessInfoService.clearBookingLocation();

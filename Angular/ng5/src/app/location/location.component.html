@@ -67,44 +67,96 @@
     <mat-card-content>
       <mat-tab-group class="demo-tab-group">
         <mat-tab i18n-label label="Monday">
+          <br>
           <div class="demo-tab-content">
-            <p>MONDAY</p>
-          </div>
+          <mat-form-field class="example-full-width">
+            <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleMonday['openTime']"/>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleMonday['closeTime']"/>
+          </mat-form-field>
+        </div>
         </mat-tab>
 
         <mat-tab i18n-label label="Tuesday">
+          <br>
           <div class="demo-tab-content">
-            <p>TUESDAY</p>
+            <mat-form-field class="example-full-width">
+              <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleTuesday['openTime']"/>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleTuesday['closeTime']"/>
+            </mat-form-field>
           </div>
         </mat-tab>
 
         <mat-tab i18n-label label="Wednesday">
           <div class="demo-tab-content">
-            <p>WEDNESDAY</p>
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleWednesday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleWednesday['closeTime']"/>
+              </mat-form-field>
+            </div>
           </div>
         </mat-tab>
 
         <mat-tab i18n-label label="Thursday">
           <div class="demo-tab-content">
-            <p>THURSDAY</p>
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleThursday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleThursday['closeTime']"/>
+              </mat-form-field>
+            </div>
           </div>
         </mat-tab>
 
         <mat-tab i18n-label label="Friday">
           <div class="demo-tab-content">
-            <p>FRIDAY</p>
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleFriday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleFriday['closeTime']"/>
+              </mat-form-field>
+            </div>
           </div>
         </mat-tab>
 
         <mat-tab i18n-label label="Saturday">
           <div class="demo-tab-content">
-            <p>SATURDAY</p>
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleSaturday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleSaturday['closeTime']"/>
+              </mat-form-field>
+            </div>
           </div>
         </mat-tab>
 
         <mat-tab i18n-label label="Sunday">
           <div class="demo-tab-content">
-            <p>SUNDAY</p>
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleSunday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleSunday['closeTime']"/>
+              </mat-form-field>
+            </div>
           </div>
         </mat-tab>
 

@@ -34,6 +34,7 @@ import { PrimengModule } from './primeng.module';
 import { AgmCoreModule } from '@agm/core';
 import { UserBusinessesComponent } from './user-businesses/user-businesses.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { BookingComponent } from './booking/booking.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     LocationInfoComponent,
     ServiceInfoComponent,
     UserBusinessesComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    BookingComponent
   ],
   imports: [
     BrowserModule,
