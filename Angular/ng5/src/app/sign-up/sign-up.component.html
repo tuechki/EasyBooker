@@ -1,4 +1,4 @@
-<h2>Sign up now and start the journey of booking</h2>
+<h2 i18n>Sign up now and start the journey of booking</h2>
 <br>
 
 <div class="easybooker-div">
@@ -6,34 +6,34 @@
   <form>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="First name" name="firstName" [(ngModel)]="user['firstName']" />
+      <input matInput i18n-placeholder type="text" placeholder="First name" name="firstName" [(ngModel)]="user['firstName']" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Last Name" name="lastName" [(ngModel)]="user['lastName']"/>
+      <input matInput i18n-placeholder type="text" placeholder="Last Name" name="lastName" [(ngModel)]="user['lastName']"/>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Username" name="username" [(ngModel)]="user['username']" />
+      <input matInput i18n-placeholder type="text" placeholder="Username" name="username" [(ngModel)]="user['username']" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="password" placeholder="Password" name="password" [(ngModel)]="user['password']" />
+      <input matInput i18n-placeholder type="password" placeholder="Password" name="password" [(ngModel)]="user['password']" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="password" placeholder="Confirm Password" name="confirmPassword" [(ngModel)]="confirmPassword"/>
+      <input matInput i18n-placeholder type="password" placeholder="Confirm Password" name="confirmPassword" [(ngModel)]="confirmPassword"/>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Email Address" name="email" [(ngModel)]="user['email']"/>
+      <input matInput i18n-placeholder type="text" placeholder="Email Address" name="email" [(ngModel)]="user['email']"/>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select placeholder="Gender">
-        <mat-option *ngFor="let gender of genders" [value]="gender.value">
-          {{ gender.viewValue }}
-        </mat-option>
+      <mat-select i18n-placeholder placeholder="Gender" [(value)]="this.user['gender']">
+        <mat-option i18n value="MALE">Male</mat-option>
+        <mat-option i18n value="FEMALE">Female</mat-option>
+        <mat-option i18n value="OTHER">Other</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -43,7 +43,7 @@
     <br/>
     <br>
 
-    <button mat-raised-button (click)="addUser()">Sign up</button>
+    <button i18n  mat-raised-button (click)="addUser()">Sign up</button>
     <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
 
     <!--<mat-card *ngIf="answerDisplay">-->

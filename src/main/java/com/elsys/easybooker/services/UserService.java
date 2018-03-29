@@ -1,11 +1,15 @@
 package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.ResourceNotFoundException;
-import com.elsys.easybooker.dtos.BusinessDTO;
-import com.elsys.easybooker.models.Business;
+import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
+import com.elsys.easybooker.dtos.user.UserBriefDTO;
+import com.elsys.easybooker.dtos.user.UserCreationDTO;
+import com.elsys.easybooker.dtos.user.UserDTO;
+import com.elsys.easybooker.dtos.user.UserUpdateDTO;
 import com.elsys.easybooker.models.User;
 import com.elsys.easybooker.models.UserBusiness;
 import com.elsys.easybooker.repositories.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,13 +17,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class    UserService {
+public class  UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public UserService(UserRepository userRepository,
                           BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -27,58 +31,63 @@ public class    UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public Iterable getUsers() {
-        return userRepository.findAll();
-    }
+    public List<UserBriefDTO> getUsers() {
+        List<UserBriefDTO> userBriefDTOList = new ArrayList<>();
 
-    public User getUserById(long userId) throws ResourceNotFoundException {
-        return userRepository.findById(userId);
-    }
-
-    public User getUserByUsername(String username) throws ResourceNotFoundException {
-        return userRepository.findByUsername(username);
-    }
-
-
-    public Iterable getBusinessesForUser(String username) {
-        User loggedInUser = userRepository.findByUsername(username);
-
-        System.out.println("------------------------" + loggedInUser.getUsername());
-
-        List<BusinessDTO> businessesDTO = new ArrayList<>();
-        for (UserBusiness userBusiness : loggedInUser.getBusinessAssoc()){
-            BusinessDTO businessDTO = new BusinessDTO();
-            businessDTO.setId(userBusiness.getBusiness().getId());
-            businessDTO.setName(userBusiness.getBusiness().getName());
-            businessDTO.setSummary(userBusiness.getBusiness().getSummary());
-            businessDTO.setEmail(userBusiness.getBusiness().getEmail());
-
-            businessesDTO.add(businessDTO);
-            System.out.println("---///---///---" + userBusiness.getBusiness().getId());
+        for (User user : userRepository.findAll()){
+            userBriefDTOList.add(modelMapper.map(user, UserBriefDTO.class));
         }
 
-        return businessesDTO;
+        return userBriefDTOList;
     }
 
-    public void createUser(User user) {
+    public UserDTO getUserById(long userId) throws ResourceNotFoundException {
+        return modelMapper.map(userRepository.findById(userId), UserDTO.class);
+    }
+
+    public UserDTO getUserByUsername(String username) throws ResourceNotFoundException {
+        return modelMapper.map(userRepository.findByUsername(username), UserDTO.class);
+    }
+
+
+    public List<BusinessBriefDTO> getBusinessesForUser(String username) {
+        User user = userRepository.findByUsername(username);
+        List<BusinessBriefDTO> businessBriefDTOList = new ArrayList<>();
+
+        for (UserBusiness userBusiness : user.getBusinessAssoc()){
+            businessBriefDTOList.add(modelMapper.map(userBusiness.getBusiness(), BusinessBriefDTO.class));
+        }
+        return businessBriefDTOList;
+    }
+
+    public UserBriefDTO createUser(UserCreationDTO userCreationDTO) {
+        User user = modelMapper.map(userCreationDTO, User.class);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        user = userRepository.save(user);
+
+        return modelMapper.map(user, UserBriefDTO.class);
     }
 
-    public void updateUsers(List<User> users) {
-
-        //TO DO if authorized to delete the user //
-        userRepository.save(users);
+    public UserDTO getLoggedInUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return modelMapper.map(userRepository.findByUsername(auth.getName()), UserDTO.class);
     }
 
-    public void deleteUsers() {
-        userRepository.deleteAll();
+    public UserBriefDTO updateLoggedInUser(UserUpdateDTO userUpdateDTO){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName());
+        User updateUser = userRepository.save(modelMapper.map(userUpdateDTO, User.class));
+        UserBriefDTO userBriefDTO = new UserBriefDTO();
+        if(user.getUsername().equals(updateUser.getUsername())) {
+            userBriefDTO = modelMapper.map(updateUser, UserBriefDTO.class);
+        }
+
+        return userBriefDTO;
     }
 
-    public void deleteUserByUsername(String username) {
-
-        //TO DO if authorized to delete the user //
-        userRepository.deleteByUsername(username);
-
+    public void deleteLoggedInUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        userRepository.deleteByUsername(auth.getName());
     }
+
 }

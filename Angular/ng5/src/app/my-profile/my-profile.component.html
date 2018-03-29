@@ -1,0 +1,52 @@
+<h2 i18n>My profile</h2>
+<br>
+
+<div class="easybooker-div">
+
+  <form>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="text" placeholder="First name" name="firstName" [(ngModel)]="user['firstName']" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="text" placeholder="Last Name" name="lastName" [(ngModel)]="user['lastName']"/>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="text" placeholder="Username" name="username" [(ngModel)]="user['username']" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="password" placeholder="Change password" name="password" [(ngModel)]="this.newPassword" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="text" placeholder="Email Address" name="email" [(ngModel)]="user['email']"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select i18n-placeholder placeholder="Gender" [(value)]="this.user['gender']">
+        <mat-option i18n value="MALE">Male</mat-option>
+        <mat-option i18n value="FEMALE">Female</mat-option>
+        <mat-option i18n value="OTHER">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--<mat-form-field class="example-full-width">-->
+    <!--<input matInput  type="text" placeholder="Enter number" name="number" [(ngModel)]="number"/>-->
+    <!--</mat-form-field>-->
+    <br/>
+    <br>
+
+    <button i18n  mat-raised-button (click)="updateUser()">Update</button>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+    <!--<mat-card *ngIf="answerDisplay">-->
+    <!--<h1>{{ answerDisplay }}, successfully created account.</h1>-->
+    <!--</mat-card>-->
+
+  </form>
+
+
+</div>

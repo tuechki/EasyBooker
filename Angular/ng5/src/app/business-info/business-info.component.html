@@ -2,31 +2,44 @@
   <mat-card-content>
     <h2 class="example-h2">{{business.name}}</h2>
     <mat-tab-group class="demo-tab-group">
-      <mat-tab label="Business info">
+      <mat-tab i18n-label label="Business info">
         <div class="demo-tab-content">
-          {{business.summary}}
+          <img class="img" src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
           <br>
           <br>
-          <p> Email: {{business.email}} </p>
+          <p i18n> Description:</p><p>{{business.description}} </p>
+          <br>
+          <p i18n> Email: </p><p>{{business.email}} </p>
         </div>
       </mat-tab>
-      <mat-tab label="Locations">
+      <mat-tab i18n-label label="Locations">
         <div class="col">
         <span *ngFor="let location of locations">
-          <button mat-raised-button (click)="showLocation(location)">{{location['address']}}</button> <br>
+
+          <button class="block" mat-raised-button (click)="showLocation(location)">
+             <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
+             <p>{{location.address}}</p>
+          </button>
+
         </span>
         </div>
       </mat-tab>
-      <mat-tab label="Services">
+      <mat-tab i18n-label label="Services">
         <div class="col">
         <span *ngFor="let service of services">
-          <button mat-raised-button >{{service['name']}} timeDuration: {{(service['timeDuration'])['hours']}}</button> <br>
+
+          <button class="block" mat-raised-button (click)="showService(service)">
+            <img class="img" src='http://localhost:8080/images/services/{{service.id}}/image.png'/>
+             <p>{{service.name}}</p>
+          </button>
+
         </span>
         </div>
       </mat-tab>
-      <mat-tab label="Employees">
-        No content
-      </mat-tab>
+
+      <!--<mat-tab label="Employees">-->
+        <!--No content-->
+      <!--</mat-tab>-->
 
     </mat-tab-group>
   </mat-card-content>

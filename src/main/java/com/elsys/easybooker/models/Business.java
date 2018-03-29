@@ -5,12 +5,9 @@ import org.springframework.jdbc.support.incrementer.AbstractDataFieldMaxValueInc
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.time.LocalDate;
 
-import static com.elsys.easybooker.security.SecurityConstants.ADMIN;
 
 @Entity
 @Table(name = "businesses")
@@ -24,20 +21,12 @@ public class Business {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "summary")
-    private String summary;
+    @Column(name = "description")
+    private String description;
 
     @NotNull
     @Column(name = "email")
     private String email;
-
-    @Column(name = "cratedAt")
-    @JsonIgnore
-    private LocalDate createdAt;
-
-//    @Lob
-//    @Column(name="image")
-//    private byte[] image;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -55,15 +44,21 @@ public class Business {
     @JsonIgnore
     private List<UserBusiness> userAssoc = new ArrayList<>();
 
+    @JsonIgnore
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
+    private LocalDateTime editedAt;
+
     public Business(){ }
 
     public Business(long id){
         this.id = id;
     }
 
-    public Business(String name, String summary, String email){
+    public Business(String name, String description, String email){
         this.name = name;
-        this.summary = summary;
+        this.description = description;
         this.email = email;
     }
 
@@ -83,12 +78,12 @@ public class Business {
         this.name = name;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getEmail() {
@@ -97,14 +92,6 @@ public class Business {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
     }
 
     public List<Service> getServices(){
@@ -129,6 +116,22 @@ public class Business {
 
     public void setUserAssoc(List<UserBusiness> userAssoc) {
         this.userAssoc = userAssoc;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getEditedAt() {
+        return editedAt;
+    }
+
+    public void setEditedAt(LocalDateTime editedAt) {
+        this.editedAt = editedAt;
     }
 
     @Override

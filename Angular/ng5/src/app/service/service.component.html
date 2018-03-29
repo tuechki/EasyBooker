@@ -1,31 +1,45 @@
-<h2>Add services to the business</h2>
+<h2 i18n>Add services to the business</h2>
 <br>
 
 <div class="easybooker-div">
 <form>
 
+  <div id="preview" class="preview">
+    <img id="selectedImage" [src]="this.selectedFile ? url : noImageURL" />
+  </div>
+
+  <br>
+
+  <div id="previewButtons">
+    <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+    <button i18n mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+    <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+    <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
+  </div>
+  <br>
+
   <mat-form-field class="example-full-width">
-    <input matInput  type="text" placeholder="Name" name="serviceName" [(ngModel)]="service['name']" />
+    <input matInput i18n-placeholder type="text" placeholder="Name" name="serviceName" [(ngModel)]="service['name']" />
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput  type="text" placeholder="Summary" name="serviceSummary" [(ngModel)]="service['summary']"/>
+    <input matInput i18n-placeholder type="text" placeholder="Description" name="serviceDescription" [(ngModel)]="service['description']"/>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput  type="text" placeholder="Time duration" name="serviceTimeDuration" [(ngModel)]="service['timeDuration']"/>
+    <input matInput i18n-placeholder type="text" placeholder="Time duration/hours" name="serviceTimeDuration" [(ngModel)]="service['timeDuration']"/>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput  type="text" placeholder="Price" name="servicePrice" [(ngModel)]="service['price']"/>
+    <input matInput i18n-placeholder type="text" placeholder="Price/$" name="servicePrice" [(ngModel)]="service['price']"/>
   </mat-form-field>
 
   <br/>
 
-  <button mat-raised-button (click)="addService()">Add service</button>
+  <button i18n mat-raised-button (click)="addService()">Add service</button>
   <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
 
-  <button mat-raised-button (click)="goToLocations()">Go to locations</button>
+  <button i18n mat-raised-button (click)="goToLocations()">Go to locations</button>
 
 </form>
 

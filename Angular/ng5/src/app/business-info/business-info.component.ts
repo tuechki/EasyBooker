@@ -19,7 +19,13 @@ export class BusinessInfoComponent implements OnInit {
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
 
   ngOnInit() {
-    this.business = this.businessInfoService.getCurrentBusiness();
+
+    this.httpClient.get('http://localhost:8080/businesses/'
+      + this.businessInfoService.getCurrentBusiness()['id'],
+      {observe: 'response'}
+    ).subscribe(resp => {
+      this.business = resp.body;
+    });
 
     this.httpClient.get('http://localhost:8080/businesses/'
       + this.businessInfoService.getCurrentBusiness()['id'] + "/services",
@@ -36,6 +42,9 @@ export class BusinessInfoComponent implements OnInit {
     ).subscribe(resp => {
       this.locations = resp.body;
     });
+
+    this.businessInfoService.clearBookingLocation();
+    this.businessInfoService.clearBookingService();
   }
 
   showLocation(location){
@@ -43,5 +52,9 @@ export class BusinessInfoComponent implements OnInit {
     this.router.navigate(['location-info']);
   }
 
+  showService(service){
+    this.businessInfoService.setCurrentService(service);
+    this.router.navigate(['service-info']);
+  }
 
 }

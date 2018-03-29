@@ -1,5 +1,6 @@
 package com.elsys.easybooker.models;
 
+import com.elsys.easybooker.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -24,15 +25,15 @@ public class UserBusiness {
     private Business business;
 
     @NotNull
-    @Column(name = "permission")
-    private int permission;
+    @Column(name = "role")
+    private Role role;
 
     public UserBusiness(){}
 
-    public UserBusiness(User user, Business business, int permission){
+    public UserBusiness(User user, Business business, Role role){
         this.user = user;
         this.business = business;
-        this.permission = permission;
+        this.role = role;
     }
 
     public User getUser() {
@@ -51,12 +52,12 @@ public class UserBusiness {
         this.business = business;
     }
 
-    public int getPermission() {
-        return permission;
+    public Role getRole() {
+        return role;
     }
 
-    public void setPermission(int permission) {
-        this.permission = permission;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -64,7 +65,7 @@ public class UserBusiness {
         if (this == o) return true;
         if (!(o instanceof UserBusiness)) return false;
         UserBusiness that = (UserBusiness) o;
-        return getPermission() == that.getPermission() &&
+        return getRole() == that.getRole() &&
                 Objects.equals(getUser(), that.getUser()) &&
                 Objects.equals(getBusiness(), that.getBusiness());
     }
@@ -72,6 +73,6 @@ public class UserBusiness {
     @Override
     public int hashCode() {
 
-        return Objects.hash(getUser(), getBusiness(), getPermission());
+        return Objects.hash(getUser(), getBusiness(), getRole());
     }
 }

@@ -12,6 +12,10 @@ import {ServiceComponent} from "./service/service.component";
 import {BusinessInfoComponent} from "./business-info/business-info.component";
 import {LocationInfoComponent} from "./location-info/location-info.component";
 import {ServiceInfoComponent} from "./service-info/service-info.component";
+import {UserBusinessesComponent} from "./user-businesses/user-businesses.component";
+import {MyProfileComponent} from "./my-profile/my-profile.component";
+import {BookingComponent} from "./booking/booking.component";
+import {MyBookingsComponent} from "./my-bookings/my-bookings.component";
 
 
 const routes: Routes = [
@@ -57,6 +61,26 @@ const routes: Routes = [
   {
     path: 'service-info',
     component: ServiceInfoComponent
+  },
+  {
+    path: 'my-businesses',
+    component: UserBusinessesComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'my-profile',
+    component: MyProfileComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'bookings',
+    component: BookingComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'myBookings',
+    component: MyBookingsComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 

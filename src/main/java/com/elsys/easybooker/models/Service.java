@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.postgresql.util.PGInterval;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class Service {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "summary")
-    private String summary;
+    @Column(name = "description")
+    private String description;
 
     @NotNull
     @Column(name = "timeDuration")
@@ -51,7 +52,13 @@ public class Service {
             fetch = FetchType.LAZY,
             mappedBy = "service")
     @JsonIgnore
-    private List<BookingRecord> bookingRecords = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
+
+    @JsonIgnore
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
+    private LocalDateTime editedAt;
 
     public Service(){ }
 
@@ -59,8 +66,9 @@ public class Service {
         this.id = id;
     }
 
-   public Service(String name, PGInterval timeDuration, int price){
+   public Service(String name, String description, PGInterval timeDuration, int price){
         this.name = name;
+        this.description = description;
         this.timeDuration = timeDuration;
         this.price = price;
 
@@ -74,12 +82,12 @@ public class Service {
         this.id = id;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public PGInterval getTimeDuration() {
@@ -122,13 +130,27 @@ public class Service {
         this.locations = locations;
     }
 
-    public List<BookingRecord> getBookingRecords() {
-        return bookingRecords;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setBookingRecords(List<BookingRecord> bookingRecords) {
-        this.bookingRecords = bookingRecords;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getEditedAt() {
+        return editedAt;
+    }
+
+    public void setEditedAt(LocalDateTime editedAt) {
+        this.editedAt = editedAt;
+    }
 }

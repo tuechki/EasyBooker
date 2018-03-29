@@ -1,0 +1,58 @@
+<h2 i18n>Your businesses, locations and services </h2>
+
+<!--<div class="container">-->
+
+  <!--<div class="easybooker-div form-group">-->
+    <!--<mat-form-field class="example-full-width">-->
+      <!--<input matInput placeholder="Search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">-->
+    <!--</mat-form-field>-->
+  <!--</div>-->
+
+  <!--<agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">-->
+    <!--<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>-->
+  <!--</agm-map>-->
+
+<!--</div>-->
+
+<mat-card>
+  <mat-card-content>
+    <mat-tab-group class="demo-tab-group">
+      <mat-tab i18n-label label="Businesses">
+        <div class="col">
+          <span class="life-container" *ngFor="let business of businesses">
+
+            <button class="block" mat-raised-button (click)="showBusiness(business)">
+                <img class="img" src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
+                <p>{{business.name}}</p>
+            </button>
+
+          </span>
+        </div>
+      </mat-tab>
+      <mat-tab i18n-label label="Locations">
+        <div class="col">
+        <span class="life-container" *ngFor="let location of locations">
+            <button class="block" mat-raised-button (click)="showLocation(location)">
+               <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
+               <p>{{location.address}}</p>
+            </button>
+        </span>
+        </div>
+      </mat-tab>
+      <mat-tab i18n-label label="Services">
+        <div class="col">
+        <span *ngFor="let service of services">
+
+          <button class="block" mat-raised-button (click)="showService(service)">
+            <img class="img" src='http://localhost:8080/images/services/{{service.id}}/image.png'/>
+             <p>{{service.name}}</p>
+          </button>
+
+        </span>
+        </div>
+      </mat-tab>
+
+
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

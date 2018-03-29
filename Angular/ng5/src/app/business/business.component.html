@@ -1,60 +1,42 @@
 
-<h2>Add new business</h2>
-<br>
-
-
-
-
-
-
-<!--<p-growl [value]="msgs"></p-growl>-->
-
-<!--<h3 class="first">Advanced</h3>-->
-<!--<p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"-->
-              <!--multiple="multiple" accept="image/*" maxFileSize="1000000">-->
-  <!--<ng-template pTemplate="content">-->
-    <!--<ul *ngIf="uploadedFiles.length">-->
-      <!--<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>-->
-    <!--</ul>-->
-  <!--</ng-template>-->
-<!--</p-fileUpload>-->
-
-<!--<h3>Basic</h3>-->
-<!--<p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBa
-<h3>Basic with Auto</h3>sicUpload($event)"></p-fileUpload>-->
-
-<!--<p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Browse"></p-fileUpload>-->
-
-
-
-
-
-
-
-
-
+<h2 i18n>Add new business</h2>
 <br>
 
 <div class="easybooker-div">
 
   <form>
 
+
+    <div id="preview" class="preview">
+      <img id="selectedImage" [src]="this.selectedFile ? url : noImageURL" />
+    </div>
+
+    <br>
+
+    <div id="previewButtons">
+      <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+      <button i18n mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+      <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+      <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
+    </div>
+    <br>
+
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Name" name="name" [(ngModel)]="business['name']" />
+      <input matInput i18n-placeholder  type="text" placeholder="Name" name="name" [(ngModel)]="business['name']" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Summary" name="summary" [(ngModel)]="business['summary']"/>
+      <input matInput i18n-placeholder type="text" placeholder="Description" name="desc" [(ngModel)]="business['description']"/>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput  type="text" placeholder="Email Address" name="email" [(ngModel)]="business['email']"/>
+      <input matInput i18n-placeholder type="text" placeholder="Email Address" name="email" [(ngModel)]="business['email']"/>
     </mat-form-field>
 
     <br/>
 
 
-    <button mat-raised-button (click)="addBusiness()">Create business</button>
+    <button i18n mat-raised-button (click)="addBusiness()">Create business</button>
     <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
 
   </form>

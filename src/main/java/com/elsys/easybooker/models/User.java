@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,16 +38,10 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "number")
-    private String number;
-
     @Column(name = "gender")
     private String gender;
 
 //    private Date dateOfBirth;
-
-//    private Image image;
-
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -56,7 +50,13 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "user")
-    private List<BookingRecord> bookingRecords = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
+
+    @JsonIgnore
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
+    private  LocalDateTime editedAt;
 
 
     public User(){ }
@@ -79,13 +79,12 @@ public class User {
     }
 
     public User(String firstName, String lastName, String username,
-                String password, String email, String number, String gender){
+                String password, String email, String gender){
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.number = number;
         this.gender = gender;
 //        this.dateOfBirth = dateOfBirth;
     }
@@ -120,14 +119,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public String getGender() {
@@ -166,12 +157,28 @@ public class User {
         this.businessAssoc = businessAssoc;
     }
 
-    public List<BookingRecord> getBookingRecords() {
-        return bookingRecords;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setBookingRecords(List<BookingRecord> bookingRecords) {
-        this.bookingRecords = bookingRecords;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getEditedAt() {
+        return editedAt;
+    }
+
+    public void setEditedAt(LocalDateTime editedAt) {
+        this.editedAt = editedAt;
     }
 
     @Override

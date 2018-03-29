@@ -31,6 +31,11 @@ import { ServiceInfoComponent } from './service-info/service-info.component';
 
 import { MaterialModule } from './material.module';
 import { PrimengModule } from './primeng.module';
+import { AgmCoreModule } from '@agm/core';
+import { UserBusinessesComponent } from './user-businesses/user-businesses.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { BookingComponent } from './booking/booking.component';
+import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,11 @@ import { PrimengModule } from './primeng.module';
     ServiceComponent,
     BusinessInfoComponent,
     LocationInfoComponent,
-    ServiceInfoComponent
+    ServiceInfoComponent,
+    UserBusinessesComponent,
+    MyProfileComponent,
+    BookingComponent,
+    MyBookingsComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +64,11 @@ import { PrimengModule } from './primeng.module';
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PrimengModule
+    PrimengModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCuxNJz1x-vTL9ggD0ELJ9p357RyzKHUZg',
+      libraries: ["places"]
+    })
 
 ],
   providers: [

@@ -1,21 +1,21 @@
 package com.elsys.easybooker.controllers;
 
-import com.elsys.easybooker.dtos.BusinessDTO;
-import com.elsys.easybooker.dtos.ServiceDTO;
-import com.elsys.easybooker.models.Business;
-import com.elsys.easybooker.models.Location;
+import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
+import com.elsys.easybooker.dtos.location.LocationBriefDTO;
+import com.elsys.easybooker.dtos.location.LocationDTO;
+import com.elsys.easybooker.dtos.location.LocationUpdateDTO;
+import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
+import com.elsys.easybooker.models.DaySchedule;
 import com.elsys.easybooker.models.Service;
-import com.elsys.easybooker.repositories.LocationRepository;
-import com.elsys.easybooker.repositories.ServiceRepository;
 import com.elsys.easybooker.services.LocationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Date;
+import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import static java.time.temporal.ChronoUnit.DAYS;
 
 @RestController
 @RequestMapping("/locations")
@@ -28,22 +28,40 @@ public class LocationController {
     }
 
     @GetMapping
-    public Iterable getLocations(){
+    public List<LocationBriefDTO> getLocations(){
         return locationService.getLocations();
     }
 
     @GetMapping("/{locationId}")
-    public Location getLocationById(@PathVariable long locationId){
+    public LocationDTO getLocationById(@PathVariable long locationId){
         return locationService.getLocationById(locationId);
     }
 
+    @PutMapping
+    public LocationBriefDTO updateLocationById(@RequestBody LocationUpdateDTO locationUpdateDTO){
+        return locationService.updateLocationById(locationUpdateDTO);
+    }
+
+    @PostMapping("/{locationId}/images")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addImageToLocation(@Valid @PathVariable long locationId, @RequestParam("image") MultipartFile image)
+            throws IOException {
+        locationService.addImageToLocation(locationId, image);
+    }
+
+    @DeleteMapping("/{locationId}")
+    public void deleteLocationById(@PathVariable long locationId){
+         locationService.deleteLocationById(locationId);
+    }
+
     @GetMapping("/{locationId}/business")
-    public BusinessDTO getBusinessForLocation(@PathVariable long locationId){
+    public BusinessBriefDTO getBusinessForLocation(@PathVariable long locationId){
         return locationService.getBusinessForLocation(locationId);
     }
 
+
     @GetMapping("/{locationId}/services")
-    public List<Service> getServicesForLocation(@PathVariable long locationId) {
+    public List<ServiceBriefDTO> getServicesForLocation(@PathVariable long locationId) {
         return locationService.getServicesForLocation(locationId);
 
     }

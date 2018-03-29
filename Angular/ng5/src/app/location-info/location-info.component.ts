@@ -14,12 +14,20 @@ export class LocationInfoComponent implements OnInit {
 
   location: any;
   services: any;
+  canBook: boolean = false;
 
   constructor(private httpClient: HttpClient, private router: Router,
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
 
   ngOnInit() {
-    this.location = this.businessInfoService.getCurrentLocation();
+
+    this.httpClient.get('http://localhost:8080/locations/'
+      + this.businessInfoService.getCurrentLocation()['id'],
+      {observe: 'response'}
+    ).subscribe(resp => {
+      this.location = resp.body;
+    });
+
 
     this.httpClient.get('http://localhost:8080/locations/'
       + this.businessInfoService.getCurrentLocation()['id'] + "/services",
@@ -29,6 +37,11 @@ export class LocationInfoComponent implements OnInit {
       console.log(resp.body.toString());
       console.log(resp.body);
     });
+
+    if(this.businessInfoService.getBookingService() != null){
+      this.canBook = true;
+      console.log(this.canBook);
+    }
 
   }
 
@@ -45,7 +58,9 @@ export class LocationInfoComponent implements OnInit {
 
   showService(service){
     this.businessInfoService.setCurrentService(service);
+    this.businessInfoService.setBookingLocation(this.businessInfoService.getCurrentLocation());
     this.router.navigate(['service-info']);
+
   }
 
 }

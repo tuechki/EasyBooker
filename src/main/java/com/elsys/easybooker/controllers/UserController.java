@@ -1,6 +1,11 @@
 package com.elsys.easybooker.controllers;
 
 import com.elsys.easybooker.ResourceNotFoundException;
+import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
+import com.elsys.easybooker.dtos.user.UserBriefDTO;
+import com.elsys.easybooker.dtos.user.UserCreationDTO;
+import com.elsys.easybooker.dtos.user.UserDTO;
+import com.elsys.easybooker.dtos.user.UserUpdateDTO;
 import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.User;
 import com.elsys.easybooker.repositories.UserRepository;
@@ -13,8 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
-@RequestMapping("/users")
+@RestController("/users")
 public class UserController {
 
     private final UserService userService;
@@ -24,44 +28,45 @@ public class UserController {
     }
 
     @GetMapping
-    public Iterable getUsers() {
+    public List<UserBriefDTO> getUsers() {
         return userService.getUsers();
     }
 
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable long userId) throws ResourceNotFoundException {
+    public UserDTO getUserById(@PathVariable long userId) throws ResourceNotFoundException {
         return userService.getUserById(userId);
     }
 
     @GetMapping("/{username}")
-    public User getUserByUsername(@PathVariable String username) throws ResourceNotFoundException {
+    public UserDTO getUserByUsername(@PathVariable String username) throws ResourceNotFoundException {
         return userService.getUserByUsername(username);
     }
 
     @GetMapping("/{username}/businesses")
-    public Iterable getBusinessesForLoggedInUser(@PathVariable String username) {
+    public List<BusinessBriefDTO> getBusinessesForUser(@PathVariable String username) {
          return userService.getBusinessesForUser(username);
     }
 
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@Valid @RequestBody User user) {
-        userService.createUser(user);
+    public UserBriefDTO createUser(@Valid @RequestBody UserCreationDTO userCreationDTO) {
+       return userService.createUser(userCreationDTO);
     }
 
-    @PutMapping
-    public void updateUsers(@Valid @RequestBody List<User> users) {
-        userService.updateUsers(users);
+    @GetMapping("/loggedInUser")
+    public UserDTO getLoggedUser() throws ResourceNotFoundException {
+        return userService.getLoggedInUser();
     }
 
-    @DeleteMapping
-    public void deleteUsers() {
-       userService.deleteUsers();
+    @PutMapping("/loggedInUser")
+    public UserBriefDTO updateLoggedUser(@RequestBody UserUpdateDTO userUpdateDTO) throws ResourceNotFoundException {
+        return userService.updateLoggedInUser(userUpdateDTO);
     }
 
-    @DeleteMapping("/{username}")
-    public void deleteUserByUsername(@PathVariable String username) {
-        userService.deleteUserByUsername(username);
+    @DeleteMapping("/loggedInUser")
+    public void deleteLoggedUser() throws ResourceNotFoundException {
+        userService.deleteLoggedInUser();
     }
 
 }

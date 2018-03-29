@@ -1,11 +1,13 @@
 package com.elsys.easybooker.controllers;
 
-import com.elsys.easybooker.dtos.BusinessDTO;
-import com.elsys.easybooker.dtos.LocationDTO;
-import com.elsys.easybooker.dtos.ServiceDTO;
-import com.elsys.easybooker.models.Business;
-import com.elsys.easybooker.models.Location;
-import com.elsys.easybooker.models.Service;
+import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
+import com.elsys.easybooker.dtos.business.BusinessDTO;
+import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
+import com.elsys.easybooker.dtos.business.BusinessUpdateDTO;
+import com.elsys.easybooker.dtos.location.LocationBriefDTO;
+import com.elsys.easybooker.dtos.location.LocationCreationDTO;
+import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
+import com.elsys.easybooker.dtos.service.ServiceCreationDTO;
 import com.elsys.easybooker.services.BusinessService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,19 +29,24 @@ public class BusinessController {
 
 
     @GetMapping
-    public Iterable getBusinesses() {
+    public List<BusinessBriefDTO> getBusinesses() {
         return businessService.getBusinesses();
     }
 
+    @GetMapping("/loggedInUser")
+    public List<BusinessBriefDTO> getBusinessesForLoggedUser() {
+        return businessService.getBusinessesForLoggedUser();
+    }
+
     @GetMapping("/{businessId}")
-    public Business getBusinessById(@PathVariable long businessId) {
+    public BusinessDTO getBusinessById(@PathVariable long businessId) {
         return businessService.getBusinessById(businessId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Business createBusiness(@Valid @RequestBody BusinessDTO businessDTO ) {
-        return  businessService.createBusiness(businessDTO);
+    public BusinessBriefDTO createBusiness(@Valid @RequestBody BusinessCreationDTO businessCreationDTO ) {
+        return  businessService.createBusiness(businessCreationDTO);
     }
 
     @PostMapping("/{businessId}/images")
@@ -50,8 +57,8 @@ public class BusinessController {
     }
 
     @PutMapping
-    public void updateBusinesses(@Valid @RequestBody Business business) {
-        businessService.updateBusiness(business);
+    public BusinessBriefDTO updateBusinesses(@Valid @RequestBody BusinessUpdateDTO businessUpdateDTO) {
+       return  businessService.updateBusiness(businessUpdateDTO);
     }
 
 
@@ -61,59 +68,40 @@ public class BusinessController {
     }
 
 
-
     @GetMapping("/{businessId}/services")
-    public Iterable getBusinessServices(@PathVariable long businessId) {
+    public List<ServiceBriefDTO> getBusinessServices(@PathVariable long businessId) {
        return  businessService.getBusinessServices(businessId);
     }
 
 
     @PostMapping("/{businessId}/services")
-    public void createBusinessService(@PathVariable long businessId, @RequestBody ServiceDTO serviceDTO) {
-        businessService.createOrUpdateBusinessService(businessId, serviceDTO);
+    public void createBusinessService(@PathVariable long businessId, @RequestBody ServiceCreationDTO serviceCreationDTO) {
+        businessService.createBusinessService(businessId, serviceCreationDTO);
     }
 
-    @PutMapping("/{businessId}/services")
-    public void updateBusinessService(@PathVariable long businessId, @RequestBody ServiceDTO serviceDTO) {
-        businessService.createOrUpdateBusinessService(businessId, serviceDTO);
-    }
 
     @DeleteMapping("/{businessId}/services")
     public void deleteBusinessServices(@PathVariable long businessId) {
         businessService.deleteBusinessServices(businessId);
     }
 
-    @DeleteMapping("/{businessId}/services/{serviceId}")
-    public void deleteBusinessServices(@PathVariable long businessId, @PathVariable long serviceId) {
-        businessService.deleteBusinessServiceById(businessId,serviceId);
-    }
-
 
     @GetMapping("/{businessId}/locations")
-    public Iterable getBusinessLocations(@PathVariable long businessId) {
+    public List<LocationBriefDTO> getBusinessLocations(@PathVariable long businessId) {
         return businessService.getBusinessLocations(businessId);
     }
 
 
     @PostMapping("/{businessId}/locations")
-    public void createBusinessLocation(@PathVariable long businessId, @RequestBody LocationDTO locationDTO) {
-        businessService.createOrUpdateBusinessLocations(businessId, locationDTO);
-    }
-
-    @PutMapping("/{businessId}/locations")
-    public void updateBusinessLocation(@PathVariable long businessId,  @RequestBody LocationDTO locationDTO) {
-        businessService.createOrUpdateBusinessLocations(businessId, locationDTO);
+    public LocationBriefDTO createBusinessLocation(@PathVariable long businessId,
+                                                   @RequestBody LocationCreationDTO locationCreationDTO) {
+       return businessService.createBusinessLocation(businessId, locationCreationDTO);
     }
 
 
     @DeleteMapping("/{businessId}/locations")
     public void deleteBusinessLocations(@PathVariable long businessId) {
         businessService.deleteBusinessLocations(businessId);
-    }
-
-    @DeleteMapping("/{businessId}/locations/{locationId}")
-    public void deleteBusinessLocationById(@PathVariable long businessId, @PathVariable long locationId) {
-        businessService.deleteBusinessLocationById(businessId, locationId);
     }
 
 }
