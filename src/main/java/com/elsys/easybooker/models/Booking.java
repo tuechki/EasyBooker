@@ -1,10 +1,14 @@
 package com.elsys.easybooker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -16,15 +20,12 @@ public class Booking {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "dayNumber")
-    private long dayNumber;
+    @Column(name = "date")
+    private LocalDate date;
 
     @NotNull
     @Column(name = "beginTime")
     private Time beginTime  ;
-
-    @Column(name = "cratedAt")
-    private Timestamp createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -38,14 +39,18 @@ public class Booking {
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
 
+    @JsonIgnore
+    private LocalDateTime createdAt;
+
+
     public Booking(){ }
 
     public Booking(long id){
         this.id = id;
     }
 
-    public Booking(long dayNumber, Time beginTime, Timestamp createdAt){
-        this.dayNumber = dayNumber;
+    public Booking(LocalDate date, Time beginTime, LocalDateTime createdAt){
+        this.date = date;
         this.beginTime = beginTime;
         this.createdAt = createdAt;
 
@@ -59,12 +64,12 @@ public class Booking {
         this.id = id;
     }
 
-    public long getDayNumber() {
-        return dayNumber;
+    public LocalDate getDate() {
+        return this.date;
     }
 
-    public void setDayNumber(long dayNumber) {
-        this.dayNumber = dayNumber;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Time getBeginTime() {
@@ -75,11 +80,11 @@ public class Booking {
         this.beginTime = beginTime;
     }
 
-    public Timestamp getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -113,7 +118,7 @@ public class Booking {
         if (!(o instanceof Booking)) return false;
         Booking that = (Booking) o;
         return getId() == that.getId() &&
-                getDayNumber() == that.getDayNumber() &&
+                getDate() == that.getDate() &&
                 Objects.equals(getBeginTime(), that.getBeginTime()) &&
                 Objects.equals(getUser(), that.getUser()) &&
                 Objects.equals(getLocation(), that.getLocation()) &&
@@ -123,6 +128,6 @@ public class Booking {
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getDayNumber(), getBeginTime(), getUser(), getLocation(), getService());
+        return Objects.hash(getId(), getDate(), getBeginTime(), getUser(), getLocation(), getService());
     }
 }

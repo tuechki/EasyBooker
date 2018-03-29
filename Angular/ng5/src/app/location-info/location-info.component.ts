@@ -14,7 +14,7 @@ export class LocationInfoComponent implements OnInit {
 
   location: any;
   services: any;
-  canBook: boolean;
+  canBook: boolean = false;
 
   constructor(private httpClient: HttpClient, private router: Router,
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
@@ -38,7 +38,7 @@ export class LocationInfoComponent implements OnInit {
       console.log(resp.body);
     });
 
-    if(this.businessInfoService.getCurrentService() != null){
+    if(this.businessInfoService.getBookingService() != null){
       this.canBook = true;
       console.log(this.canBook);
     }

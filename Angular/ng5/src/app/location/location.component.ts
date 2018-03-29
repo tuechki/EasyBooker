@@ -17,7 +17,7 @@ export class LocationComponent implements OnInit {
 
   selectedServices = [];
 
-  change(e, service){
+  addServiceToLocation(e, service){
     if(e.checked){
       this.selectedServices.push(service['id']);
     }

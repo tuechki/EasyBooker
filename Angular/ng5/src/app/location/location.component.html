@@ -39,7 +39,7 @@
     <mat-checkbox color="warn"
                   name="{{service['name']}}"
                   value="{{service['name']}}"
-                  (change)="change($event, service)">
+                  (change)="addServiceToLocation($event, service)">
          {{service['name']}}
     </mat-checkbox>
 </span>
@@ -53,10 +53,10 @@
 
   <br>
 
-  <button mat-raised-button (click)="addLocation()">Add location</button>
+  <button mat-raised-button i18n (click)="addLocation()">Add location</button>
   <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
 
-  <button mat-raised-button (click)="finish()">I'm done</button>
+  <button mat-raised-button i18n (click)="finish()">I'm done</button>
 
 
 </form>

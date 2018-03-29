@@ -30,10 +30,10 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select i18n-placeholder placeholder="Gender" [(value)]="this.user.gender">
-        <mat-option value="MALE">Male</mat-option>
-        <mat-option value="FEMALE">Female</mat-option>
-        <mat-option value="OTHER">Other</mat-option>
+      <mat-select i18n-placeholder placeholder="Gender" [(value)]="this.user['gender']">
+        <mat-option i18n value="MALE">Male</mat-option>
+        <mat-option i18n value="FEMALE">Female</mat-option>
+        <mat-option i18n value="OTHER">Other</mat-option>
       </mat-select>
     </mat-form-field>
 

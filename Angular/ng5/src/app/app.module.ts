@@ -35,6 +35,7 @@ import { AgmCoreModule } from '@agm/core';
 import { UserBusinessesComponent } from './user-businesses/user-businesses.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { BookingComponent } from './booking/booking.component';
+import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { BookingComponent } from './booking/booking.component';
     ServiceInfoComponent,
     UserBusinessesComponent,
     MyProfileComponent,
-    BookingComponent
+    BookingComponent,
+    MyBookingsComponent
   ],
   imports: [
     BrowserModule,
