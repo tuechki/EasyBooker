@@ -26,11 +26,11 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping
-    public List<UserBriefDTO> getUsers() {
-        return userService.getUsers();
-    }
+//
+//    @GetMapping
+//    public List<UserBriefDTO> getUsers() {
+//        return userService.getUsers();
+//    }
 
     @GetMapping("/{userId}")
     public UserDTO getUserById(@PathVariable long userId) throws ResourceNotFoundException {

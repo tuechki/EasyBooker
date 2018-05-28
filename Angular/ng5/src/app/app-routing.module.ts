@@ -73,12 +73,12 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'bookings',
+    path: 'booking',
     component: BookingComponent,
     canActivate: [AuthGuardService]
   },
   {
-    path: 'myBookings',
+    path: 'my-bookings',
     component: MyBookingsComponent,
     canActivate: [AuthGuardService]
   }

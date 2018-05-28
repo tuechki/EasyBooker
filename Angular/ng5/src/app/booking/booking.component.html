@@ -1,3 +1,49 @@
-<p>
-  booking works!
-</p>
+<h2 i18n>Confirm your booking </h2>
+
+<mat-card>
+  <mat-card-content>
+
+    <button i18n mat-raised-button (click)="confirmBooking()">Confirm booking</button>
+
+    <mat-tab-group class="demo-tab-group">
+
+
+          <mat-tab i18n-label label="Business info">
+            <div class="demo-tab-content">
+              <img class="img" src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
+              <br>
+              <br>
+              <p i18n> Description:</p><p>{{business.description}} </p>
+              <br>
+              <p i18n> Email: </p><p>{{business.email}} </p>
+            </div>
+          </mat-tab>
+
+
+          <mat-tab i18n-label label="Location info">
+            <div class="demo-tab-content">
+              <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
+              <br>
+              <p i18n> Description: </p><p>{{location.description}} </p>
+              <br>
+              <p i18n> Email: </p><p>{{location.email}} </p>
+            </div>
+
+          </mat-tab>
+            <mat-tab i18n-label label="Service info">
+              <div class="demo-tab-content">
+                <img class="img" src='http://localhost:8080/images/services/{{service.id}}/image.png'/>
+                <br>
+                <br>
+                <p i18n> Description: </p><p>{{service.description}} </p>
+                <br>
+                <br>
+                <p i18n> Price: </p><p>{{service.price}} </p>
+                <p i18n> TimeDuration: </p><p>{{service.timeDuration['hours']}}:{{service.timeDuration['minutes']}}</p>
+              </div>
+            </mat-tab>
+
+
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

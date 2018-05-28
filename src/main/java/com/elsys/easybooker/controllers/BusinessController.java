@@ -75,8 +75,8 @@ public class BusinessController {
 
 
     @PostMapping("/{businessId}/services")
-    public void createBusinessService(@PathVariable long businessId, @RequestBody ServiceCreationDTO serviceCreationDTO) {
-        businessService.createBusinessService(businessId, serviceCreationDTO);
+    public ServiceBriefDTO createBusinessService(@PathVariable long businessId, @RequestBody ServiceCreationDTO serviceCreationDTO) {
+      return  businessService.createBusinessService(businessId, serviceCreationDTO);
     }
 
 
