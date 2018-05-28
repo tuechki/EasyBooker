@@ -44,6 +44,12 @@ public class Business {
     @JsonIgnore
     private List<UserBusiness> userAssoc = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "business")
+    @JsonIgnore
+    private List<Booking> bookings = new ArrayList<>();
+
     @JsonIgnore
     private LocalDateTime createdAt;
 
@@ -116,6 +122,14 @@ public class Business {
 
     public void setUserAssoc(List<UserBusiness> userAssoc) {
         this.userAssoc = userAssoc;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public LocalDateTime getCreatedAt() {

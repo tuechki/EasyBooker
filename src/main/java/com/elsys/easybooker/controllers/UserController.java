@@ -6,6 +6,7 @@ import com.elsys.easybooker.dtos.user.UserBriefDTO;
 import com.elsys.easybooker.dtos.user.UserCreationDTO;
 import com.elsys.easybooker.dtos.user.UserDTO;
 import com.elsys.easybooker.dtos.user.UserUpdateDTO;
+import com.elsys.easybooker.models.Booking;
 import com.elsys.easybooker.models.Business;
 import com.elsys.easybooker.models.User;
 import com.elsys.easybooker.repositories.UserRepository;
@@ -62,6 +63,11 @@ public class UserController {
     @PutMapping("/loggedInUser")
     public UserBriefDTO updateLoggedUser(@RequestBody UserUpdateDTO userUpdateDTO) throws ResourceNotFoundException {
         return userService.updateLoggedInUser(userUpdateDTO);
+    }
+
+    @PutMapping("/loggedInUser/bookings")
+    public Booking addBookingToUser(@RequestBody Booking booking) throws ResourceNotFoundException {
+
     }
 
     @DeleteMapping("/loggedInUser")

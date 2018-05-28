@@ -6,6 +6,7 @@ import com.elsys.easybooker.dtos.user.UserBriefDTO;
 import com.elsys.easybooker.dtos.user.UserCreationDTO;
 import com.elsys.easybooker.dtos.user.UserDTO;
 import com.elsys.easybooker.dtos.user.UserUpdateDTO;
+import com.elsys.easybooker.models.Booking;
 import com.elsys.easybooker.models.User;
 import com.elsys.easybooker.models.UserBusiness;
 import com.elsys.easybooker.repositories.UserRepository;
@@ -88,6 +89,13 @@ public class  UserService {
     public void deleteLoggedInUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUsername(auth.getName());
+    }
+
+
+    public Booking addBookingToUser(Booking booking){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedInUser = userRepository.findByUsername(auth.getName());
+
     }
 
 }

@@ -32,6 +32,10 @@ public class Booking {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id", nullable = false)
+    private Business business;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
@@ -110,6 +114,14 @@ public class Booking {
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
     @Override
