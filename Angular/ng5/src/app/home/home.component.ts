@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   businesses: any;
   locations: any;
   services: any;
+  loadedBusinesses: boolean;
 
   image: File = null;
 
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
+    this.loadedBusinesses = false;
     //set google maps defaults
     this.zoom = 4;
     this.latitude = 42.698334;
@@ -78,24 +80,25 @@ export class HomeComponent implements OnInit {
           console.log(resp.headers);
           console.log(resp.body);
           this.businesses = resp.body;
+          this.loadedBusinesses = true;
         }
       );
 
-    this.httpClient.get('http://localhost:8080/locations', {observe: 'response'})
-      .subscribe(resp => {
-          console.log(resp.headers);
-          console.log(resp.body);
-          this.locations = resp.body;
-        }
-      );
-
-    this.httpClient.get('http://localhost:8080/services', {observe: 'response'})
-      .subscribe(resp => {
-          console.log(resp.headers);
-          console.log(resp.body);
-          this.services = resp.body;
-        }
-      );
+    // this.httpClient.get('http://localhost:8080/locations', {observe: 'response'})
+    //   .subscribe(resp => {
+    //       console.log(resp.headers);
+    //       console.log(resp.body);
+    //       this.locations = resp.body;
+    //     }
+    //   );
+    //
+    // this.httpClient.get('http://localhost:8080/services', {observe: 'response'})
+    //   .subscribe(resp => {
+    //       console.log(resp.headers);
+    //       console.log(resp.body);
+    //       this.services = resp.body;
+    //     }
+    //   );
 
     this.businessInfoService.clearBookingLocation();
     this.businessInfoService.clearBookingService();

@@ -21,8 +21,8 @@
         <div class="col">
           <span class="life-container" *ngFor="let business of businesses">
 
-            <button class="block" mat-raised-button (click)="showBusiness(business)">
-                <img class="img" src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
+            <button class="block" *ngIf="this.loadedBusinesses == true" mat-raised-button (click)="showBusiness(business)">
+                <img class="img"  src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
                 <p>{{business.name}}</p>
             </button>
 

@@ -56,6 +56,10 @@ export class LocationInfoComponent implements OnInit {
 
   }
 
+  bookIt(){
+    this.router.navigate(['booking']);
+  }
+
   showService(service){
     this.businessInfoService.setCurrentService(service);
     this.businessInfoService.setBookingLocation(this.businessInfoService.getCurrentLocation());
