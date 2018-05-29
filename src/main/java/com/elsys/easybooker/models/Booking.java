@@ -53,7 +53,7 @@ public class Booking {
         this.id = id;
     }
 
-    public Booking(LocalDate date, Time beginTime, LocalDateTime createdAt){
+   public Booking(LocalDate date,Time beginTime,LocalDateTime createdAt){
         this.date = date;
         this.beginTime = beginTime;
         this.createdAt = createdAt;
@@ -62,10 +62,6 @@ public class Booking {
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public LocalDate getDate() {

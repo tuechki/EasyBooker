@@ -15,6 +15,14 @@ export class BookingComponent implements OnInit {
   location: any;
   service: any;
 
+  booking: object =  {
+    businessId: '',
+    locationId: '',
+    serviceId: '',
+    beginTime: '',
+    date:'2018-10-10'
+  };
+
   constructor(private httpClient: HttpClient, private router: Router,
               public authService: AuthService, public businessInfoService: BusinessInfoService) { }
 
@@ -47,7 +55,26 @@ export class BookingComponent implements OnInit {
   }
 
   confirmBooking(){
-    this.router.navigate(['my-bookings']);
+
+    this.booking['businessId'] = this.businessInfoService.getCurrentBusiness()['id'];
+    this.booking['locationId'] = this.businessInfoService.getCurrentLocation()['id'];
+    this.booking['serviceId'] = this.businessInfoService.getCurrentService()['id'];
+    this.booking['beginTime'] = "18:30:49";
+
+    console.log(this.booking);
+
+    this.httpClient.post('http://localhost:8080/bookings',
+      this.booking,
+      {observe: 'response'}
+    ).subscribe(resp => {
+
+      console.log("EHOOOOOO: " + resp.body);
+
+      this.router.navigate(['my-bookings']);
+
+    });
+
+
   }
 
 }

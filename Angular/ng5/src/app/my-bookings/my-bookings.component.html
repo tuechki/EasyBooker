@@ -1,3 +1,32 @@
-<p>
-  my-bookings works!
-</p>
+<h2 i18n>Review your bookings...</h2>
+<br>
+
+<mat-card>
+  <mat-card-content >
+
+    <button i18n mat-raised-button > Business </button>
+    <button i18n mat-raised-button > Address </button>
+    <button i18n mat-raised-button > Service </button>
+    <button i18n mat-raised-button > Date </button>
+    <button i18n mat-raised-button > Time </button>
+
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card *ngFor="let booking of bookings">
+  <mat-card-content >
+
+    <button class="block" *ngIf="this.loadedBusinesses == true" mat-raised-button >
+      <img class="img"  src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
+      <p>{{business.name}}</p>
+    </button>
+
+  <button i18n mat-raised-button (click)="showBusiness(this.booking)">{{this.booking.businessName}}</button>
+  <button i18n mat-raised-button (click)="showLocation(this.booking)">{{this.booking.locationAddress}}</button>
+  <button i18n mat-raised-button (click)="showService(this.booking)">{{this.booking.serviceName}}</button>
+    <button i18n mat-raised-button >{{this.booking.date}}</button>
+    <button i18n mat-raised-button >{{this.booking.beginTime}}</button>
+
+    </mat-card-content>
+</mat-card>

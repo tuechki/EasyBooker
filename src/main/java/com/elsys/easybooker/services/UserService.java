@@ -1,15 +1,15 @@
 package com.elsys.easybooker.services;
 
 import com.elsys.easybooker.ResourceNotFoundException;
+import com.elsys.easybooker.dtos.booking.BookingBriefDTO;
+import com.elsys.easybooker.dtos.booking.BookingCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.user.UserBriefDTO;
 import com.elsys.easybooker.dtos.user.UserCreationDTO;
 import com.elsys.easybooker.dtos.user.UserDTO;
 import com.elsys.easybooker.dtos.user.UserUpdateDTO;
-import com.elsys.easybooker.models.Booking;
-import com.elsys.easybooker.models.User;
-import com.elsys.easybooker.models.UserBusiness;
-import com.elsys.easybooker.repositories.UserRepository;
+import com.elsys.easybooker.models.*;
+import com.elsys.easybooker.repositories.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,12 +23,25 @@ import java.util.List;
 public class  UserService {
 
     private final UserRepository userRepository;
+    private final BusinessRepository businessRepository;
+    private final LocationRepository locationRepository;
+    private final ServiceRepository serviceRepository;
+    private final BookingRepository bookingRepository;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ModelMapper modelMapper = new ModelMapper();
 
     public UserService(UserRepository userRepository,
+                          BusinessRepository businessRepository,
+                          LocationRepository locationRepository,
+                          ServiceRepository serviceRepository,
+                          BookingRepository bookingRepository,
                           BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.businessRepository = businessRepository;
+        this.locationRepository = locationRepository;
+        this.serviceRepository = serviceRepository;
+        this.bookingRepository = bookingRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -92,10 +105,48 @@ public class  UserService {
     }
 
 
-    public Booking addBookingToUser(Booking booking){
+    public BookingBriefDTO addBookingToUser(BookingCreationDTO bookingCreationDTO){
+
+        Booking booking  = modelMapper.map(bookingCreationDTO, Booking.class);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedInUser = userRepository.findByUsername(auth.getName());
+        booking.setUser(loggedInUser);
 
+        Business business = businessRepository.findById(bookingCreationDTO.getBusinessId());
+        booking.setBusiness(business);
+
+        Location location = locationRepository.findById(bookingCreationDTO.getLocationId());
+        booking.setLocation(location);
+
+        com.elsys.easybooker.models.Service service = serviceRepository.findById(bookingCreationDTO.getServiceId());
+        booking.setService(service);
+
+        booking = bookingRepository.save(booking);
+
+
+
+
+//            Business business = businessRepository.findById(businessId);
+//            service.setBusiness(business);
+//            service = serviceRepository.save(service);
+//            business.getServices().add(service);
+//            businessRepository.save(business);
+
+
+        return modelMapper.map(booking, BookingBriefDTO.class);
+
+    }
+
+    public List<BookingBriefDTO> getBookingsOfUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedInUser = userRepository.findByUsername(auth.getName());
+        List<BookingBriefDTO> bookingBriefDTOList = new ArrayList<>();
+        for(Booking booking : bookingRepository.findByUser(loggedInUser) ){
+            bookingBriefDTOList.add(modelMapper.map(booking,BookingBriefDTO.class));
+        }
+
+        return bookingBriefDTOList;
     }
 
 }

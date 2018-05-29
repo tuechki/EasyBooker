@@ -73,7 +73,10 @@ dependencies {
 		compile group: 'com.vividsolutions', name: 'jts', version: '1.13'
 
 
-	    compile("io.jsonwebtoken:jjwt:0.7.0")
+		// https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+		compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.5'
+
+		compile("io.jsonwebtoken:jjwt:0.7.0")
 
 
 		//Test
