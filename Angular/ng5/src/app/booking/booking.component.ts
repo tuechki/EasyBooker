@@ -3,6 +3,7 @@ import {BusinessInfoService} from "../services/business.info.service";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
+import {MatDatepickerInputEvent} from "@angular/material";
 
 @Component({
   selector: 'app-booking',
@@ -10,6 +11,7 @@ import {AuthService} from "../auth/auth.service";
   styleUrls: ['./booking.component.scss']
 })
 export class BookingComponent implements OnInit {
+
 
   business: any;
   location: any;
@@ -20,7 +22,7 @@ export class BookingComponent implements OnInit {
     locationId: '',
     serviceId: '',
     beginTime: '',
-    date:'2018-10-10'
+    date:'2018-09-10'
   };
 
   constructor(private httpClient: HttpClient, private router: Router,
@@ -53,6 +55,25 @@ export class BookingComponent implements OnInit {
 
 
   }
+
+  events: string[] = [];
+
+  chooseDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.events.push(`${type}: ${event.value}`);
+
+    console.log(event.value.getMonth());
+
+    this.httpClient.get('http://localhost:8080/locations/'
+      + this.location.id + '/services/' + this.service.id + '/'
+      + event.value.getFullYear() + '/'
+      + (event.value.getMonth() + 1) + '/'
+      + event.value.getDate(),
+      {observe: 'response'}
+    ).subscribe(resp => {
+      console.log(resp.body);
+    });
+  }
+
 
   confirmBooking(){
 

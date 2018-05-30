@@ -46,44 +46,44 @@ findIndexToUpdate(service) {
 
   dayScheduleMonday: object = {
     weekDay:'MONDAY',
-    openTime: '',
-    closeTime: ''
+    openTime: null,
+    closeTime: null
   };
 
   dayScheduleTuesday: object = {
     weekDay:'TUESDAY',
-    openTime: '',
-    closeTime: ''
+    openTime: null,
+    closeTime: null
   };
 
   dayScheduleWednesday: object = {
     weekDay:'WEDNESDAY',
-    openTime: '',
-    closeTime: ''
+    openTime: null,
+    closeTime: null
   };
 
   dayScheduleThursday: object = {
     weekDay:'THURSDAY',
-    openTime: '',
-    closeTime: ''
+    openTime: null,
+    closeTime: null
   };
 
   dayScheduleFriday: object = {
     weekDay:'FRIDAY',
-    openTime: '',
-    closeTime: ''
+    openTime: null,
+    closeTime: null
   };
 
   dayScheduleSaturday: object = {
     weekDay:'SATURDAY',
-    openTime: '',
-    closeTime: ''
+    openTime: null,
+    closeTime: null
   };
 
   dayScheduleSunday: object = {
     weekDay:'SUNDAY',
-    openTime: '',
-    closeTime: ''
+    openTime: null,
+    closeTime: null
   };
 
 
@@ -129,14 +129,14 @@ findIndexToUpdate(service) {
 
    addLocation() {
 
-     // this.location['dayScheduleList'].push(this.dayScheduleMonday);
-     // this.location['dayScheduleList'].push(this.dayScheduleTuesday);
-     // this.location['dayScheduleList'].push(this.dayScheduleWednesday);
-     // this.location['dayScheduleList'].push(this.dayScheduleThursday);
-     // this.location['dayScheduleList'].push(this.dayScheduleFriday);
-     // this.location['dayScheduleList'].push(this.dayScheduleSaturday);
-     // this.location['dayScheduleList'].push(this.dayScheduleSunday);
-     // console.log(this.location['dayScheduleList']);
+     this.location['dayScheduleList'].push(this.dayScheduleMonday);
+     this.location['dayScheduleList'].push(this.dayScheduleTuesday);
+     this.location['dayScheduleList'].push(this.dayScheduleWednesday);
+     this.location['dayScheduleList'].push(this.dayScheduleThursday);
+     this.location['dayScheduleList'].push(this.dayScheduleFriday);
+     this.location['dayScheduleList'].push(this.dayScheduleSaturday);
+     this.location['dayScheduleList'].push(this.dayScheduleSunday);
+      console.log(this.location['dayScheduleList']);
 
     this.showSpinner = true;
 
@@ -177,6 +177,7 @@ findIndexToUpdate(service) {
     this.location['description'] = '';
     this.location['number'] = '';
     this.location['email'] = '';
+    this.location['dayScheduleList'] = [];
   }
 
   finish(){

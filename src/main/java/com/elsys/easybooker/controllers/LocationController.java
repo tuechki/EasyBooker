@@ -1,12 +1,15 @@
 package com.elsys.easybooker.controllers;
 
+import com.elsys.easybooker.dtos.booking.BookingBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationDTO;
 import com.elsys.easybooker.dtos.location.LocationUpdateDTO;
 import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
+import com.elsys.easybooker.models.Booking;
 import com.elsys.easybooker.models.DaySchedule;
 import com.elsys.easybooker.models.Service;
+import com.elsys.easybooker.repositories.BookingRepository;
 import com.elsys.easybooker.services.LocationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,6 +39,11 @@ public class LocationController {
     @GetMapping("/{locationId}")
     public LocationDTO getLocationById(@PathVariable long locationId){
         return locationService.getLocationById(locationId);
+    }
+
+    @GetMapping("/{locationId}/schedule")
+    public List<DaySchedule> getDayScheduleForLocation(@PathVariable long locationId){
+        return locationService.getDayScheduleForLocation(locationId);
     }
 
     @PutMapping
@@ -72,15 +81,12 @@ public class LocationController {
 
     }
 
-    @GetMapping("/{locationId}/services/{serviceId}/freeHours")
-    public void getLocationsForService(@PathVariable long locationId, @PathVariable long serviceId,
-                                          @RequestBody LocalDate dateForBooking ) {
-//        Location location = locationRepository.findById(locationId);
-//        Service service = serviceRepository.findById(serviceId);
-//        Business business = location.getBusiness();
-//
-//        return  DAYS.between(business.getCreatedAt(), dateForBooking);
+    @GetMapping("/{locationId}/services/{serviceId}/{year}/{month}/{day}")
+    public List<BookingBriefDTO> getFreeHours(@PathVariable long locationId, @PathVariable long serviceId,
+                                                        @PathVariable int year, @PathVariable int month, @PathVariable int day) {
 
+
+        return locationService.getFreeHours(locationId, serviceId, year, month, day);
     }
 
 

@@ -9,13 +9,130 @@
     <h2 class="example-h2">{{location.address}}</h2>
     <mat-tab-group class="demo-tab-group">
       <mat-tab i18n-label label="Location info">
-        <div class="demo-tab-content">
-          <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
+
+
+
+        <div>
+          <div style="float: left;">
+            <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
+          </div>
+
+          <div>
+
+          </div>
+          <div class="day-schedules" style="float: left; margin-left: 20px;">
+
+            <mat-card>
+              <mat-card-content >
+
+                <div style="margin-left: 100px">
+                  <button i18n mat-raised-button style="width: 110px; margin-left: 11px;"> Monday </button>
+                  <button i18n mat-raised-button style="width: 110px; margin-left: 11px;"> Tuesday </button>
+                  <button i18n mat-raised-button style="width: 110px; margin-left: 11px;"> Wednesday </button>
+                  <button i18n mat-raised-button style="width: 110px; margin-left: 11px;"> Thursday </button>
+                  <button i18n mat-raised-button style="width: 110px; margin-left: 11px;"> Friday </button>
+                  <button i18n mat-raised-button style="width: 110px; margin-left: 11px;"> Saturday </button>
+                  <button i18n mat-raised-button style="width: 110px; margin-left: 11px;"> Sunday </button>
+                </div>
+
+
+              </mat-card-content>
+            </mat-card>
+
+
+
+            <mat-card fxLayout.xs="column">
+
+              <mat-card-content>
+                <button i18n mat-raised-button style="margin-right: 11px"> Open </button>
+              </mat-card-content>
+
+
+              <mat-card-content fxFlex *ngFor="let daySchedule of schedule">
+                <button i18n mat-raised-button *ngIf="daySchedule.openTime == null || daySchedule.closeTime == null" style="width: 110px; margin-left: 11px; background-color: red;" > Day off </button>
+                <button i18n mat-raised-button *ngIf="daySchedule.openTime != null && daySchedule.closeTime != null" style="width: 110px; margin-left: 11px;" > {{daySchedule.openTime}} </button>
+              </mat-card-content>
+
+            </mat-card>
+
+
+
+              <mat-card fxLayout.xs="column">
+
+                <mat-card-content>
+                  <button i18n mat-raised-button style="margin-right: 11px"> Close </button>
+                </mat-card-content>
+
+                <mat-card-content fxFlex *ngFor="let daySchedule of schedule">
+                  <button i18n mat-raised-button style="width: 110px; margin-left: 11px;"> {{daySchedule.closeTime}} </button>
+                </mat-card-content>
+
+              </mat-card>
+
+
+
+            <!--<mat-card>-->
+              <!--<mat-card-content >-->
+
+                <!--<button i18n mat-raised-button > Close </button>-->
+                <!--<button i18n mat-raised-button > Monday </button>-->
+                <!--<button i18n mat-raised-button > Tuesday </button>-->
+                <!--<button i18n mat-raised-button > Wednesday </button>-->
+                <!--<button i18n mat-raised-button > Thursday </button>-->
+                <!--<button i18n mat-raised-button > Friday </button>-->
+                <!--<button i18n mat-raised-button > Saturday </button>-->
+                <!--<button i18n mat-raised-button > Sunday </button>-->
+
+              <!--</mat-card-content>-->
+            <!--</mat-card>-->
+
+          </div>
+        </div>
+
+
+
+        <!--<mat-grid-list cols="4" rows="4">-->
+
+          <!--<mat-grid-tile [colspan]="1" >-->
+            <!---->
+          <!--</mat-grid-tile>-->
+
+          <!--&lt;!&ndash;<mat-grid-tile [colspan]="3" >&ndash;&gt;-->
+
+              <!--&lt;!&ndash;&ndash;&gt;-->
+
+          <!--&lt;!&ndash;</mat-grid-tile>&ndash;&gt;-->
+
+        <!--</mat-grid-list>-->
+
+
+
+        <div class="demo-tab-content" style="float: left;" >
+
           <br>
           <p i18n> Description: </p><p>{{location.description}} </p>
           <br>
           <p i18n> Email: </p><p>{{location.email}} </p>
         </div>
+
+
+        <mat-card *ngFor="let booking of bookings">
+          <mat-card-content >
+
+            <button class="block" *ngIf="this.loadedBusinesses == true" mat-raised-button >
+              <img class="img"  src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
+              <p>{{business.name}}</p>
+            </button>
+
+            <button i18n mat-raised-button (click)="showBusiness(this.booking)">{{this.booking.businessName}}</button>
+            <button i18n mat-raised-button (click)="showLocation(this.booking)">{{this.booking.locationAddress}}</button>
+            <button i18n mat-raised-button (click)="showService(this.booking)">{{this.booking.serviceName}}</button>
+            <button i18n mat-raised-button >{{this.booking.date | date}}</button>
+            <button i18n mat-raised-button >{{this.booking.beginTime}}</button>
+
+          </mat-card-content>
+        </mat-card>
+
 
       </mat-tab>
       <!--<mat-tab label="Day schedule">-->

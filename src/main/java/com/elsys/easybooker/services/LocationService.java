@@ -1,15 +1,15 @@
 package com.elsys.easybooker.services;
 
+import com.elsys.easybooker.dtos.booking.BookingBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationDTO;
 import com.elsys.easybooker.dtos.location.LocationUpdateDTO;
 import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
 import com.elsys.easybooker.enums.Role;
+import com.elsys.easybooker.enums.WeekDay;
 import com.elsys.easybooker.models.*;
-import com.elsys.easybooker.repositories.LocationRepository;
-import com.elsys.easybooker.repositories.ServiceRepository;
-import com.elsys.easybooker.repositories.UserRepository;
+import com.elsys.easybooker.repositories.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +21,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -31,15 +34,21 @@ public class LocationService {
     private final ServiceRepository serviceRepository;
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
+    private final BookingRepository bookingRepository;
+    private final DayScheduleRepository dayScheduleRepository;
     private final ModelMapper modelMapper = new ModelMapper();
 
     public LocationService(
                            ServiceRepository serviceRepository,
                            LocationRepository locationRepository,
-                           UserRepository userRepository){
+                           UserRepository userRepository,
+                           BookingRepository bookingRepository,
+                           DayScheduleRepository dayScheduleRepository){
         this.serviceRepository = serviceRepository;
         this.locationRepository = locationRepository;
         this.userRepository = userRepository;
+        this.bookingRepository = bookingRepository;
+        this.dayScheduleRepository = dayScheduleRepository;
     }
 
     public List<LocationBriefDTO> getLocations() {
@@ -55,6 +64,12 @@ public class LocationService {
     public LocationDTO getLocationById(long locationId){
         return modelMapper.map(locationRepository.findById(locationId), LocationDTO.class);
     }
+
+
+    public List<DaySchedule> getDayScheduleForLocation(long locationId){
+        return dayScheduleRepository.findAllByLocationId(locationId);
+    }
+
 
     public BusinessBriefDTO getBusinessForLocation(long locationId){
         Location location = locationRepository.findById(locationId);
@@ -99,6 +114,8 @@ public class LocationService {
         Location location = locationRepository.findById(locationId);
         List<Service> servicesForLocation = new ArrayList<>();
 
+
+
         for(Long serviceId : serviceIds){
           Service service = serviceRepository.findById(serviceId);
           service.getLocations().add(location);
@@ -108,6 +125,43 @@ public class LocationService {
         location.setServices(servicesForLocation);
         locationRepository.save(location);
 
+    }
+
+    public WeekDay getDayOfWeek(int dayOfWeek){
+        switch (dayOfWeek) {
+            case 1:  return WeekDay.SUNDAY;
+            case 2:  return WeekDay.MONDAY;
+            case 3:  return WeekDay.TUESDAY;
+            case 4:  return WeekDay.WEDNESDAY;
+            case 5:  return WeekDay.THURSDAY;
+            case 6:  return WeekDay.FRIDAY;
+        }
+
+        return WeekDay.SATURDAY;
+    }
+
+    public List<BookingBriefDTO> getFreeHours(long locationId, long serviceId, int year, int month, int day){
+
+//        Location location = locationRepository.findById(locationId);
+//        Service service = serviceRepository.findById(serviceId);
+//        Business business = location.getBusiness();
+//
+//        return  DAYS.between(business.getCreatedAt(), dateForBooking);
+
+        LocalDate localDate = LocalDate.of(year,month,day);
+        List<DaySchedule> schedule =  dayScheduleRepository.findAllByLocationId(locationId);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Date.valueOf(localDate));
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        System.out.println("TOVA: " + getDayOfWeek(dayOfWeek));
+
+        List<BookingBriefDTO> bookingBriefDTOList = new ArrayList<>();
+        for(Booking booking : bookingRepository.findByDate(localDate)){
+            bookingBriefDTOList.add(modelMapper.map(booking, BookingBriefDTO.class));
+        }
+
+        return bookingBriefDTOList;
     }
 
 

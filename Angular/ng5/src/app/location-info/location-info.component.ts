@@ -14,6 +14,7 @@ export class LocationInfoComponent implements OnInit {
 
   location: any;
   services: any;
+  schedule: any;
   canBook: boolean = false;
 
   constructor(private httpClient: HttpClient, private router: Router,
@@ -35,6 +36,14 @@ export class LocationInfoComponent implements OnInit {
     ).subscribe(resp => {
       this.services = resp.body;
       console.log(resp.body.toString());
+      console.log(resp.body);
+    });
+
+    this.httpClient.get('http://localhost:8080/locations/'
+      + this.businessInfoService.getCurrentLocation()['id'] + "/schedule",
+      {observe: 'response'}
+    ).subscribe(resp => {
+      this.schedule = resp.body;
       console.log(resp.body);
     });
 

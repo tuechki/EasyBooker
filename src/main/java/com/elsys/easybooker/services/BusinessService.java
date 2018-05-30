@@ -186,6 +186,11 @@ public class BusinessService {
 
         Location location = modelMapper.map(locationCreationDTO, Location.class);
 
+        for(DaySchedule daySchedule : locationCreationDTO.getDayScheduleList()){
+            daySchedule.setLocation(location);
+            location.getScheduleOfDays().add(daySchedule);
+        }
+
         if(isUserBusinessAdmin(businessId)) {
             Business business = businessRepository.findById(businessId);
                 location.setBusiness(business);

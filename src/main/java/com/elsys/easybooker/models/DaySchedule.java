@@ -1,6 +1,7 @@
 package com.elsys.easybooker.models;
 
 import com.elsys.easybooker.enums.WeekDay;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,12 +25,13 @@ public class DaySchedule {
     @Column(name = "openTime")
     private Time openTime;
 
-    @NotNull
     @Column(name = "CloseTime")
     private Time closeTime;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", nullable = false)
+    @JsonIgnore
     private Location location;
 
     public DaySchedule(){ }
