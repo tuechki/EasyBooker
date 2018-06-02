@@ -11,6 +11,7 @@ import com.elsys.easybooker.enums.WeekDay;
 import com.elsys.easybooker.models.*;
 import com.elsys.easybooker.repositories.*;
 import org.modelmapper.ModelMapper;
+import org.postgresql.util.PGInterval;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
@@ -22,10 +23,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
+import java.sql.Time;
+import java.time.Duration;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.time.LocalTime;
+import java.util.*;
 
 @org.springframework.stereotype.Service
 public class LocationService {
@@ -114,14 +116,26 @@ public class LocationService {
         Location location = locationRepository.findById(locationId);
         List<Service> servicesForLocation = new ArrayList<>();
 
-
+        PGInterval minTimeBetweenServices = serviceRepository.findById(serviceIds.get(0)).getTimeDuration();
 
         for(Long serviceId : serviceIds){
           Service service = serviceRepository.findById(serviceId);
+
+
+          if(minTimeBetweenServices.getHours() > service.getTimeDuration().getHours()){
+              minTimeBetweenServices = service.getTimeDuration();
+          }else{
+              if(minTimeBetweenServices.getMinutes() > service.getTimeDuration().getMinutes()){
+                  minTimeBetweenServices = service.getTimeDuration();
+              }
+          }
+
+
           service.getLocations().add(location);
           servicesForLocation.add(service);
         }
 
+        location.setMinTimeBetweenServices(minTimeBetweenServices);
         location.setServices(servicesForLocation);
         locationRepository.save(location);
 
@@ -140,28 +154,109 @@ public class LocationService {
         return WeekDay.SATURDAY;
     }
 
-    public List<BookingBriefDTO> getFreeHours(long locationId, long serviceId, int year, int month, int day){
+//    public List<Time> returnHours(List<Booking> bookings, Time beginTime, Time endTime, PGInterval minTimeBetweenServices){
+//        for (; beginTime.getTime() < endTime.getTime(); beginTime.)
+//    }
 
-//        Location location = locationRepository.findById(locationId);
-//        Service service = serviceRepository.findById(serviceId);
+    public List<LocalTime> freeHours(Location location, LocalDate localDate, PGInterval serviceDuration){
+        List<LocalTime> localTimeList = new ArrayList<>();
+        LocalTime beginTime = LocalTime.of(10,30);
+        LocalTime endTime = LocalTime.of(17,30);
+
+        LocalTime beginTime2= LocalTime.of(12,40);
+        LocalTime endTime2 = LocalTime.of(13,30);
+
+        localTimeList.add(beginTime);
+        localTimeList.add(endTime);
+
+        localTimeList.add(beginTime2);
+        localTimeList.add(endTime2);
+
+        for(Booking booking : bookingRepository.findByDate(localDate)){
+            localTimeList.add(booking.getBeginTime());
+            localTimeList.add(booking.getEndTime());
+            Collections.sort(localTimeList);
+        }
+
+        localTimeList.sort(new Comparator<LocalTime>() {
+            @Override
+            public int compare(LocalTime localTime1, LocalTime localTime2) {
+                if(localTime1.equals(localTime2)){
+                    return 0;
+                }else if(localTime1.isBefore(localTime2)){
+                    return -1;
+                }
+                return 1;
+            }
+        });
+
+        for(LocalTime localTime : localTimeList){
+            System.out.println("Tova: " +  localTime);
+        }
+
+
+
+
+        List<LocalTime> freeHours = new ArrayList<>();
+
+        for(int counter = 0; counter < localTimeList.size(); counter += 2){
+            for(LocalTime bookingTime = localTimeList.get(counter);
+                bookingTime.plusHours(serviceDuration.getHours())
+                        .plusMinutes(serviceDuration.getMinutes())
+                        .isBefore(localTimeList.get(counter + 1))
+                                ||
+                        bookingTime.plusHours(serviceDuration.getHours())
+                                .plusMinutes(serviceDuration.getMinutes())
+                                .equals(localTimeList.get(counter + 1));
+               bookingTime = bookingTime.plusHours(location.getMinTimeBetweenServices().getHours())
+                        .plusMinutes(location.getMinTimeBetweenServices().getMinutes())){
+
+
+                System.out.println("Booking time: " + bookingTime);
+                freeHours.add(bookingTime);
+
+            }
+        }
+
+        return freeHours;
+
+    }
+
+    public List<LocalTime> getFreeHours(long locationId, long serviceId, int year, int month, int day){
+
+        Location location = locationRepository.findById(locationId);
+        PGInterval minTimeBetweenServices = location.getMinTimeBetweenServices();
+        Service service = serviceRepository.findById(serviceId);
+        PGInterval serviceDuration = service.getTimeDuration();
 //        Business business = location.getBusiness();
 //
 //        return  DAYS.between(business.getCreatedAt(), dateForBooking);
 
         LocalDate localDate = LocalDate.of(year,month,day);
         List<DaySchedule> schedule =  dayScheduleRepository.findAllByLocationId(locationId);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(Date.valueOf(localDate));
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
-        System.out.println("TOVA: " + getDayOfWeek(dayOfWeek));
+
+        Calendar begin = Calendar.getInstance();
+        begin.setTime(Date.valueOf(localDate));
+        begin.add(Calendar.HOUR_OF_DAY,10);
+        begin.add(Calendar.MINUTE, 30);
+
+        Calendar end = Calendar.getInstance();
+        end.setTime(Date.valueOf(localDate));
+        end.add(Calendar.HOUR_OF_DAY,19);
+        end.add(Calendar.MINUTE, 30);
+
+//        Duration duration = new Duration().
+
+
+
 
         List<BookingBriefDTO> bookingBriefDTOList = new ArrayList<>();
         for(Booking booking : bookingRepository.findByDate(localDate)){
             bookingBriefDTOList.add(modelMapper.map(booking, BookingBriefDTO.class));
         }
 
-        return bookingBriefDTOList;
+        return freeHours(location, localDate, serviceDuration);
     }
 
 

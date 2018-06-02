@@ -16,6 +16,7 @@ export class BookingComponent implements OnInit {
   business: any;
   location: any;
   service: any;
+  freeHours: any;
 
   booking: object =  {
     businessId: '',
@@ -71,16 +72,17 @@ export class BookingComponent implements OnInit {
       {observe: 'response'}
     ).subscribe(resp => {
       console.log(resp.body);
+      this.freeHours = resp.body;
     });
   }
 
 
-  confirmBooking(){
+  confirmBooking(freeHour){
 
     this.booking['businessId'] = this.businessInfoService.getCurrentBusiness()['id'];
     this.booking['locationId'] = this.businessInfoService.getCurrentLocation()['id'];
     this.booking['serviceId'] = this.businessInfoService.getCurrentService()['id'];
-    this.booking['beginTime'] = "18:30:49";
+    this.booking['beginTime'] = freeHour[0] + ":" + freeHour[1];
 
     console.log(this.booking);
 

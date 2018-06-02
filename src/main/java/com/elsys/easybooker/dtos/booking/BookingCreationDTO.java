@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class BookingCreationDTO {
     @NotNull
@@ -21,7 +22,7 @@ public class BookingCreationDTO {
     private LocalDate date;
 
     @NotNull
-    private Time beginTime  ;
+    private LocalTime beginTime  ;
 
     @JsonIgnore
     private final LocalDateTime createdAt = LocalDateTime.now();
@@ -58,11 +59,11 @@ public class BookingCreationDTO {
         this.date = date;
     }
 
-    public Time getBeginTime() {
+    public LocalTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Time beginTime) {
+    public void setBeginTime(LocalTime beginTime) {
         this.beginTime = beginTime;
     }
 

@@ -1,6 +1,7 @@
 package com.elsys.easybooker.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.postgresql.util.PGInterval;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
@@ -25,7 +27,9 @@ public class Booking {
 
     @NotNull
     @Column(name = "beginTime")
-    private Time beginTime  ;
+    private LocalTime beginTime;
+
+    private LocalTime endTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -53,7 +57,7 @@ public class Booking {
         this.id = id;
     }
 
-   public Booking(LocalDate date,Time beginTime,LocalDateTime createdAt){
+   public Booking(LocalDate date,LocalTime beginTime,LocalDateTime createdAt){
         this.date = date;
         this.beginTime = beginTime;
         this.createdAt = createdAt;
@@ -72,12 +76,17 @@ public class Booking {
         this.date = date;
     }
 
-    public Time getBeginTime() {
+    public LocalTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Time beginTime) {
+    public void setBeginTime(LocalTime beginTime) {
         this.beginTime = beginTime;
+    }
+
+    public LocalTime getEndTime(){
+        PGInterval serviceDuration = this.getService().getTimeDuration();
+        return this.getBeginTime().plusHours(serviceDuration.getHours()).plusMinutes(serviceDuration.getMinutes());
     }
 
     public LocalDateTime getCreatedAt() {

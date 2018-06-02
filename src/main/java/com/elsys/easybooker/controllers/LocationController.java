@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,8 +83,8 @@ public class LocationController {
     }
 
     @GetMapping("/{locationId}/services/{serviceId}/{year}/{month}/{day}")
-    public List<BookingBriefDTO> getFreeHours(@PathVariable long locationId, @PathVariable long serviceId,
-                                                        @PathVariable int year, @PathVariable int month, @PathVariable int day) {
+    public List<LocalTime> getFreeHours(@PathVariable long locationId, @PathVariable long serviceId,
+                                        @PathVariable int year, @PathVariable int month, @PathVariable int day) {
 
 
         return locationService.getFreeHours(locationId, serviceId, year, month, day);

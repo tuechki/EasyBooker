@@ -26,7 +26,7 @@
   <button i18n mat-raised-button (click)="showLocation(this.booking)">{{this.booking.locationAddress}}</button>
   <button i18n mat-raised-button (click)="showService(this.booking)">{{this.booking.serviceName}}</button>
     <button i18n mat-raised-button >{{this.booking.date | date}}</button>
-    <button i18n mat-raised-button >{{this.booking.beginTime}}</button>
+    <button i18n mat-raised-button >{{this.booking.beginTime[0] + ":" + this.booking.beginTime[1]}}</button>
 
     </mat-card-content>
 </mat-card>

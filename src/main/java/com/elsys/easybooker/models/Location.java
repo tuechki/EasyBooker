@@ -3,6 +3,7 @@ package com.elsys.easybooker.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.elsys.easybooker.enums.WeekDay;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.postgresql.util.PGInterval;
 
@@ -147,6 +148,17 @@ public class Location {
 
     public List<DaySchedule> getScheduleOfDays() {
         return scheduleOfDays;
+    }
+
+    public DaySchedule getScheduleOfDays(WeekDay weekDay) {
+
+        for(DaySchedule daySchedule : getScheduleOfDays()){
+            if(daySchedule.getWeekDay().equals(weekDay)){
+                return daySchedule;
+            }
+        }
+
+        return null;
     }
 
     public void setScheduleOfDays(List<DaySchedule> scheduleOfDays) {

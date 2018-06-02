@@ -21,8 +21,8 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <div class="example-events">
-      <div *ngFor="let e of events">{{e}}</div>
+    <div class="example-events" >
+      <button i18n mat-raised-button  *ngFor="let freeHour of freeHours" (click)="confirmBooking(freeHour)">{{freeHour[0] + ":" + freeHour[1]}}</button>
     </div>
 
 
