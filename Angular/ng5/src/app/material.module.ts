@@ -9,13 +9,15 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatIconModule} from '@angular/material/icon';
+
 
 @NgModule({
   imports: [MatButtonModule, MatToolbarModule, MatInputModule, MatTabsModule,
     MatSelectModule,  MatProgressSpinnerModule, MatCardModule, MatCheckboxModule,
-    MatDatepickerModule, MatNativeDateModule, MatGridListModule, FlexLayoutModule],
+    MatDatepickerModule, MatNativeDateModule, MatGridListModule, FlexLayoutModule, MatIconModule],
   exports: [MatButtonModule, MatToolbarModule, MatInputModule, MatTabsModule,
     MatSelectModule,  MatProgressSpinnerModule, MatCardModule, MatCheckboxModule,
-    MatDatepickerModule, MatNativeDateModule, MatGridListModule, FlexLayoutModule],
+    MatDatepickerModule, MatNativeDateModule, MatGridListModule, FlexLayoutModule, MatIconModule],
 })
 export class MaterialModule { }

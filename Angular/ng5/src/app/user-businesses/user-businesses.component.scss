@@ -13,3 +13,15 @@
 agm-map {
   height: 300px;
 }
+
+
+.button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.edit-button{
+  width: 240px;
+  margin-bottom: 20px;
+}

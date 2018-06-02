@@ -21,10 +21,18 @@
         <div class="col">
           <span class="life-container" *ngFor="let business of businesses">
 
-            <button class="block" mat-raised-button (click)="showBusiness(business)">
+            <div>
+              <button class="block" mat-raised-button (click)="showBusiness(business)">
+
                 <img class="img" src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
                 <p>{{business.name}}</p>
-            </button>
+                <div class="button-row">
+                  <button mat-raised-button color="primary" (click)="editBusiness()" class="edit-button">Edit</button>
+                </div>
+
+              </button>
+            </div>
+
 
           </span>
         </div>
@@ -35,6 +43,9 @@
             <button class="block" mat-raised-button (click)="showLocation(location)">
                <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
                <p>{{location.address}}</p>
+               <div class="button-row">
+                  <button mat-raised-button color="primary" (click)="editLocation()" class="edit-button">Edit</button>
+               </div>
             </button>
         </span>
         </div>
@@ -46,6 +57,9 @@
           <button class="block" mat-raised-button (click)="showService(service)">
             <img class="img" src='http://localhost:8080/images/services/{{service.id}}/image.png'/>
              <p>{{service.name}}</p>
+             <div class="button-row">
+                  <button mat-raised-button color="primary" (click)="editService()" class="edit-button">Edit</button>
+             </div>
           </button>
 
         </span>

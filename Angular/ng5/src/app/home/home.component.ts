@@ -19,6 +19,10 @@ export class HomeComponent implements OnInit {
   services: any;
   loadedBusinesses: boolean;
 
+  businessAddedToFavourites: boolean;
+  locationAddedToFavourites: boolean;
+  serviceAddedToFavourites: boolean;
+
   image: File = null;
 
   public latitude: number;
@@ -40,6 +44,11 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.businessAddedToFavourites = false;
+    this.locationAddedToFavourites = false;
+    this.serviceAddedToFavourites = false;
+
     this.loadedBusinesses = false;
     //set google maps defaults
     this.zoom = 4;
@@ -84,21 +93,21 @@ export class HomeComponent implements OnInit {
         }
       );
 
-    // this.httpClient.get('http://localhost:8080/locations', {observe: 'response'})
-    //   .subscribe(resp => {
-    //       console.log(resp.headers);
-    //       console.log(resp.body);
-    //       this.locations = resp.body;
-    //     }
-    //   );
-    //
-    // this.httpClient.get('http://localhost:8080/services', {observe: 'response'})
-    //   .subscribe(resp => {
-    //       console.log(resp.headers);
-    //       console.log(resp.body);
-    //       this.services = resp.body;
-    //     }
-    //   );
+    this.httpClient.get('http://localhost:8080/locations', {observe: 'response'})
+      .subscribe(resp => {
+          console.log(resp.headers);
+          console.log(resp.body);
+          this.locations = resp.body;
+        }
+      );
+
+    this.httpClient.get('http://localhost:8080/services', {observe: 'response'})
+      .subscribe(resp => {
+          console.log(resp.headers);
+          console.log(resp.body);
+          this.services = resp.body;
+        }
+      );
 
     this.businessInfoService.clearBookingLocation();
     this.businessInfoService.clearBookingService();
@@ -116,21 +125,44 @@ export class HomeComponent implements OnInit {
 
 
   showBusiness(business){
-    console.log(business);
-    this.businessInfoService.setCurrentBusiness(business);
-    this.router.navigate(['business-info']);
+    if(!this.businessAddedToFavourites){
+      console.log(business);
+      this.businessInfoService.setCurrentBusiness(business);
+      this.router.navigate(['business-info']);
+    }else{
+      console.log("BUSINESS TO FAVOURITES");
+    }
   }
 
   showLocation(location){
-    this.businessInfoService.setCurrentLocation(location);
-    this.router.navigate(['location-info']);
+    if(!this.locationAddedToFavourites){
+      this.businessInfoService.setCurrentLocation(location);
+      this.router.navigate(['location-info']);
+    }else{
+      console.log("LOCATION TO FAVOURITES");
+    }
   }
 
   showService(service){
-    this.businessInfoService.setCurrentService(service);
-    this.businessInfoService.clearCurrentLocation();
-    this.router.navigate(['service-info']);
+    if(!this.serviceAddedToFavourites){
+      this.businessInfoService.setCurrentService(service);
+      this.businessInfoService.clearCurrentLocation();
+      this.router.navigate(['service-info']);
+    }else{
+      console.log("SERVICE TO FAVOURITES");
+    }
+  }
 
+  addBusinessToFavourites(){
+    this.businessAddedToFavourites = true;
+  }
+
+  addLocationToFavourites(){
+    this.locationAddedToFavourites = true;
+  }
+
+  addServiceToFavourites(){
+    this.serviceAddedToFavourites = true;
   }
 
 }

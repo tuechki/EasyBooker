@@ -19,6 +19,10 @@ export class UserBusinessesComponent implements OnInit {
   locationsPerBusiness: any[] = [];
   servicesPerBusiness: any[] = [];
 
+  businessToBeEdited: boolean;
+  locationToBeEdited: boolean;
+  serviceToBeEdited: boolean;
+
   image: File = null;
 
   constructor(
@@ -30,6 +34,10 @@ export class UserBusinessesComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.businessToBeEdited = false;
+    this.locationToBeEdited = false;
+    this.serviceToBeEdited = false;
 
     this.httpClient.get('http://localhost:8080/businesses/loggedInUser', {observe: 'response'})
       .subscribe(resp => {
@@ -74,20 +82,44 @@ export class UserBusinessesComponent implements OnInit {
   }
 
   showBusiness(business){
-    console.log(business);
-    this.businessInfoService.setCurrentBusiness(business);
-    this.router.navigate(['business-info']);
+    if(!this.businessToBeEdited){
+      console.log(business);
+      this.businessInfoService.setCurrentBusiness(business);
+      this.router.navigate(['business-info']);
+    }else {
+      console.log("DAAAAA BUSINESS");
+    }
+
   }
 
   showLocation(location){
-    this.businessInfoService.setCurrentLocation(location);
-    this.router.navigate(['location-info']);
+    if(!this.locationToBeEdited){
+      this.businessInfoService.setCurrentLocation(location);
+      this.router.navigate(['location-info']);
+    }else {
+      console.log("DAAAAA LOCATION");
+    }
   }
 
   showService(service){
-    this.businessInfoService.setCurrentService(service);
-    this.businessInfoService.clearCurrentLocation();
-    this.router.navigate(['service-info']);
+    if(!this.serviceToBeEdited){
+      this.businessInfoService.setCurrentService(service);
+      this.businessInfoService.clearCurrentLocation();
+      this.router.navigate(['service-info']);
+    }else {
+      console.log("DAAAAA SERVICE");
+    }
+  }
 
+  editBusiness(){
+    this.businessToBeEdited = true;
+  }
+
+  editLocation(){
+    this.locationToBeEdited = true;
+  }
+
+  editService(){
+    this.serviceToBeEdited = true;
   }
 }
