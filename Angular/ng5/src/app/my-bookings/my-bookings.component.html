@@ -4,11 +4,11 @@
 <mat-card>
   <mat-card-content >
 
-    <button i18n mat-raised-button > Business </button>
-    <button i18n mat-raised-button > Address </button>
-    <button i18n mat-raised-button > Service </button>
-    <button i18n mat-raised-button > Date </button>
-    <button i18n mat-raised-button > Time </button>
+    <button i18n mat-raised-button color="primary" > Business </button>
+    <button i18n mat-raised-button color="primary" > Address </button>
+    <button i18n mat-raised-button color="primary" > Service </button>
+    <button i18n mat-raised-button color="primary" > Date </button>
+    <button i18n mat-raised-button color="primary" > Time </button>
 
   </mat-card-content>
 </mat-card>
@@ -22,11 +22,11 @@
       <p>{{business.name}}</p>
     </button>
 
-  <button i18n mat-raised-button (click)="showBusiness(this.booking)">{{this.booking.businessName}}</button>
-  <button i18n mat-raised-button (click)="showLocation(this.booking)">{{this.booking.locationAddress}}</button>
-  <button i18n mat-raised-button (click)="showService(this.booking)">{{this.booking.serviceName}}</button>
-    <button i18n mat-raised-button >{{this.booking.date | date}}</button>
-    <button i18n mat-raised-button >{{this.booking.beginTime[0] + ":" + this.booking.beginTime[1]}}</button>
+  <button i18n mat-raised-button (click)="showBusiness(this.booking)" color="warn">{{this.booking.businessName}}</button>
+  <button i18n mat-raised-button (click)="showLocation(this.booking)" color="warn">{{this.booking.locationAddress}}</button>
+  <button i18n mat-raised-button (click)="showService(this.booking)" color="warn">{{this.booking.serviceName}}</button>
+    <button i18n mat-raised-button color="warn">{{this.booking.date | date}}</button>
+    <button i18n mat-raised-button color="warn">{{this.booking.beginTime[0] + ":" + this.booking.beginTime[1]}}</button>
 
     </mat-card-content>
 </mat-card>

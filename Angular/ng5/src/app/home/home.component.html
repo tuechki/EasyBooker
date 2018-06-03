@@ -22,7 +22,13 @@
           <span class="life-container" *ngFor="let business of businesses">
 
             <button class="block" *ngIf="this.loadedBusinesses == true" mat-raised-button (click)="showBusiness(business)">
-                <img class="img"  src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
+
+              <img
+                class="img"
+                src='http://localhost:8080/images/businesses/{{business.id}}/image.png'
+                onerror="this.src='../../assets/images/noImageSelected.jpg'"
+                onabort="this.src='../../assets/images/noImageSelected.jpg'"/>
+
                 <p style="margin-left:30px;">{{business.name}}
                 <button mat-icon-button color="warn" style="float:right;" (click)="addBusinessToFavourites()">
                   <mat-icon>favorite</mat-icon>
@@ -39,7 +45,10 @@
         <span class="life-container" *ngFor="let location of locations">
 
           <button class="block" mat-raised-button (click)="showLocation(location)">
-             <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
+             <img class="img"
+                  src='http://localhost:8080/images/locations/{{location.id}}/image.png'
+                  onerror="this.src='../../assets/images/noImageSelected.jpg'"
+                  onabort="this.src='../../assets/images/noImageSelected.jpg'"/>
              <p style="margin-left:30px;">{{location.address}}
                 <button mat-icon-button color="warn" style="float:right;" (click)="addLocationToFavourites()">
                   <mat-icon>favorite</mat-icon>
@@ -55,7 +64,10 @@
         <span *ngFor="let service of services">
 
           <button class="block" mat-raised-button (click)="showService(service)">
-            <img class="img" src='http://localhost:8080/images/services/{{service.id}}/image.png'/>
+            <img class="img"
+                 src='http://localhost:8080/images/services/{{service.id}}/image.png'
+                 onerror="this.src='../../assets/images/noImageSelected.jpg'"
+                 onabort="this.src='../../assets/images/noImageSelected.jpg'"/>
              <p style="margin-left:30px;">{{service.name}}
                 <button mat-icon-button color="warn" style="float:right;" (click)="addServiceToFavourites()">
                   <mat-icon>favorite</mat-icon>
