@@ -17,9 +17,9 @@ public class UserUpdateDTO {
 
     @NotNull
     private String lastName;
-
-    @NotNull
-    private String password;
+//
+//    @NotNull
+//    private String password;
 
     @NotNull
     private String email;
@@ -53,13 +53,13 @@ public class UserUpdateDTO {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     public String getEmail() {
         return email;

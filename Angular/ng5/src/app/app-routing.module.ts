@@ -16,6 +16,7 @@ import {UserBusinessesComponent} from "./user-businesses/user-businesses.compone
 import {MyProfileComponent} from "./my-profile/my-profile.component";
 import {BookingComponent} from "./booking/booking.component";
 import {MyBookingsComponent} from "./my-bookings/my-bookings.component";
+import {EditBusinessComponent} from "./edit-business/edit-business.component";
 
 
 const routes: Routes = [
@@ -80,6 +81,12 @@ const routes: Routes = [
   {
     path: 'my-bookings',
     component: MyBookingsComponent,
+    canActivate: [AuthGuardService]
+  },
+
+  {
+    path: 'edit-business',
+    component: EditBusinessComponent,
     canActivate: [AuthGuardService]
   }
 ];

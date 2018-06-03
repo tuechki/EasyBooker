@@ -58,17 +58,17 @@ public class UserController {
     }
 
     @GetMapping("/users/loggedInUser")
-    public UserDTO getLoggedUser() throws ResourceNotFoundException {
+    public UserDTO getLoggedInUser() throws ResourceNotFoundException {
         return userService.getLoggedInUser();
     }
 
     @PutMapping("/users/loggedInUser")
-    public UserBriefDTO updateLoggedUser(@RequestBody UserUpdateDTO userUpdateDTO) throws ResourceNotFoundException {
+    public UserBriefDTO updateLoggedInUser(@RequestBody UserUpdateDTO userUpdateDTO) throws ResourceNotFoundException {
         return userService.updateLoggedInUser(userUpdateDTO);
     }
 
     @DeleteMapping("/users/loggedInUser")
-    public void deleteLoggedUser() throws ResourceNotFoundException {
+    public void deleteLoggedInUser() throws ResourceNotFoundException {
         userService.deleteLoggedInUser();
     }
 

@@ -13,12 +13,7 @@ import org.springframework.web.servlet.config.annotation.*;
 
 import javax.annotation.PostConstruct;
 
-@CrossOrigin(origins = "localhost:4200")
-@SpringBootApplication(exclude = {
-		org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class
-//		org.activiti.spring.boot.SecurityAutoConfiguration.class,
-//		org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration.class
-})
+@SpringBootApplication
 public class EasybookerApplication {
 
 	@Bean
@@ -46,16 +41,17 @@ public class EasybookerApplication {
 //	}
 
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurerAdapter() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/users").allowedOrigins("http://localhost:4200");
-			}
-		};
-
-	}
+//	@Bean
+//	public WebMvcConfigurer corsConfigurer() {
+//		return new WebMvcConfigurerAdapter() {
+//			@Override
+//			public void addCorsMappings(CorsRegistry registry) {
+//				registry.addMapping("/**")
+//						.allowedOrigins("http://localhost:4200");
+//			}
+//		};
+//
+//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(EasybookerApplication.class, args);

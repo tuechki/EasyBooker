@@ -36,6 +36,7 @@ import { UserBusinessesComponent } from './user-businesses/user-businesses.compo
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { BookingComponent } from './booking/booking.component';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
+import { EditBusinessComponent } from './edit-business/edit-business.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { MyBookingsComponent } from './my-bookings/my-bookings.component';
     UserBusinessesComponent,
     MyProfileComponent,
     BookingComponent,
-    MyBookingsComponent
+    MyBookingsComponent,
+    EditBusinessComponent
   ],
   imports: [
     BrowserModule,

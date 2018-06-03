@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit {
         username: this.username,
         password: this.password
         }, {observe: 'response'}).subscribe(resp => {
+          console.log("RESPONSE  BODY: " + resp.body);
+          console.log("RESPONSE  HEADERS: " + resp.headers);
       localStorage.setItem('token',resp.headers.getAll('Authorization').toString());
       this.router.navigate(['']);
     });

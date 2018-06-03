@@ -1,0 +1,45 @@
+
+<h2 i18n>Add new business</h2>
+<br>
+
+<div class="easybooker-div">
+
+  <form>
+
+
+    <div id="preview" class="preview">
+      <img id="selectedImage" [src]="this.selectedFile ? url : noImageURL" />
+    </div>
+
+    <br>
+
+    <div id="previewButtons">
+      <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+      <button i18n mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+      <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+      <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
+    </div>
+    <br>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder  type="text" placeholder="Name" name="name" [(ngModel)]="business['name']" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="text" placeholder="Description" name="desc" [(ngModel)]="business['description']"/>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="text" placeholder="Email Address" name="email" [(ngModel)]="business['email']"/>
+    </mat-form-field>
+
+    <br/>
+
+
+    <button i18n mat-raised-button (click)="updateBusiness()">Update business</button>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+  </form>
+
+
+</div>

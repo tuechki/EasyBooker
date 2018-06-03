@@ -64,6 +64,20 @@ export class BookingComponent implements OnInit {
 
     console.log(event.value.getMonth());
 
+    let month = (event.value.getMonth() + 1).toString();
+    if(month.length < 2){
+      month = '0' + month;
+    }
+
+    let day = (event.value.getDay()).toString();
+    if(day.length < 2){
+      day = '0' + day;
+    }
+
+    this.booking['date'] = event.value.getFullYear() + '-'
+      +  month + '-'
+      + day;
+
     this.httpClient.get('http://localhost:8080/locations/'
       + this.location.id + '/services/' + this.service.id + '/'
       + event.value.getFullYear() + '/'

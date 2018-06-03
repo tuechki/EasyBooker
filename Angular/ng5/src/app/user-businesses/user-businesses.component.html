@@ -20,20 +20,13 @@
       <mat-tab i18n-label label="Businesses">
         <div class="col">
           <span class="life-container" *ngFor="let business of businesses">
-
-            <div>
               <button class="block" mat-raised-button (click)="showBusiness(business)">
-
                 <img class="img" src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
                 <p>{{business.name}}</p>
                 <div class="button-row">
                   <button mat-raised-button color="primary" (click)="editBusiness()" class="edit-button">Edit</button>
                 </div>
-
               </button>
-            </div>
-
-
           </span>
         </div>
       </mat-tab>

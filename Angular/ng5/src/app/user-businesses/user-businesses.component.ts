@@ -87,7 +87,7 @@ export class UserBusinessesComponent implements OnInit {
       this.businessInfoService.setCurrentBusiness(business);
       this.router.navigate(['business-info']);
     }else {
-      console.log("DAAAAA BUSINESS");
+      this.router.navigate(['edit-business']);
     }
 
   }

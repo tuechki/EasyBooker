@@ -38,7 +38,7 @@ public class BusinessController {
         return businessService.getBusinessesForLoggedUser();
     }
 
-    @GetMapping("/{businessId}")
+    @RequestMapping(value="/{businessId}",method=RequestMethod.GET)
     public BusinessDTO getBusinessById(@PathVariable long businessId) {
         return businessService.getBusinessById(businessId);
     }
