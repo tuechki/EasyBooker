@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {CreateBusinessService} from "../services/message.service";
 import {BusinessInfoService} from "../services/business.info.service";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-business',
@@ -10,6 +11,15 @@ import {BusinessInfoService} from "../services/business.info.service";
   styleUrls: ['./business.component.scss']
 })
 export class BusinessComponent implements OnInit {
+
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  nameFormControl = new FormControl('', [
+    Validators.required
+  ]);
 
   business: object = {
     name: '',
@@ -48,30 +58,36 @@ export class BusinessComponent implements OnInit {
   }
 
   addBusiness() {
-    this.showSpinner = true;
 
-    this.httpClient.post('http://localhost:8080/businesses',
-      this.business,
-      {observe: 'response'}
-    ).subscribe(resp => {
-      this.createBusinessService.setBusinessId(resp.body["id"]);
+    if (!this.nameFormControl.hasError('required')
+      && !this.emailFormControl.hasError('required')
+      && !this.emailFormControl.hasError('email')) {
 
-      if(this.selectedFile) {
-        const fd = new FormData();
-        fd.append('image', this.selectedFile, this.selectedFile.name);
-        this.httpClient.post('http://localhost:8080/businesses/' + resp.body["id"] + '/images',
-          fd
-        ).subscribe(resp => {
-          console.log(fd);
-        });
-      }
+      this.showSpinner = true;
 
-      this.router.navigate(['/services']);
-    });
-    setTimeout(() => {
-      // this.answerDisplay = this.name;
-      this.showSpinner = false;
-    }, 2000);
+      this.httpClient.post('http://localhost:8080/businesses',
+        this.business,
+        {observe: 'response'}
+      ).subscribe(resp => {
+        this.createBusinessService.setBusinessId(resp.body["id"]);
+
+        if (this.selectedFile) {
+          const fd = new FormData();
+          fd.append('image', this.selectedFile, this.selectedFile.name);
+          this.httpClient.post('http://localhost:8080/businesses/' + resp.body["id"] + '/images',
+            fd
+          ).subscribe(resp => {
+            console.log(fd);
+          });
+        }
+
+        this.router.navigate(['/services']);
+      });
+      setTimeout(() => {
+        // this.answerDisplay = this.name;
+        this.showSpinner = false;
+      }, 2000);
+    }
   }
 
 }

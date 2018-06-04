@@ -19,7 +19,10 @@
   <br>
 
   <mat-form-field class="example-full-width">
-    <input matInput i18n-placeholder type="text" placeholder="Name" name="serviceName" [(ngModel)]="service['name']" />
+    <input matInput placeholder="Name" [formControl]="nameFormControl" [(ngModel)]="service['name']">
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
@@ -27,11 +30,17 @@
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput i18n-placeholder type="text" placeholder="Time duration/hours" name="serviceTimeDuration" [(ngModel)]="service['timeDuration']"/>
+    <input matInput placeholder="Time duration/hours" [formControl]="timeDurationFormControl" [(ngModel)]="service['timeDuration']">
+    <mat-error *ngIf="timeDurationFormControl.hasError('required')">
+      Time duration is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput i18n-placeholder type="text" placeholder="Price/$" name="servicePrice" [(ngModel)]="service['price']"/>
+    <input matInput placeholder="Price/$" [formControl]="priceFormControl" [(ngModel)]="service['price']">
+    <mat-error *ngIf="priceFormControl.hasError('required')">
+      Price is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
   <br/>

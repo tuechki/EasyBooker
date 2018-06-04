@@ -3,6 +3,7 @@ import {CreateBusinessService} from "../services/message.service";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {BusinessInfoService} from "../services/business.info.service";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-service',
@@ -10,6 +11,18 @@ import {BusinessInfoService} from "../services/business.info.service";
   styleUrls: ['./service.component.scss']
 })
 export class ServiceComponent implements OnInit{
+
+  nameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  timeDurationFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  priceFormControl = new FormControl('', [
+    Validators.required
+  ]);
 
   services: object[] = [];
 
@@ -55,34 +68,40 @@ export class ServiceComponent implements OnInit{
 
 
   addService() {
-    this.showSpinner = true;
 
-    this.httpClient.post('http://localhost:8080/businesses/' +
-      this.createBusinessService.getBusinessId() +'/services',
-      this.service,
-      {observe: 'response'}
-    ).subscribe(resp => {
+    if (!this.nameFormControl.hasError('required')
+      && !this.timeDurationFormControl.hasError('required')
+      && !this.priceFormControl.hasError('required')) {
 
-      if(this.selectedFile) {
-        const fd = new FormData();
-        fd.append('image', this.selectedFile, this.selectedFile.name);
-        this.httpClient.post('http://localhost:8080/services/' + resp.body["id"] + '/images',
-          fd
-        ).subscribe(resp => {
-          this.selectedFile = null;
-        });
-      }
+      this.showSpinner = true;
 
-    });
-    setTimeout(() => {
-      // this.answerDisplay = this.name;
-      this.showSpinner = false;
-    }, 2000);
+      this.httpClient.post('http://localhost:8080/businesses/' +
+        this.createBusinessService.getBusinessId() + '/services',
+        this.service,
+        {observe: 'response'}
+      ).subscribe(resp => {
 
-    this.service['name'] = '';
-    this.service['description'] = '';
-    this.service['timeDuration'] = '';
-    this.service['price'] = '';
+        if (this.selectedFile) {
+          const fd = new FormData();
+          fd.append('image', this.selectedFile, this.selectedFile.name);
+          this.httpClient.post('http://localhost:8080/services/' + resp.body["id"] + '/images',
+            fd
+          ).subscribe(resp => {
+            this.selectedFile = null;
+          });
+        }
+
+      });
+      setTimeout(() => {
+        // this.answerDisplay = this.name;
+        this.showSpinner = false;
+      }, 2000);
+
+      this.service['name'] = ' ';
+      this.service['description'] = ' ';
+      this.service['timeDuration'] = ' ';
+      this.service['price'] = ' ';
+    }
   }
 
   goToLocations(){

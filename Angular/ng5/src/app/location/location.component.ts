@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {CreateBusinessService} from "../services/message.service";
 import {BusinessInfoService} from "../services/business.info.service";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-location',
@@ -11,9 +12,14 @@ import {BusinessInfoService} from "../services/business.info.service";
 })
 export class LocationComponent implements OnInit {
 
+  addressFormControl = new FormControl('', [
+    Validators.required
+  ]);
 
-
-
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
 
   selectedServices = [];
 
@@ -129,55 +135,60 @@ findIndexToUpdate(service) {
 
    addLocation() {
 
-     this.location['dayScheduleList'].push(this.dayScheduleMonday);
-     this.location['dayScheduleList'].push(this.dayScheduleTuesday);
-     this.location['dayScheduleList'].push(this.dayScheduleWednesday);
-     this.location['dayScheduleList'].push(this.dayScheduleThursday);
-     this.location['dayScheduleList'].push(this.dayScheduleFriday);
-     this.location['dayScheduleList'].push(this.dayScheduleSaturday);
-     this.location['dayScheduleList'].push(this.dayScheduleSunday);
-      console.log(this.location['dayScheduleList']);
+     if (!this.addressFormControl.hasError('required')
+       && !this.emailFormControl.hasError('required')
+       && !this.emailFormControl.hasError('email')) {
 
-    this.showSpinner = true;
+       this.location['dayScheduleList'].push(this.dayScheduleMonday);
+       this.location['dayScheduleList'].push(this.dayScheduleTuesday);
+       this.location['dayScheduleList'].push(this.dayScheduleWednesday);
+       this.location['dayScheduleList'].push(this.dayScheduleThursday);
+       this.location['dayScheduleList'].push(this.dayScheduleFriday);
+       this.location['dayScheduleList'].push(this.dayScheduleSaturday);
+       this.location['dayScheduleList'].push(this.dayScheduleSunday);
+       console.log(this.location['dayScheduleList']);
 
-    this.httpClient.post('http://localhost:8080/businesses/'
-      + this.createBusinessService.getBusinessId() + '/locations',
-      this.location,
-      {observe: 'response'}
-    ).subscribe(resp => {
+       this.showSpinner = true;
 
-
-      this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + "/services",
-        this.selectedServices,
-        {observe: 'response'}
-      ).subscribe(resp => {
-        console.log(resp);
-      });
+       this.httpClient.post('http://localhost:8080/businesses/'
+         + this.createBusinessService.getBusinessId() + '/locations',
+         this.location,
+         {observe: 'response'}
+       ).subscribe(resp => {
 
 
-      if(this.selectedFile) {
-        const fd = new FormData();
-        fd.append('image', this.selectedFile, this.selectedFile.name);
-        this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + '/images',
-          fd
-        ).subscribe(resp => {
-          this.selectedFile = null;
-        });
-      }
-
-    });
+         this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + "/services",
+           this.selectedServices,
+           {observe: 'response'}
+         ).subscribe(resp => {
+           console.log(resp);
+         });
 
 
-    setTimeout(() => {
-      // this.answerDisplay = this.name;
-      this.showSpinner = false;
-    }, 2000);
+         if (this.selectedFile) {
+           const fd = new FormData();
+           fd.append('image', this.selectedFile, this.selectedFile.name);
+           this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + '/images',
+             fd
+           ).subscribe(resp => {
+             this.selectedFile = null;
+           });
+         }
 
-    this.location['address'] = '';
-    this.location['description'] = '';
-    this.location['number'] = '';
-    this.location['email'] = '';
-    this.location['dayScheduleList'] = [];
+       });
+
+
+       setTimeout(() => {
+         // this.answerDisplay = this.name;
+         this.showSpinner = false;
+       }, 2000);
+
+       this.location['address'] = ' ';
+       this.location['description'] = '';
+       this.location['number'] = '';
+       // this.location['email'] = ' ';
+       // this.location['dayScheduleList'] = [];
+     }
   }
 
   finish(){

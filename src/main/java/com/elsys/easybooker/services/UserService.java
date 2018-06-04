@@ -15,13 +15,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class  UserService {
 
+    private final Path rootUserImagesLocation = Paths.get("src\\main\\resources\\static\\images\\users");
     private final UserRepository userRepository;
     private final BusinessRepository businessRepository;
     private final LocationRepository locationRepository;
@@ -80,6 +87,15 @@ public class  UserService {
         user = userRepository.save(user);
 
         return modelMapper.map(user, UserBriefDTO.class);
+    }
+
+    public void addImageToUser(long userId, MultipartFile image) throws IOException {
+
+        String imageName = "image";
+        String imageExtension = ".png";
+
+        new File(this.rootUserImagesLocation.toString() + "/" + userId ).mkdirs();
+        Files.copy(image.getInputStream(), this.rootUserImagesLocation.resolve( userId + "/" + imageName + imageExtension));
     }
 
     public UserDTO getLoggedInUser(){

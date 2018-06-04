@@ -82,19 +82,18 @@ export class UserBusinessesComponent implements OnInit {
   }
 
   showBusiness(business){
+    this.businessInfoService.setCurrentBusiness(business);
     if(!this.businessToBeEdited){
-      console.log(business);
-      this.businessInfoService.setCurrentBusiness(business);
       this.router.navigate(['business-info']);
     }else {
       this.router.navigate(['edit-business']);
     }
-
   }
 
   showLocation(location){
+    this.businessInfoService.setCurrentLocation(location);
     if(!this.locationToBeEdited){
-      this.businessInfoService.setCurrentLocation(location);
+      this.businessInfoService.clearCurrentService();
       this.router.navigate(['location-info']);
     }else {
       console.log("DAAAAA LOCATION");
@@ -102,8 +101,8 @@ export class UserBusinessesComponent implements OnInit {
   }
 
   showService(service){
+    this.businessInfoService.setCurrentService(service);
     if(!this.serviceToBeEdited){
-      this.businessInfoService.setCurrentService(service);
       this.businessInfoService.clearCurrentLocation();
       this.router.navigate(['service-info']);
     }else {

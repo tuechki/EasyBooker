@@ -5,29 +5,63 @@
 
   <form>
 
+    <div id="preview" class="preview">
+      <img id="selectedImage" [src]="this.selectedFile ? url : noImageURL" />
+    </div>
+
+    <br>
+
+    <div id="previewButtons">
+      <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+      <button i18n mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+      <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+      <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
+    </div>
+    <br>
+
     <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder type="text" placeholder="First name" name="firstName" [(ngModel)]="user['firstName']" />
+      <input matInput placeholder="First name" [formControl]="firstNameFormControl" [(ngModel)]="user['firstName']">
+      <mat-error *ngIf="firstNameFormControl.hasError('required')">
+        First name is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder type="text" placeholder="Last Name" name="lastName" [(ngModel)]="user['lastName']"/>
+      <input matInput placeholder="Last name" [formControl]="lastNameFormControl" [(ngModel)]="user['lastName']">
+      <mat-error *ngIf="lastNameFormControl.hasError('required')">
+        Last name is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder type="text" placeholder="Username" name="username" [(ngModel)]="user['username']" />
+      <input matInput placeholder="Username" [formControl]="usernameFormControl" [(ngModel)]="user['username']">
+      <mat-error *ngIf="usernameFormControl.hasError('required')">
+        Username is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder type="password" placeholder="Password" name="password" [(ngModel)]="user['password']" />
-    </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Password" [formControl]="passwordFormControl" type="password" [(ngModel)]="user['password']">
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder type="password" placeholder="Confirm Password" name="confirmPassword" [(ngModel)]="confirmPassword"/>
-    </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder type="text" placeholder="Email Address" name="email" [(ngModel)]="user['email']"/>
-    </mat-form-field>
+      <!--&lt;!&ndash;<mat-form-field class="example-full-width">&ndash;&gt;-->
+      <!--&lt;!&ndash;<input matInput i18n-placeholder type="password" placeholder="Confirm Password" name="confirmPassword" [(ngModel)]="confirmPassword"/>&ndash;&gt;-->
+      <!--&lt;!&ndash;</mat-form-field>&ndash;&gt;-->
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" [formControl]="emailFormControl" [(ngModel)]="user['email']">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
 
     <mat-form-field>
       <mat-select i18n-placeholder placeholder="Gender" [(value)]="this.user['gender']">

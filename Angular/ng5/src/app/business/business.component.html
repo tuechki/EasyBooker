@@ -22,15 +22,25 @@
     <br>
 
     <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder  type="text" placeholder="Name" name="name" [(ngModel)]="business['name']" />
+      <input matInput placeholder="Name" [formControl]="nameFormControl" [(ngModel)]="business['name']">
+      <mat-error *ngIf="nameFormControl.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
+
 
     <mat-form-field class="example-full-width">
       <input matInput i18n-placeholder type="text" placeholder="Description" name="desc" [(ngModel)]="business['description']"/>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput i18n-placeholder type="text" placeholder="Email Address" name="email" [(ngModel)]="business['email']"/>
+      <input matInput i18n-placeholder placeholder="Email" [formControl]="emailFormControl" [(ngModel)]="business['email']">
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
     <br/>

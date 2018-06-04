@@ -30,7 +30,7 @@ export class EditBusinessComponent implements OnInit {
   ngOnInit() {
 
     this.httpClient.get('http://localhost:8080/businesses/'
-      + 2,
+      + this.businessInfoService.getCurrentBusiness()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
       this.business = resp.body;

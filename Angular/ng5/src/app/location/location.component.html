@@ -19,7 +19,10 @@
   <br>
 
   <mat-form-field class="example-full-width">
-    <input matInput i18n-placeholder type="text" placeholder="Address" name="locationAddress" [(ngModel)]="location['address']" />
+    <input matInput placeholder="Address" [formControl]="addressFormControl" [(ngModel)]="location['address']">
+    <mat-error *ngIf="addressFormControl.hasError('required')">
+      Address is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
@@ -31,7 +34,13 @@
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput i18n-placeholder type="text" placeholder="Email" name="locationEmail" [(ngModel)]="location['email']"/>
+    <input matInput placeholder="Email" [formControl]="emailFormControl" [(ngModel)]="location['email']">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
   <div class="col">
