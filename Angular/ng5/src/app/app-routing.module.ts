@@ -17,6 +17,8 @@ import {MyProfileComponent} from "./my-profile/my-profile.component";
 import {BookingComponent} from "./booking/booking.component";
 import {MyBookingsComponent} from "./my-bookings/my-bookings.component";
 import {EditBusinessComponent} from "./edit-business/edit-business.component";
+import {EditLocationComponent} from "./edit-location/edit-location.component";
+import {EditServiceComponent} from "./edit-service/edit-service.component";
 
 
 const routes: Routes = [
@@ -87,6 +89,18 @@ const routes: Routes = [
   {
     path: 'edit-business',
     component: EditBusinessComponent,
+    canActivate: [AuthGuardService]
+  },
+
+  {
+    path: 'edit-location',
+    component: EditLocationComponent,
+    canActivate: [AuthGuardService]
+  },
+
+  {
+    path: 'edit-service',
+    component: EditServiceComponent,
     canActivate: [AuthGuardService]
   }
 ];

@@ -96,7 +96,7 @@ export class UserBusinessesComponent implements OnInit {
       this.businessInfoService.clearCurrentService();
       this.router.navigate(['location-info']);
     }else {
-      console.log("DAAAAA LOCATION");
+      this.router.navigate(['edit-location']);
     }
   }
 
@@ -106,7 +106,7 @@ export class UserBusinessesComponent implements OnInit {
       this.businessInfoService.clearCurrentLocation();
       this.router.navigate(['service-info']);
     }else {
-      console.log("DAAAAA SERVICE");
+      this.router.navigate(['edit-service']);
     }
   }
 

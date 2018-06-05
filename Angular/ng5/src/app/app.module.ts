@@ -37,6 +37,8 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { BookingComponent } from './booking/booking.component';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 import { EditBusinessComponent } from './edit-business/edit-business.component';
+import { EditServiceComponent } from './edit-service/edit-service.component';
+import { EditLocationComponent } from './edit-location/edit-location.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { EditBusinessComponent } from './edit-business/edit-business.component';
     MyProfileComponent,
     BookingComponent,
     MyBookingsComponent,
-    EditBusinessComponent
+    EditBusinessComponent,
+    EditServiceComponent,
+    EditLocationComponent
   ],
   imports: [
     BrowserModule,

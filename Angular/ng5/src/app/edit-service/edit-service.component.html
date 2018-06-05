@@ -1,0 +1,58 @@
+<h2 i18n>Edit service</h2>
+<br>
+
+<div class="easybooker-div">
+  <form>
+
+    <div id="preview" class="preview">
+      <img id="selectedImage" [src]="this.selectedFile ? url : noImageURL" />
+    </div>
+
+    <br>
+
+    <div id="previewButtons">
+      <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+      <button i18n mat-raised-button *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+      <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+      <button i18n mat-raised-button *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
+    </div>
+    <br>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Name" [formControl]="nameFormControl" [(ngModel)]="service['name']">
+      <mat-error *ngIf="nameFormControl.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="text" placeholder="Description" name="serviceDescription" [(ngModel)]="service['description']"/>
+    </mat-form-field>
+
+    <!--{{service.timeDuration['hours']}}:{{service.timeDuration['minutes']}}-->
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Time duration/hours" [formControl]="timeDurationFormControl"  [(ngModel)]="this.timeDuration">
+      <mat-error *ngIf="timeDurationFormControl.hasError('required')">
+        Time duration is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Price/$" [formControl]="priceFormControl" [(ngModel)]="service['price']">
+      <mat-error *ngIf="priceFormControl.hasError('required')">
+        Price is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <br/>
+
+    <button i18n mat-raised-button (click)="updateService()">Update service</button>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+    <button i18n mat-raised-button (click)="goToLocations()">Go to locations</button>
+
+  </form>
+
+</div>
+

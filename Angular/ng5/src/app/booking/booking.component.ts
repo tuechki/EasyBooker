@@ -23,7 +23,7 @@ export class BookingComponent implements OnInit {
     locationId: '',
     serviceId: '',
     beginTime: '',
-    date:'2018-09-10'
+    date:''
   };
 
   constructor(private httpClient: HttpClient, private router: Router,
@@ -62,14 +62,12 @@ export class BookingComponent implements OnInit {
   chooseDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
 
-    console.log(event.value.getMonth());
-
     let month = (event.value.getMonth() + 1).toString();
     if(month.length < 2){
       month = '0' + month;
     }
 
-    let day = (event.value.getDay()).toString();
+    let day = (event.value.getDate()).toString();
     if(day.length < 2){
       day = '0' + day;
     }
@@ -85,7 +83,6 @@ export class BookingComponent implements OnInit {
       + event.value.getDate(),
       {observe: 'response'}
     ).subscribe(resp => {
-      console.log(resp.body);
       this.freeHours = resp.body;
     });
   }
@@ -104,11 +101,7 @@ export class BookingComponent implements OnInit {
       this.booking,
       {observe: 'response'}
     ).subscribe(resp => {
-
-      console.log("EHOOOOOO: " + resp.body);
-
       this.router.navigate(['my-bookings']);
-
     });
 
 

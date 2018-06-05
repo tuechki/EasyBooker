@@ -1,0 +1,175 @@
+<h2 i18n>Edit location</h2>
+<br>
+
+<div id="left" class="easybooker-div">
+  <form>
+
+    <div id="preview" class="preview">
+      <img id="selectedImage" [src]="this.selectedFile ? url : noImageURL" />
+    </div>
+
+    <br>
+
+    <div id="previewButtons">
+      <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+      <button mat-raised-button i18n *ngIf="!this.selectedFile" (click)="fileInput.click()">Select image</button>
+      <button mat-raised-button i18n *ngIf="this.selectedFile" (click)="removeFile()">Remove image</button>
+      <button mat-raised-button i18n *ngIf="this.selectedFile" (click)="fileInput.click()">Change </button>
+    </div>
+    <br>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Address" [formControl]="addressFormControl" [(ngModel)]="location['address']">
+      <mat-error *ngIf="addressFormControl.hasError('required')">
+        Address is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="text" placeholder="Description" name="serviceDescription" [(ngModel)]="location['description']"/>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput i18n-placeholder type="text" placeholder="Number" name="locationNumber" [(ngModel)]="location['number']"/>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Email" [formControl]="emailFormControl" [(ngModel)]="location['email']">
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <div class="col">
+    <span *ngFor="let service of services">
+    <mat-checkbox color="warn"
+                  name="{{service['name']}}"
+                  value="{{service['name']}}"
+                  (change)="addServiceToLocation($event, service)">
+         {{service['name']}}
+    </mat-checkbox>
+</span>
+    </div>
+
+    <!--<p> Selected value: {{selectedServices | json}} </p>-->
+
+    <br/>
+
+
+
+    <br>
+
+    <button mat-raised-button i18n (click)="updateLocation()">Add location</button>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+    <button mat-raised-button i18n (click)="finish()">I'm done</button>
+
+
+  </form>
+</div>
+
+<div id="right">
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group class="demo-tab-group">
+        <mat-tab i18n-label label="Monday">
+          <br>
+          <div class="demo-tab-content">
+            <mat-form-field class="example-full-width">
+              <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleMonday['openTime']"/>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleMonday['closeTime']"/>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+
+        <mat-tab i18n-label label="Tuesday">
+          <br>
+          <div class="demo-tab-content">
+            <mat-form-field class="example-full-width">
+              <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleTuesday['openTime']"/>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleTuesday['closeTime']"/>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+
+        <mat-tab i18n-label label="Wednesday">
+          <div class="demo-tab-content">
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleWednesday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleWednesday['closeTime']"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab i18n-label label="Thursday">
+          <div class="demo-tab-content">
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleThursday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleThursday['closeTime']"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab i18n-label label="Friday">
+          <div class="demo-tab-content">
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleFriday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleFriday['closeTime']"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab i18n-label label="Saturday">
+          <div class="demo-tab-content">
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleSaturday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleSaturday['closeTime']"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab i18n-label label="Sunday">
+          <div class="demo-tab-content">
+            <br>
+            <div class="demo-tab-content">
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Open Time" name="openTime" [(ngModel)]="dayScheduleSunday['openTime']"/>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput i18n-placeholder type="text" placeholder="Close Time" name="closeTime" [(ngModel)]="dayScheduleSunday['closeTime']"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
