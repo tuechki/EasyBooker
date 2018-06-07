@@ -119,26 +119,6 @@
         </div>
 
 
-        <mat-card *ngFor="let booking of bookings">
-          <mat-card-content >
-
-            <button class="block" *ngIf="this.loadedBusinesses == true" mat-raised-button >
-              <img class="img"
-                   src='http://localhost:8080/images/businesses/{{business.id}}/image.png'
-                   onerror="this.src='../../assets/images/noImageSelected.jpg'"
-                   onabort="this.src='../../assets/images/noImageSelected.jpg'"/>
-              <p>{{business.name}}</p>
-            </button>
-
-            <button i18n mat-raised-button (click)="showBusiness(this.booking)">{{this.booking.businessName}}</button>
-            <button i18n mat-raised-button (click)="showLocation(this.booking)">{{this.booking.locationAddress}}</button>
-            <button i18n mat-raised-button (click)="showService(this.booking)">{{this.booking.serviceName}}</button>
-            <button i18n mat-raised-button >{{this.booking.date | date}}</button>
-            <button i18n mat-raised-button >{{this.booking.beginTime}}</button>
-
-          </mat-card-content>
-        </mat-card>
-
 
       </mat-tab>
       <!--<mat-tab label="Day schedule">-->
