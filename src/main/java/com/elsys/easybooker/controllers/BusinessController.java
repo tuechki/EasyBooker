@@ -1,5 +1,6 @@
 package com.elsys.easybooker.controllers;
 
+import com.elsys.easybooker.dtos.booking.BookingBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
@@ -102,6 +103,11 @@ public class BusinessController {
     @DeleteMapping("/{businessId}/locations")
     public void deleteBusinessLocations(@PathVariable long businessId) {
         businessService.deleteBusinessLocations(businessId);
+    }
+
+    @GetMapping("/{businessId}/bookings")
+    public List<BookingBriefDTO> getBusinessBookings(@PathVariable long businessId) {
+        return businessService.getBusinessBookings(businessId);
     }
 
 }

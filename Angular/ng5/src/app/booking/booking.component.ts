@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
 import {MatDatepickerInputEvent} from "@angular/material";
+import {ApiService} from "../services/api.service";
+import {MatTimepickerInputEvent} from "angular5-time-picker/src/timepicker.directive";
 
 @Component({
   selector: 'app-booking',
@@ -27,18 +29,19 @@ export class BookingComponent implements OnInit {
   };
 
   constructor(private httpClient: HttpClient, private router: Router,
-              public authService: AuthService, public businessInfoService: BusinessInfoService) { }
+              public authService: AuthService, public businessInfoService: BusinessInfoService,
+              public apiService: ApiService) { }
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/businesses/'
+    this.httpClient.get(this.apiService.getAPI() + '/businesses/'
       + this.businessInfoService.getCurrentBusiness()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
       this.business = resp.body;
     });
 
-    this.httpClient.get('http://localhost:8080/locations/'
+    this.httpClient.get(this.apiService.getAPI() + '/locations/'
       + this.businessInfoService.getCurrentLocation()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
@@ -46,7 +49,7 @@ export class BookingComponent implements OnInit {
     });
 
 
-    this.httpClient.get('http://localhost:8080/services/'
+    this.httpClient.get(this.apiService.getAPI() + '/services/'
       + this.businessInfoService.getCurrentService()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
@@ -76,7 +79,7 @@ export class BookingComponent implements OnInit {
       +  month + '-'
       + day;
 
-    this.httpClient.get('http://localhost:8080/locations/'
+    this.httpClient.get(this.apiService.getAPI() + '/locations/'
       + this.location.id + '/services/' + this.service.id + '/'
       + event.value.getFullYear() + '/'
       + (event.value.getMonth() + 1) + '/'
@@ -87,7 +90,6 @@ export class BookingComponent implements OnInit {
     });
   }
 
-
   confirmBooking(freeHour){
 
     this.booking['businessId'] = this.businessInfoService.getCurrentBusiness()['id'];
@@ -97,7 +99,7 @@ export class BookingComponent implements OnInit {
 
     console.log(this.booking);
 
-    this.httpClient.post('http://localhost:8080/bookings',
+    this.httpClient.post(this.apiService.getAPI() + '/bookings',
       this.booking,
       {observe: 'response'}
     ).subscribe(resp => {

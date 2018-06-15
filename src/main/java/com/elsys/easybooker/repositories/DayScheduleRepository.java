@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface DayScheduleRepository extends JpaRepository<DaySchedule, Long>{
     public List<DaySchedule> findAllByLocationId(long locationId);
-    public List<DaySchedule> findAllByLocationIdAndWeekDay(long locationId, WeekDay weekDay);
+    public DaySchedule findByLocationIdAndWeekDay(long locationId, WeekDay weekDay);
 }

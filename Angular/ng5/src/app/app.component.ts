@@ -11,12 +11,16 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit{
 
+  // Configuration of the time picker (format 12H with a default date and time)
+  private config = { hour: 7, minute: 15, meriden: 'PM', format: 12 };
+
   languages = [
     { code: 'en', label: 'English'},
     { code: 'bg', label: 'Български'}
   ];
 
   constructor(@Inject(LOCALE_ID) protected localeId: string, public authService: AuthService, private router: Router){}
+
 
   ngOnInit() {
   }

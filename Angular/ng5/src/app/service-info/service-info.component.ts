@@ -3,6 +3,7 @@ import {BusinessInfoService} from "../services/business.info.service";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-service-info',
@@ -17,18 +18,19 @@ export class ServiceInfoComponent implements OnInit {
   canBook: boolean;
 
   constructor(private httpClient: HttpClient, private router: Router,
-              public authService: AuthService, public businessInfoService: BusinessInfoService) { }
+              public authService: AuthService, public businessInfoService: BusinessInfoService,
+              public apiService: ApiService) { }
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/services/'
+    this.httpClient.get(this.apiService.getAPI() + '/services/'
       + this.businessInfoService.getCurrentService()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
       this.service = resp.body;
     });
 
-    this.httpClient.get('http://localhost:8080/services/'
+    this.httpClient.get(this.apiService.getAPI() + '/services/'
       + this.businessInfoService.getCurrentService()['id'] + "/locations",
       {observe: 'response'}
     ).subscribe(resp => {
@@ -43,7 +45,7 @@ export class ServiceInfoComponent implements OnInit {
   }
 
   goToBusiness(){
-    this.httpClient.get('http://localhost:8080/services/'
+    this.httpClient.get(this.apiService.getAPI() + '/services/'
       + this.businessInfoService.getCurrentService()['id'] + "/business",
       {observe: 'response'}
     ).subscribe(resp => {

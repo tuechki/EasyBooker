@@ -141,14 +141,14 @@ public class LocationService {
 
     }
 
-    public WeekDay getDayOfWeek(int dayOfWeek){
+    public WeekDay getDayOfWeek(String dayOfWeek){
         switch (dayOfWeek) {
-            case 1:  return WeekDay.SUNDAY;
-            case 2:  return WeekDay.MONDAY;
-            case 3:  return WeekDay.TUESDAY;
-            case 4:  return WeekDay.WEDNESDAY;
-            case 5:  return WeekDay.THURSDAY;
-            case 6:  return WeekDay.FRIDAY;
+            case "SUNDAY":  return WeekDay.SUNDAY;
+            case "MONDAY":  return WeekDay.MONDAY;
+            case "TUESDAY":  return WeekDay.TUESDAY;
+            case "WEDNESDAY":  return WeekDay.WEDNESDAY;
+            case "THURSDAY":  return WeekDay.THURSDAY;
+            case "FRIDAY":  return WeekDay.FRIDAY;
         }
 
         return WeekDay.SATURDAY;
@@ -160,17 +160,12 @@ public class LocationService {
 
     public List<LocalTime> freeHours(Location location, LocalDate localDate, PGInterval serviceDuration){
         List<LocalTime> localTimeList = new ArrayList<>();
-        LocalTime beginTime = LocalTime.of(10,30);
-        LocalTime endTime = LocalTime.of(17,30);
-
-        LocalTime beginTime2= LocalTime.of(12,40);
-        LocalTime endTime2 = LocalTime.of(13,30);
+        DaySchedule daySchedule = dayScheduleRepository.findByLocationIdAndWeekDay(location.getId(), getDayOfWeek(localDate.getDayOfWeek().toString()));
+        LocalTime beginTime = daySchedule.getOpenTime().toLocalTime();
+        LocalTime endTime = daySchedule.getCloseTime().toLocalTime();
 
         localTimeList.add(beginTime);
         localTimeList.add(endTime);
-
-        localTimeList.add(beginTime2);
-        localTimeList.add(endTime2);
 
         for(Booking booking : bookingRepository.findByDate(localDate)){
             localTimeList.add(booking.getBeginTime());
@@ -257,6 +252,15 @@ public class LocationService {
         }
 
         return freeHours(location, localDate, serviceDuration);
+    }
+
+    public List<BookingBriefDTO> getLocationBookings(long locationId){
+        List<BookingBriefDTO> bookingBriefDTOList = new ArrayList<>();
+        for(Booking booking : bookingRepository.findByLocation(locationRepository.findById(locationId)) ){
+            bookingBriefDTOList.add(modelMapper.map(booking,BookingBriefDTO.class));
+        }
+
+        return bookingBriefDTOList;
     }
 
 

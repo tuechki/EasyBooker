@@ -22,12 +22,16 @@
           <span class="life-container" *ngFor="let business of businesses">
               <button class="block" mat-raised-button (click)="showBusiness(business)">
                 <img class="img"
-                     src='http://localhost:8080/images/businesses/{{business.id}}/image.png'
+                     src='{{this.apiService.getAPI()}}/images/businesses/{{business.id}}/image.png'
                      onerror="this.src='../../assets/images/noImageSelected.jpg'"
                      onabort="this.src='../../assets/images/noImageSelected.jpg'"/>
                 <p>{{business.name}}</p>
                 <div class="button-row">
-                  <button mat-raised-button color="primary" (click)="editBusiness()" class="edit-button">Edit</button>
+                  <button mat-raised-button color="primary" (click)="editBusiness()" class="delete-button">Edit</button>
+                  <button mat-raised-button color="warn" (click)="deleteBusiness()" class="delete-button">Delete</button>
+                </div>
+                <div class="button-row">
+                  <button mat-raised-button color="primary" (click)="showBusinessBookings()" class="edit-button">Show bookings</button>
                 </div>
               </button>
           </span>
@@ -38,13 +42,17 @@
         <span class="life-container" *ngFor="let location of locations">
             <button class="block" mat-raised-button (click)="showLocation(location)">
                <img class="img"
-                    src='http://localhost:8080/images/locations/{{location.id}}/image.png'
+                    src='{{this.apiService.getAPI()}}/images/locations/{{location.id}}/image.png'
                     onerror="this.src='../../assets/images/noImageSelected.jpg'"
                     onabort="this.src='../../assets/images/noImageSelected.jpg'"/>
                <p>{{location.address}}</p>
                <div class="button-row">
-                  <button mat-raised-button color="primary" (click)="editLocation()" class="edit-button">Edit</button>
-               </div>
+                  <button mat-raised-button color="primary" (click)="editBusiness()" class="delete-button">Edit</button>
+                  <button mat-raised-button color="warn" (click)="editLocation()" class="delete-button">Delete</button>
+                </div>
+              <div class="button-row">
+                  <button mat-raised-button color="primary" (click)="showLocationBookings()" class="edit-button">Show bookings</button>
+                </div>
             </button>
         </span>
         </div>
@@ -55,13 +63,17 @@
 
           <button class="block" mat-raised-button (click)="showService(service)">
             <img class="img"
-                 src='http://localhost:8080/images/services/{{service.id}}/image.png'
+                 src='{{this.apiService.getAPI()}}/images/services/{{service.id}}/image.png'
                  onerror="this.src='../../assets/images/noImageSelected.jpg'"
                  onabort="this.src='../../assets/images/noImageSelected.jpg'"/>
              <p>{{service.name}}</p>
              <div class="button-row">
-                  <button mat-raised-button color="primary" (click)="editService()" class="edit-button">Edit</button>
-             </div>
+                  <button mat-raised-button color="primary" (click)="editService()" class="delete-button">Edit</button>
+                  <button mat-raised-button color="warn" (click)="editService()" class="delete-button">Delete</button>
+                </div>
+            <div class="button-row">
+                  <button mat-raised-button color="primary" (click)="showServiceBookings()" class="edit-button">Show bookings</button>
+                </div>
           </button>
 
         </span>

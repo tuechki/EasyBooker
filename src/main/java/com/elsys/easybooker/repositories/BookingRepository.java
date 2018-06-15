@@ -1,8 +1,6 @@
 package com.elsys.easybooker.repositories;
 
-import com.elsys.easybooker.models.Booking;
-import com.elsys.easybooker.models.Location;
-import com.elsys.easybooker.models.User;
+import com.elsys.easybooker.models.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
@@ -12,4 +10,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     public List<Booking> findByUser(User user);
     public List<Booking> findByDate(LocalDate localDate);
     public List<Booking> findByDateAndLocation(LocalDate localDate, Location location);
+    public List<Booking> findByLocation(Location location);
+    public List<Booking> findByService(Service service);
+    public List<Booking> findByBusiness(Business business);
 }

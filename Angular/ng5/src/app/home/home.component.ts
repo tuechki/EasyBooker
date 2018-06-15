@@ -6,6 +6,10 @@ import {Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {MapsAPILoader} from "@agm/core";
 import {} from '@types/googlemaps'
+import {ApiService} from "../services/api.service";
+import {PageEvent} from "@angular/material";
+
+import { AmazingTimePickerService } from 'amazing-time-picker';
 
 @Component({
   selector: 'app-home',
@@ -39,9 +43,10 @@ export class HomeComponent implements OnInit {
     public authService: AuthService,
     private router: Router,
     private httpClient: HttpClient,
-    public businessInfoService: BusinessInfoService
+    public businessInfoService: BusinessInfoService,
+    public apiService: ApiService,
+    private atp: AmazingTimePickerService
   ) {}
-
 
   ngOnInit() {
 
@@ -84,7 +89,7 @@ export class HomeComponent implements OnInit {
       });
     });
 
-    this.httpClient.get('http://localhost:8080/businesses', {observe: 'response'})
+    this.httpClient.get(this.apiService.getAPI() + '/businesses', {observe: 'response'})
       .subscribe(resp => {
           console.log(resp.headers);
           console.log(resp.body);
@@ -93,7 +98,7 @@ export class HomeComponent implements OnInit {
         }
       );
 
-    this.httpClient.get('http://localhost:8080/locations', {observe: 'response'})
+    this.httpClient.get(this.apiService.getAPI() + '/locations', {observe: 'response'})
       .subscribe(resp => {
           console.log(resp.headers);
           console.log(resp.body);
@@ -101,7 +106,7 @@ export class HomeComponent implements OnInit {
         }
       );
 
-    this.httpClient.get('http://localhost:8080/services', {observe: 'response'})
+    this.httpClient.get(this.apiService.getAPI() + '/services', {observe: 'response'})
       .subscribe(resp => {
           console.log(resp.headers);
           console.log(resp.body);

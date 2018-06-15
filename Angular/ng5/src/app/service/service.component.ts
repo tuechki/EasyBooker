@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {BusinessInfoService} from "../services/business.info.service";
 import {FormControl, Validators} from "@angular/forms";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-service',
@@ -17,11 +18,13 @@ export class ServiceComponent implements OnInit{
   ]);
 
   timeDurationFormControl = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.pattern("[0-9]*:[0-9]*")
   ]);
 
   priceFormControl = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.pattern("[1-9][0-9]*")
   ]);
 
   services: object[] = [];
@@ -40,7 +43,8 @@ export class ServiceComponent implements OnInit{
 
   constructor(private httpClient: HttpClient, private router: Router,
               private createBusinessService: CreateBusinessService,
-              private businessInfoService: BusinessInfoService) {}
+              private businessInfoService: BusinessInfoService,
+              public apiService: ApiService) {}
 
 
    ngOnInit(){
@@ -71,11 +75,13 @@ export class ServiceComponent implements OnInit{
 
     if (!this.nameFormControl.hasError('required')
       && !this.timeDurationFormControl.hasError('required')
-      && !this.priceFormControl.hasError('required')) {
+      && !this.priceFormControl.hasError('required')
+      && !this.priceFormControl.hasError('pattern')
+      && !this.timeDurationFormControl.hasError('pattern')) {
 
       this.showSpinner = true;
 
-      this.httpClient.post('http://localhost:8080/businesses/' +
+      this.httpClient.post(this.apiService.getAPI() + '/businesses/' +
         this.createBusinessService.getBusinessId() + '/services',
         this.service,
         {observe: 'response'}
@@ -84,7 +90,8 @@ export class ServiceComponent implements OnInit{
         if (this.selectedFile) {
           const fd = new FormData();
           fd.append('image', this.selectedFile, this.selectedFile.name);
-          this.httpClient.post('http://localhost:8080/services/' + resp.body["id"] + '/images',
+          this.httpClient.post(this.apiService.getAPI() + '/services/' +
+            resp.body["id"] + '/images',
             fd
           ).subscribe(resp => {
             this.selectedFile = null;

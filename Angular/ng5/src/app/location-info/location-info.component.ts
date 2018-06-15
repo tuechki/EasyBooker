@@ -4,6 +4,7 @@ import {BusinessInfoService} from "../services/business.info.service";
 import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
 import {error} from "util";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-location-info',
@@ -18,11 +19,12 @@ export class LocationInfoComponent implements OnInit {
   canBook: boolean = false;
 
   constructor(private httpClient: HttpClient, private router: Router,
-              public authService: AuthService, public businessInfoService: BusinessInfoService) { }
+              public authService: AuthService, public businessInfoService: BusinessInfoService,
+              public apiService: ApiService) { }
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/locations/'
+    this.httpClient.get(this.apiService.getAPI() + '/locations/'
       + this.businessInfoService.getCurrentLocation()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
@@ -30,7 +32,7 @@ export class LocationInfoComponent implements OnInit {
     });
 
 
-    this.httpClient.get('http://localhost:8080/locations/'
+    this.httpClient.get(this.apiService.getAPI() + '/locations/'
       + this.businessInfoService.getCurrentLocation()['id'] + "/services",
       {observe: 'response'}
     ).subscribe(resp => {
@@ -39,7 +41,7 @@ export class LocationInfoComponent implements OnInit {
       console.log(resp.body);
     });
 
-    this.httpClient.get('http://localhost:8080/locations/'
+    this.httpClient.get(this.apiService.getAPI() + '/locations/'
       + this.businessInfoService.getCurrentLocation()['id'] + "/schedule",
       {observe: 'response'}
     ).subscribe(resp => {
@@ -55,7 +57,7 @@ export class LocationInfoComponent implements OnInit {
   }
 
   goToBusiness(){
-    this.httpClient.get('http://localhost:8080/locations/'
+    this.httpClient.get(this.apiService.getAPI() + '/locations/'
       + this.businessInfoService.getCurrentLocation()['id'] + "/business",
       {observe: 'response'}
     ).subscribe(resp => {

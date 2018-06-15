@@ -1,5 +1,6 @@
 package com.elsys.easybooker.services;
 
+import com.elsys.easybooker.dtos.booking.BookingBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
@@ -7,6 +8,7 @@ import com.elsys.easybooker.dtos.service.ServiceDTO;
 import com.elsys.easybooker.dtos.service.ServiceUpdateDTO;
 import com.elsys.easybooker.enums.Role;
 import com.elsys.easybooker.models.*;
+import com.elsys.easybooker.repositories.BookingRepository;
 import com.elsys.easybooker.repositories.LocationRepository;
 import com.elsys.easybooker.repositories.ServiceRepository;
 import com.elsys.easybooker.repositories.UserRepository;
@@ -31,16 +33,19 @@ public class ServiceService {
     private final ServiceRepository serviceRepository;
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
+    private final BookingRepository bookingRepository;
     private final ModelMapper modelMapper = new ModelMapper();
 
     public ServiceService(
             ServiceRepository serviceRepository,
             LocationRepository locationRepository,
-            UserRepository userRepository){
+            UserRepository userRepository,
+            BookingRepository  bookingRepository){
 
         this.serviceRepository = serviceRepository;
         this.locationRepository = locationRepository;
         this.userRepository = userRepository;
+        this.bookingRepository = bookingRepository;
     }
 
 
@@ -94,6 +99,15 @@ public class ServiceService {
         if(isUserBusinessAdmin(serviceRepository.findById(serviceId).getBusiness().getId())){
             locationRepository.delete(serviceId);
         }
+    }
+
+    public List<BookingBriefDTO> getServiceBookings(long serviceId){
+        List<BookingBriefDTO> bookingBriefDTOList = new ArrayList<>();
+        for(Booking booking : bookingRepository.findByService(serviceRepository.findById(serviceId)) ){
+            bookingBriefDTOList.add(modelMapper.map(booking,BookingBriefDTO.class));
+        }
+
+        return bookingBriefDTOList;
     }
 
 

@@ -19,6 +19,9 @@ import {MyBookingsComponent} from "./my-bookings/my-bookings.component";
 import {EditBusinessComponent} from "./edit-business/edit-business.component";
 import {EditLocationComponent} from "./edit-location/edit-location.component";
 import {EditServiceComponent} from "./edit-service/edit-service.component";
+import {BusinessBookingsComponent} from "./business-bookings/business-bookings.component";
+import {LocationBookingsComponent} from "./location-bookings/location-bookings.component";
+import {ServiceBookingsComponent} from "./service-bookings/service-bookings.component";
 
 
 const routes: Routes = [
@@ -83,6 +86,23 @@ const routes: Routes = [
   {
     path: 'my-bookings',
     component: MyBookingsComponent,
+    canActivate: [AuthGuardService]
+  },
+
+  {
+    path: 'business-bookings',
+    component: BusinessBookingsComponent,
+    canActivate: [AuthGuardService]
+  },
+
+  {
+    path: 'location-bookings',
+    component: LocationBookingsComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'service-bookings',
+    component: ServiceBookingsComponent,
     canActivate: [AuthGuardService]
   },
 

@@ -39,6 +39,14 @@ import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 import { EditBusinessComponent } from './edit-business/edit-business.component';
 import { EditServiceComponent } from './edit-service/edit-service.component';
 import { EditLocationComponent } from './edit-location/edit-location.component';
+import {ApiService} from "./services/api.service";
+import { LocationBookingsComponent } from './location-bookings/location-bookings.component';
+import { ServiceBookingsComponent } from './service-bookings/service-bookings.component';
+import { BusinessBookingsComponent } from './business-bookings/business-bookings.component';
+
+import { Angular5TimePickerModule } from 'angular5-time-picker';
+
+import { AmazingTimePickerModule } from 'amazing-time-picker';
 
 @NgModule({
   declarations: [
@@ -60,9 +68,16 @@ import { EditLocationComponent } from './edit-location/edit-location.component';
     MyBookingsComponent,
     EditBusinessComponent,
     EditServiceComponent,
-    EditLocationComponent
+    EditLocationComponent,
+    LocationBookingsComponent,
+    ServiceBookingsComponent,
+    BusinessBookingsComponent
   ],
   imports: [
+
+    AmazingTimePickerModule,
+
+    Angular5TimePickerModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -86,7 +101,8 @@ import { EditLocationComponent } from './edit-location/edit-location.component';
       AuthGuardService,
       CreateBusinessService,
       BusinessInfoService,
-      UploadService
+      UploadService,
+      ApiService
 
   ],
   bootstrap: [AppComponent]

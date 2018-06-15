@@ -21,15 +21,21 @@
 
     <mat-form-field class="example-full-width">
       <input matInput placeholder="First name" [formControl]="firstNameFormControl" [(ngModel)]="user['firstName']">
-      <mat-error *ngIf="firstNameFormControl.hasError('required')">
+      <mat-error *ngIf="firstNameFormControl.hasError('required') && !firstNameFormControl.hasError('pattern')">
         First name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="firstNameFormControl.hasError('pattern')">
+        Has to contain <strong>only letters</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Last name" [formControl]="lastNameFormControl" [(ngModel)]="user['lastName']">
-      <mat-error *ngIf="lastNameFormControl.hasError('required')">
+      <mat-error *ngIf="lastNameFormControl.hasError('required') && !lastNameFormControl.hasError('pattern')">
         Last name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="lastNameFormControl.hasError('pattern')">
+        Has to contain <strong>only letters</strong>
       </mat-error>
     </mat-form-field>
 
@@ -37,6 +43,9 @@
       <input matInput placeholder="Username" [formControl]="usernameFormControl" [(ngModel)]="user['username']">
       <mat-error *ngIf="usernameFormControl.hasError('required')">
         Username is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="usernameFormControl.hasError('pattern')">
+        Has to contain <strong>only letters, digits and "-,_"</strong>
       </mat-error>
     </mat-form-field>
 

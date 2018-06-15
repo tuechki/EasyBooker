@@ -34,12 +34,18 @@
     <mat-error *ngIf="timeDurationFormControl.hasError('required')">
       Time duration is <strong>required</strong>
     </mat-error>
+    <mat-error *ngIf="timeDurationFormControl.hasError('pattern')">
+      Time duration is <strong>only hours : minutes</strong>
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Price/$" [formControl]="priceFormControl" [(ngModel)]="service['price']">
     <mat-error *ngIf="priceFormControl.hasError('required')">
       Price is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="priceFormControl.hasError('pattern')">
+      Price is <strong>only number</strong>
     </mat-error>
   </mat-form-field>
 

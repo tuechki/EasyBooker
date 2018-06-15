@@ -12,9 +12,8 @@
       <!--<mat-datepicker touchUi="true" #picker></mat-datepicker>-->
     <!--</mat-form-field>-->
 
-
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Input & change events"
+      <input matInput [matDatepicker]="picker" placeholder="Choose a date"
              (dateInput)="chooseDate('input', $event)" (dateChange)="chooseDate('change', $event)">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
@@ -34,7 +33,7 @@
 
           <mat-tab i18n-label label="Business info">
             <div class="demo-tab-content">
-              <img class="img" src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
+              <img class="img" src='{{this.apiService.getAPI()}}/images/businesses/{{business.id}}/image.png'/>
               <br>
               <br>
               <p i18n> Description:</p><p>{{business.description}} </p>
@@ -46,7 +45,7 @@
 
           <mat-tab i18n-label label="Location info">
             <div class="demo-tab-content">
-              <img class="img" src='http://localhost:8080/images/locations/{{location.id}}/image.png'/>
+              <img class="img" src='{{this.apiService.getAPI()}}/images/locations/{{location.id}}/image.png'/>
               <br>
               <p i18n> Description: </p><p>{{location.description}} </p>
               <br>
@@ -56,7 +55,7 @@
           </mat-tab>
             <mat-tab i18n-label label="Service info">
               <div class="demo-tab-content">
-                <img class="img" src='http://localhost:8080/images/services/{{service.id}}/image.png'/>
+                <img class="img" src='{{this.apiService.getAPI()}}/images/services/{{service.id}}/image.png'/>
                 <br>
                 <br>
                 <p i18n> Description: </p><p>{{service.description}} </p>

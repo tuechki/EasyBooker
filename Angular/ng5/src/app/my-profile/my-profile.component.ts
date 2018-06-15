@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {BusinessInfoService} from "../services/business.info.service";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-my-profile',
@@ -27,12 +28,14 @@ export class MyProfileComponent implements OnInit {
   showSpinner: boolean = false;
 
 
-  constructor(private httpClient: HttpClient, private router: Router, private businessInfoService: BusinessInfoService) {
+  constructor(private httpClient: HttpClient, private router: Router,
+              private businessInfoService: BusinessInfoService,
+              public apiService: ApiService) {
   }
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/users/loggedInUser',
+    this.httpClient.get(this.apiService.getAPI() + '/users/loggedInUser',
       {observe: 'response'}).subscribe(resp => {
       this.user = resp.body;
       console.log(resp.body);
@@ -50,7 +53,7 @@ export class MyProfileComponent implements OnInit {
       this.user['password'] = this.newPassword;
     }
 
-    this.httpClient.put('http://localhost:8080/users/loggedInUser',
+    this.httpClient.put(this.apiService.getAPI() + '/users/loggedInUser',
       this.user,
       {observe: 'response'}).subscribe(resp => {
           this.httpClient.get('http://localhost:8080/users/loggedInUser',

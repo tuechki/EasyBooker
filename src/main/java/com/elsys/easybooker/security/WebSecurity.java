@@ -16,7 +16,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 import javax.servlet.Filter;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static com.elsys.easybooker.security.SecurityConstants.SIGN_UP_URL;
 
@@ -61,7 +63,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         corsConfig.applyPermitDefaultValues();
         corsConfig.addAllowedMethod(HttpMethod.PUT);
         corsConfig.addExposedHeader("Authorization");
-        corsConfig.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        List<String> allowedOrigins = new ArrayList<>();
+        allowedOrigins.add("http://localhost:4200");
+        allowedOrigins.add("http://dani.1h.cx:8080");
+        corsConfig.setAllowedOrigins(allowedOrigins);
         source.registerCorsConfiguration("/**", corsConfig);
         return source;
     }

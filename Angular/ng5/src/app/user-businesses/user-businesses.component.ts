@@ -4,6 +4,7 @@ import {BusinessInfoService} from "../services/business.info.service";
 
 import {AuthService} from "../auth/auth.service";
 import {HttpClient} from "@angular/common/http";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-user-businesses',
@@ -22,6 +23,10 @@ export class UserBusinessesComponent implements OnInit {
   businessToBeEdited: boolean;
   locationToBeEdited: boolean;
   serviceToBeEdited: boolean;
+  businessBookings: boolean;
+  locationBookings: boolean;
+  serviceBookings: boolean;
+  businessToBeDeleted: boolean;
 
   image: File = null;
 
@@ -29,7 +34,8 @@ export class UserBusinessesComponent implements OnInit {
     public authService: AuthService,
     private router: Router,
     private httpClient: HttpClient,
-    public businessInfoService: BusinessInfoService
+    public businessInfoService: BusinessInfoService,
+    public apiService: ApiService
   ) {}
 
 
@@ -38,13 +44,17 @@ export class UserBusinessesComponent implements OnInit {
     this.businessToBeEdited = false;
     this.locationToBeEdited = false;
     this.serviceToBeEdited = false;
+    this.businessBookings = false;
+    this.locationBookings = false;
+    this.serviceBookings = false;
+    this.businessToBeDeleted = false;
 
-    this.httpClient.get('http://localhost:8080/businesses/loggedInUser', {observe: 'response'})
+    this.httpClient.get(this.apiService.getAPI() + '/businesses/loggedInUser', {observe: 'response'})
       .subscribe(resp => {
           this.businesses = resp.body;
 
           for(var i = 0; i < this.businesses.length; i++){
-            this.httpClient.get('http://localhost:8080/businesses/' + this.businesses[i].id
+            this.httpClient.get(this.apiService.getAPI() + '/businesses/' + this.businesses[i].id
                                                                           + '/locations', {observe: 'response'})
               .subscribe(resp => {
                     this.locationsPerBusiness.push(resp.body);
@@ -58,7 +68,7 @@ export class UserBusinessesComponent implements OnInit {
               );
 
 
-            this.httpClient.get('http://localhost:8080/businesses/'  + this.businesses[i].id
+            this.httpClient.get(this.apiService.getAPI() + '/businesses/'  + this.businesses[i].id
               + '/services', {observe: 'response'})
               .subscribe(resp => {
                   this.servicesPerBusiness.push(resp.body);
@@ -82,32 +92,75 @@ export class UserBusinessesComponent implements OnInit {
   }
 
   showBusiness(business){
+    this.businessInfoService.clearCurrentService();
+    this.businessInfoService.clearCurrentLocation();
+
     this.businessInfoService.setCurrentBusiness(business);
-    if(!this.businessToBeEdited){
+    if(!this.businessToBeEdited && !this.businessBookings){
       this.router.navigate(['business-info']);
+    }else if(this.businessBookings) {
+      this.router.navigate(['business-bookings']);
+    }else if(this.businessToBeDeleted) {
+      this.httpClient.delete(this.apiService.getAPI() + '/businesses/'
+        + this.businessInfoService.getCurrentBusiness()['id'], {observe: 'response'})
+        .subscribe(resp => {
+          }
+        );
+      this.httpClient.delete(this.apiService.getAPI() + '/businesses/'
+        + this.businessInfoService.getCurrentBusiness()['id'] + '/services', {observe: 'response'})
+        .subscribe(resp => {
+          }
+        );
+      this.httpClient.delete(this.apiService.getAPI() + '/businesses/'
+        + this.businessInfoService.getCurrentBusiness()['id'] + '/locations', {observe: 'response'})
+        .subscribe(resp => {
+          }
+        );
     }else {
       this.router.navigate(['edit-business']);
     }
   }
 
   showLocation(location){
+    this.businessInfoService.clearCurrentService();
+
     this.businessInfoService.setCurrentLocation(location);
-    if(!this.locationToBeEdited){
-      this.businessInfoService.clearCurrentService();
+    if(!this.locationToBeEdited && !this.locationBookings){
       this.router.navigate(['location-info']);
-    }else {
+    }else if(this.locationBookings) {
+      this.router.navigate(['location-bookings']);
+    }else{
       this.router.navigate(['edit-location']);
     }
   }
 
   showService(service){
+    this.businessInfoService.clearCurrentLocation();
+
     this.businessInfoService.setCurrentService(service);
-    if(!this.serviceToBeEdited){
-      this.businessInfoService.clearCurrentLocation();
+    if(!this.serviceToBeEdited && !this.serviceBookings){
       this.router.navigate(['service-info']);
+    }else if(this.serviceBookings) {
+      this.router.navigate(['service-bookings']);
     }else {
       this.router.navigate(['edit-service']);
     }
+  }
+
+  deleteBusiness(){
+    this.businessToBeDeleted = true;
+  }
+
+  showBusinessBookings(){
+    this.businessBookings = true;
+  }
+
+  showLocationBookings(){
+    this.locationBookings = true;
+  }
+
+  showServiceBookings(){
+    this.serviceBookings = true;
   }
 
   editBusiness(){

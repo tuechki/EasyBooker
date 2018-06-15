@@ -4,6 +4,7 @@ import {FormControl, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {CreateBusinessService} from "../services/message.service";
 import {Router} from "@angular/router";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-edit-service',
@@ -42,12 +43,13 @@ export class EditServiceComponent implements OnInit {
 
   constructor(private httpClient: HttpClient, private router: Router,
               private createBusinessService: CreateBusinessService,
-              private businessInfoService: BusinessInfoService) {}
+              private businessInfoService: BusinessInfoService,
+              public apiService: ApiService) {}
 
 
   ngOnInit(){
 
-    this.httpClient.get('http://localhost:8080/services/'
+    this.httpClient.get(this.apiService.getAPI() + '/services/'
       + this.businessInfoService.getCurrentService()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
@@ -91,7 +93,7 @@ export class EditServiceComponent implements OnInit {
       this.service['timeDuration']['minutes'] = timeDurationList.pop();
       this.service['timeDuration']['hours'] = timeDurationList.pop();
 
-      this.httpClient.post('http://localhost:8080/businesses/' +
+      this.httpClient.post(this.apiService.getAPI() + '/businesses/' +
         this.createBusinessService.getBusinessId() + '/services',
         this.service,
         {observe: 'response'}
@@ -100,7 +102,7 @@ export class EditServiceComponent implements OnInit {
         if (this.selectedFile) {
           const fd = new FormData();
           fd.append('image', this.selectedFile, this.selectedFile.name);
-          this.httpClient.post('http://localhost:8080/services/' + resp.body["id"] + '/images',
+          this.httpClient.post(this.apiService.getAPI() + '/services/' + resp.body["id"] + '/images',
             fd
           ).subscribe(resp => {
             this.selectedFile = null;

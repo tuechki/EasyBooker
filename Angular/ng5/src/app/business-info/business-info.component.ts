@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BusinessInfoService} from "../services/business.info.service";
 import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-business-info',
@@ -16,18 +17,19 @@ export class BusinessInfoComponent implements OnInit {
   services: any;
 
   constructor(private httpClient: HttpClient, private router: Router,
-              public authService: AuthService, public businessInfoService: BusinessInfoService) { }
+              public authService: AuthService, public businessInfoService: BusinessInfoService,
+              public apiService: ApiService) { }
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/businesses/'
+    this.httpClient.get(this.apiService.getAPI() + '/businesses/'
       + this.businessInfoService.getCurrentBusiness()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
       this.business = resp.body;
     });
 
-    this.httpClient.get('http://localhost:8080/businesses/'
+    this.httpClient.get(this.apiService.getAPI() + '/businesses/'
       + this.businessInfoService.getCurrentBusiness()['id'] + "/services",
       {observe: 'response'}
     ).subscribe(resp => {
@@ -36,7 +38,7 @@ export class BusinessInfoComponent implements OnInit {
       console.log(resp.body);
     });
 
-    this.httpClient.get('http://localhost:8080/businesses/'
+    this.httpClient.get(this.apiService.getAPI() + '/businesses/'
       + this.businessInfoService.getCurrentBusiness()['id'] + "/locations",
       {observe: 'response'}
     ).subscribe(resp => {

@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {CreateBusinessService} from "../services/message.service";
 import {BusinessInfoService} from "../services/business.info.service";
 import {FormControl, Validators} from "@angular/forms";
+import {ApiService} from "../services/api.service";
+import { AmazingTimePickerService } from 'amazing-time-picker';
 
 @Component({
   selector: 'app-location',
@@ -19,6 +21,10 @@ export class LocationComponent implements OnInit {
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
+  ]);
+
+  numberFormControl = new FormControl('', [
+    Validators.pattern("[0-9]*")
   ]);
 
   selectedServices = [];
@@ -46,7 +52,14 @@ findIndexToUpdate(service) {
 
   constructor(private httpClient: HttpClient, private router: Router,
               private createBusinessService: CreateBusinessService,
-              private businessInfoService: BusinessInfoService) {}
+              private businessInfoService: BusinessInfoService,
+              public apiService: ApiService,
+              public atp: AmazingTimePickerService) {}
+
+
+  public selectedOpenTime: string;
+  public selectedCloseTime: string;
+
 
   locations: object[] = [];
 
@@ -103,9 +116,72 @@ findIndexToUpdate(service) {
 
   services: any;
 
+  open(whichTime: string) {
+    const amazingTimePicker = this.atp.open();
+    amazingTimePicker.afterClose().subscribe(time => {
+      if(whichTime === "mondayOpen"){
+        this.selectedOpenTime = time;
+        this.dayScheduleMonday['openTime'] = this.selectedOpenTime + ':00';
+      } else if(whichTime === "mondayClose"){
+        this.selectedCloseTime = time;
+        this.dayScheduleMonday['closeTime'] = this.selectedCloseTime + ':00';
+      } else
+
+        if(whichTime === "tuesdayOpen"){
+        this.selectedOpenTime = time;
+        this.dayScheduleTuesday['openTime'] = this.selectedOpenTime + ':00';
+      } else if(whichTime === "tuesdayClose"){
+        this.selectedCloseTime = time;
+        this.dayScheduleTuesday['closeTime'] = this.selectedCloseTime + ':00';
+      } else
+
+        if(whichTime === "wednesdayOpen"){
+        this.selectedOpenTime = time;
+        this.dayScheduleWednesday['openTime'] = this.selectedOpenTime + ':00';
+      } else if(whichTime === "wednesdayClose"){
+        this.selectedCloseTime = time;
+        this.dayScheduleWednesday['closeTime'] = this.selectedCloseTime + ':00';
+      }else
+
+        if(whichTime === "thursdayOpen"){
+          this.selectedOpenTime = time;
+          this.dayScheduleThursday['openTime'] = this.selectedOpenTime + ':00';
+        } else if(whichTime === "thursdayClose"){
+          this.selectedCloseTime = time;
+          this.dayScheduleThursday['closeTime'] = this.selectedCloseTime + ':00';
+        }else
+
+        if(whichTime === "fridayOpen"){
+          this.selectedOpenTime = time;
+          this.dayScheduleFriday['openTime'] = this.selectedOpenTime + ':00';
+        } else if(whichTime === "fridayClose"){
+          this.selectedCloseTime = time;
+          this.dayScheduleFriday['closeTime'] = this.selectedCloseTime + ':00';
+        }else
+
+        if(whichTime === "saturdayOpen"){
+          this.selectedOpenTime = time;
+          this.dayScheduleSaturday['openTime'] = this.selectedOpenTime + ':00';
+        } else if(whichTime === "saturdayClose"){
+          this.selectedCloseTime = time;
+          this.dayScheduleSaturday['closeTime'] = this.selectedCloseTime + ':00';
+        }else
+
+        if(whichTime === "sundayOpen"){
+          this.selectedOpenTime = time;
+          this.dayScheduleSunday['openTime'] = this.selectedOpenTime + ':00';
+        } else if(whichTime === "sundayClose"){
+          this.selectedCloseTime = time;
+          this.dayScheduleSunday['closeTime'] = this.selectedCloseTime + ':00';
+        }
+
+
+    });
+  }
+
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/businesses/'
+    this.httpClient.get(this.apiService.getAPI() + '/businesses/'
       + this.createBusinessService.getBusinessId() + "/services",
       {observe: 'response'}
     ).subscribe(resp => {
@@ -137,7 +213,8 @@ findIndexToUpdate(service) {
 
      if (!this.addressFormControl.hasError('required')
        && !this.emailFormControl.hasError('required')
-       && !this.emailFormControl.hasError('email')) {
+       && !this.emailFormControl.hasError('email')
+       && !this.numberFormControl.hasError('pattern')) {
 
        this.location['dayScheduleList'].push(this.dayScheduleMonday);
        this.location['dayScheduleList'].push(this.dayScheduleTuesday);
@@ -150,14 +227,14 @@ findIndexToUpdate(service) {
 
        this.showSpinner = true;
 
-       this.httpClient.post('http://localhost:8080/businesses/'
+       this.httpClient.post(this.apiService.getAPI() + '/businesses/'
          + this.createBusinessService.getBusinessId() + '/locations',
          this.location,
          {observe: 'response'}
        ).subscribe(resp => {
 
 
-         this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + "/services",
+         this.httpClient.post(this.apiService.getAPI() + '/locations/' + resp.body["id"] + "/services",
            this.selectedServices,
            {observe: 'response'}
          ).subscribe(resp => {
@@ -168,7 +245,7 @@ findIndexToUpdate(service) {
          if (this.selectedFile) {
            const fd = new FormData();
            fd.append('image', this.selectedFile, this.selectedFile.name);
-           this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + '/images',
+           this.httpClient.post(this.apiService.getAPI() + '/locations/' + resp.body["id"] + '/images',
              fd
            ).subscribe(resp => {
              this.selectedFile = null;

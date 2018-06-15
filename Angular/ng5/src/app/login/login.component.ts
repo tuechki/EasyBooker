@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
   showSpinner: boolean = false;
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(private httpClient: HttpClient, private router: Router, public apiService: ApiService) {
   }
 
   ngOnInit() {
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this.showSpinner =   true;
 
-    this.httpClient.post('http://localhost:8080/login',
+    this.httpClient.post(this.apiService.getAPI() + '/login',
       {
         username: this.username,
         password: this.password

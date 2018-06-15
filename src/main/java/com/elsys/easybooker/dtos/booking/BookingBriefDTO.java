@@ -27,6 +27,15 @@ public class BookingBriefDTO {
     @NotNull
     private String serviceName;
 
+    @NotNull
+    private long userId;
+
+    @NotNull
+    private String userFirstName;
+
+    @NotNull
+    private String userLastName;
+
     private LocalDate date;
 
     @NotNull
@@ -81,6 +90,30 @@ public class BookingBriefDTO {
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 
     public LocalDate getDate() {

@@ -1,0 +1,27 @@
+
+<mat-card>
+  <mat-card-content >
+
+    <button i18n mat-raised-button color="primary" > Business </button>
+    <button i18n mat-raised-button color="primary" > Address </button>
+    <button i18n mat-raised-button color="primary" > Service </button>
+    <button i18n mat-raised-button color="primary" > Date </button>
+    <button i18n mat-raised-button color="primary" > Time </button>
+    <button i18n mat-raised-button color="primary" > Customer </button>
+
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card *ngFor="let booking of bookings">
+  <mat-card-content >
+
+    <button i18n mat-raised-button (click)="showBusiness(booking)" color="warn">{{booking.businessName}}</button>
+    <button i18n mat-raised-button (click)="showLocation(booking)" color="warn">{{booking.locationAddress}}</button>
+    <button i18n mat-raised-button (click)="showService(booking)" color="warn">{{booking.serviceName}}</button>
+    <button i18n mat-raised-button color="warn">{{booking.date | date}}</button>
+    <button i18n mat-raised-button color="warn">{{booking.beginTime[0] + ":" + booking.beginTime[1]}}</button>
+    <button i18n mat-raised-button color="warn">{{booking.userFirstName}} {{booking.userLastName}}</button>
+
+  </mat-card-content>
+</mat-card>

@@ -1,4 +1,5 @@
 package com.elsys.easybooker.controllers;
+import com.elsys.easybooker.dtos.booking.BookingBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.location.LocationBriefDTO;
 import com.elsys.easybooker.dtos.service.ServiceBriefDTO;
@@ -63,5 +64,9 @@ public class ServiceController {
         return serviceService.getBusinessForService(serviceId);
     }
 
+    @GetMapping("/{serviceId}/bookings")
+    public List<BookingBriefDTO> getBusinessBookings(@PathVariable long serviceId) {
+        return serviceService.getServiceBookings(serviceId);
+    }
 
 }

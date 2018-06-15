@@ -4,6 +4,7 @@ import {FormControl, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {CreateBusinessService} from "../services/message.service";
 import {Router} from "@angular/router";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-edit-location',
@@ -47,7 +48,8 @@ export class EditLocationComponent implements OnInit {
 
   constructor(private httpClient: HttpClient, private router: Router,
               private createBusinessService: CreateBusinessService,
-              private businessInfoService: BusinessInfoService) {}
+              private businessInfoService: BusinessInfoService,
+              public apiService: ApiService) {}
 
   locations: object[] = [];
 
@@ -106,18 +108,18 @@ export class EditLocationComponent implements OnInit {
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/locations/'
+    this.httpClient.get(this.apiService.getAPI() + '/locations/'
       + this.businessInfoService.getCurrentLocation()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
       this.location = resp.body;
     });
 
-    this.httpClient.get('http://localhost:8080/locations/'
+    this.httpClient.get(this.apiService.getAPI() + '/locations/'
       + this.businessInfoService.getCurrentLocation()['id'] + "/business",
       {observe: 'response'}
     ).subscribe(resp => {
-      this.httpClient.get('http://localhost:8080/businesses/'
+      this.httpClient.get('/businesses/'
         + resp.body['id'] + "/services",
         {observe: 'response'}
       ).subscribe(resp => {
@@ -165,14 +167,14 @@ export class EditLocationComponent implements OnInit {
 
       this.showSpinner = true;
 
-      this.httpClient.post('http://localhost:8080/businesses/'
+      this.httpClient.post(this.apiService.getAPI() + '/businesses/'
         + this.createBusinessService.getBusinessId() + '/locations',
         this.location,
         {observe: 'response'}
       ).subscribe(resp => {
 
 
-        this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + "/services",
+        this.httpClient.post(this.apiService.getAPI() + '/locations/' + resp.body["id"] + "/services",
           this.selectedServices,
           {observe: 'response'}
         ).subscribe(resp => {
@@ -183,7 +185,7 @@ export class EditLocationComponent implements OnInit {
         if (this.selectedFile) {
           const fd = new FormData();
           fd.append('image', this.selectedFile, this.selectedFile.name);
-          this.httpClient.post('http://localhost:8080/locations/' + resp.body["id"] + '/images',
+          this.httpClient.post(this.apiService.getAPI() + '/locations/' + resp.body["id"] + '/images',
             fd
           ).subscribe(resp => {
             this.selectedFile = null;

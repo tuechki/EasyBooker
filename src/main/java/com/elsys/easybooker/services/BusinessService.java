@@ -1,5 +1,6 @@
 package com.elsys.easybooker.services;
 
+import com.elsys.easybooker.dtos.booking.BookingBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessBriefDTO;
 import com.elsys.easybooker.dtos.business.BusinessCreationDTO;
 import com.elsys.easybooker.dtos.business.BusinessDTO;
@@ -33,6 +34,7 @@ public class BusinessService {
     private final ServiceRepository serviceRepository;
     private final LocationRepository locationRepository;
     private final DayScheduleRepository dayScheduleRepository;
+    private final BookingRepository bookingRepository;
     private final UsersBusinessesRepository usersBusinessesRepository;
     private final ModelMapper modelMapper = new ModelMapper();
 
@@ -41,13 +43,15 @@ public class BusinessService {
                            ServiceRepository serviceRepository,
                            LocationRepository locationRepository,
                            DayScheduleRepository dayScheduleRepository,
-                           UsersBusinessesRepository usersBusinessesRepository){
+                           UsersBusinessesRepository usersBusinessesRepository,
+                           BookingRepository bookingRepository){
         this.userRepository = userRepository;
         this.businessRepository = businessRepository;
         this.serviceRepository = serviceRepository;
         this.locationRepository = locationRepository;
         this.dayScheduleRepository = dayScheduleRepository;
         this.usersBusinessesRepository = usersBusinessesRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     public List<BusinessBriefDTO> getBusinesses() {
@@ -123,6 +127,15 @@ public class BusinessService {
         }
     }
 
+    public List<BookingBriefDTO> getBusinessBookings(long businessId){
+        List<BookingBriefDTO> bookingBriefDTOList = new ArrayList<>();
+        for(Booking booking : bookingRepository.findByBusiness(businessRepository.findById(businessId)) ){
+            BookingBriefDTO bookingBriefDTO = modelMapper.map(booking,BookingBriefDTO.class);
+            bookingBriefDTOList.add(bookingBriefDTO);
+        }
+
+        return bookingBriefDTOList;
+    }
 
 
     //----Services----//

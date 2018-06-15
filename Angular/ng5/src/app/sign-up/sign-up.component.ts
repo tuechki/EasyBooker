@@ -3,6 +3,7 @@ import {NgForm, FormGroup, FormBuilder, Validators, FormControl, AbstractControl
 import {HttpClient} from "@angular/common/http";
 import {anchorDef} from "@angular/core/src/view";
 import {Router} from "@angular/router";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -22,15 +23,18 @@ export class SignUpComponent implements OnInit {
 
 
   firstNameFormControl = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.pattern("[A-Za-z]*")
   ]);
 
   lastNameFormControl = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.pattern("[A-za-z]*")
   ]);
 
   usernameFormControl = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.pattern("[a-z0-9_-]*")
   ]);
 
   passwordFormControl = new FormControl('', [
@@ -51,7 +55,8 @@ export class SignUpComponent implements OnInit {
   answerDisplay: string = '';
   showSpinner: boolean = false;
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(private httpClient: HttpClient, private router: Router,
+              public apiService: ApiService) {
 
   }
 
@@ -71,14 +76,14 @@ export class SignUpComponent implements OnInit {
       this.showSpinner = true;
       console.log(this.user['firstName']);
 
-      this.httpClient.post('http://localhost:8080/users',
+      this.httpClient.post(this.apiService.getAPI() + '/users',
         this.user,
         {observe: 'response'}).subscribe(resp => {
 
         if (this.selectedFile) {
           const fd = new FormData();
           fd.append('image', this.selectedFile, this.selectedFile.name);
-          this.httpClient.post('http://localhost:8080/users/' + resp.body["id"] + '/images',
+          this.httpClient.post( this.apiService.getAPI() + '/users/' + resp.body["id"] + '/images',
             fd
           ).subscribe(resp => {
             console.log(fd);

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,44 +16,20 @@ import org.springframework.web.servlet.config.annotation.*;
 import javax.annotation.PostConstruct;
 
 @SpringBootApplication
-public class EasybookerApplication {
+public class EasybookerApplication
+//		extends SpringBootServletInitializer
+{
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-//	@Configuration
-//	public static class PathMatchingConfigurationAdapter extends WebMvcConfigurerAdapter {
-//
-//		@Override
-//		public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-//			configurer.favorPathExtension(false);
-//		}
-//	}
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//        return application.sources(EasybookerApplication.class);
+//    }
 
-//	@Configuration
-//	public class WebConfiguration extends WebMvcConfigurationSupport {
-//
-//		@Override
-//		public void addResourceHandlers(ResourceHandlerRegistry registry){
-//			registry.addResourceHandler("/**")
-//					.addResourceLocations("classpath:/static/");
-//		}
-//	}
-
-
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurerAdapter() {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/**")
-//						.allowedOrigins("http://localhost:4200");
-//			}
-//		};
-//
-//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(EasybookerApplication.class, args);

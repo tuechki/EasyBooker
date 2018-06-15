@@ -3,6 +3,7 @@ import {BusinessInfoService} from "../services/business.info.service";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-my-bookings',
@@ -26,11 +27,12 @@ export class MyBookingsComponent implements OnInit {
   };
 
   constructor(private httpClient: HttpClient, private router: Router,
-              public authService: AuthService, public businessInfoService: BusinessInfoService) { }
+              public authService: AuthService, public businessInfoService: BusinessInfoService,
+              public apiService: ApiService) { }
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/bookings/',
+    this.httpClient.get(this.apiService.getAPI() + '/bookings/',
       {observe: 'response'}
     ).subscribe(resp => {
       this.bookings = resp.body;

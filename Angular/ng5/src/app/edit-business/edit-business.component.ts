@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {CreateBusinessService} from "../services/message.service";
 import {BusinessInfoService} from "../services/business.info.service";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-edit-business',
@@ -24,12 +25,13 @@ export class EditBusinessComponent implements OnInit {
 
   constructor(private httpClient: HttpClient, private router: Router,
               private createBusinessService: CreateBusinessService,
-              private businessInfoService: BusinessInfoService) {}
+              private businessInfoService: BusinessInfoService,
+              public apiService: ApiService) {}
 
 
   ngOnInit() {
 
-    this.httpClient.get('http://localhost:8080/businesses/'
+    this.httpClient.get(this.apiService.getAPI() + '/businesses/'
       + this.businessInfoService.getCurrentBusiness()['id'],
       {observe: 'response'}
     ).subscribe(resp => {
@@ -58,7 +60,7 @@ export class EditBusinessComponent implements OnInit {
   updateBusiness() {
     this.showSpinner = true;
 
-    this.httpClient.put('http://localhost:8080/businesses',
+    this.httpClient.put(this.apiService.getAPI() + '/businesses',
       this.business,
       {observe: 'response'}
     ).subscribe(resp => {
@@ -67,7 +69,7 @@ export class EditBusinessComponent implements OnInit {
       if(this.selectedFile) {
         const fd = new FormData();
         fd.append('image', this.selectedFile, this.selectedFile.name);
-        this.httpClient.post('http://localhost:8080/businesses/' + resp.body["id"] + '/images',
+        this.httpClient.post(this.apiService.getAPI() + '/businesses/' + resp.body["id"] + '/images',
           fd
         ).subscribe(resp => {
           console.log(fd);

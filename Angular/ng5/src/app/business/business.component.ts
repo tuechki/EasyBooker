@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {CreateBusinessService} from "../services/message.service";
 import {BusinessInfoService} from "../services/business.info.service";
 import {FormControl, Validators} from "@angular/forms";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-business',
@@ -34,7 +35,8 @@ export class BusinessComponent implements OnInit {
 
   constructor(private httpClient: HttpClient, private router: Router,
               private createBusinessService: CreateBusinessService,
-              private businessInfoService: BusinessInfoService) {}
+              private businessInfoService: BusinessInfoService,
+              public apiService: ApiService) {}
 
 
   ngOnInit() {
@@ -65,7 +67,7 @@ export class BusinessComponent implements OnInit {
 
       this.showSpinner = true;
 
-      this.httpClient.post('http://localhost:8080/businesses',
+      this.httpClient.post(this.apiService.getAPI() + '/businesses',
         this.business,
         {observe: 'response'}
       ).subscribe(resp => {
@@ -74,7 +76,8 @@ export class BusinessComponent implements OnInit {
         if (this.selectedFile) {
           const fd = new FormData();
           fd.append('image', this.selectedFile, this.selectedFile.name);
-          this.httpClient.post('http://localhost:8080/businesses/' + resp.body["id"] + '/images',
+          this.httpClient.post(this.apiService.getAPI() + '/businesses/'
+            + resp.body["id"] + '/images',
             fd
           ).subscribe(resp => {
             console.log(fd);

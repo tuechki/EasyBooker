@@ -91,4 +91,9 @@ public class LocationController {
     }
 
 
+    @GetMapping("/{locationId}/bookings")
+    public List<BookingBriefDTO> getLocationBookings(@PathVariable long locationId) {
+       return locationService.getLocationBookings(locationId);
+    }
+
 }

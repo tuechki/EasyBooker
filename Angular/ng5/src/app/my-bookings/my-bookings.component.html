@@ -1,4 +1,4 @@
-<h2 i18n>Review your bookings...</h2>
+<script src="my-bookings.component.ts"></script><h2 i18n>Review your bookings...</h2>
 <br>
 
 <mat-card>
@@ -18,7 +18,7 @@
   <mat-card-content >
 
     <button class="block" *ngIf="this.loadedBusinesses == true" mat-raised-button >
-      <img class="img"  src='http://localhost:8080/images/businesses/{{business.id}}/image.png'/>
+      <img class="img"  src='{{this.apiService.getAPI()}}/images/businesses/{{business.id}}/image.png'/>
       <p>{{business.name}}</p>
     </button>
 

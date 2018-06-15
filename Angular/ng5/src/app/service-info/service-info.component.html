@@ -11,7 +11,7 @@
       <mat-tab i18n-label label="Service info">
         <div class="demo-tab-content">
           <img class="img"
-               src='http://localhost:8080/images/services/{{service.id}}/image.png'
+               src='{{this.apiService.getAPI()}}/images/services/{{service.id}}/image.png'
                onerror="this.src='../../assets/images/noImageSelected.jpg'"
                onabort="this.src='../../assets/images/noImageSelected.jpg'"/>
           <br>
@@ -29,7 +29,7 @@
 
            <button class="block" mat-raised-button (click)="showLocation(location)">
              <img class="img"
-                  src='http://localhost:8080/images/locations/{{location.id}}/image.png'
+                  src='{{this.apiService.getAPI()}}/images/locations/{{location.id}}/image.png'
                   onerror="this.src='../../assets/images/noImageSelected.jpg'"
                   onabort="this.src='../../assets/images/noImageSelected.jpg'"/>
              <p>{{location.address}}</p>
